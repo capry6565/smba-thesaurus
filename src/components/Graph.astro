@@ -21,36 +21,35 @@ const defaultOptions = {
     }
   },
   edges: {
-  arrows: 'to',
-  color: { 
-    color: '#848484', 
-    hover: '#2B7CE9',
-    highlight: '#2B7CE9'  // ← при клике синий
-  },
-  smooth: { type: 'cubicBezier' },
-  width: 2,
-  font: { 
-    size: 12, 
-    align: 'middle',
-    color: '#2B7CE9',  // ← синий текст
-    strokeWidth: 0
-  },
-  // ✅ НОВОЕ: курсор pointer при наведении
-  chosen: {
-    edge: function(values, id, selected, hovering) {
-      if (hovering) {
-        values.width = 3;
-        values.color = '#2B7CE9';
-      }
+    arrows: 'to',
+    color: { 
+      color: '#848484', 
+      hover: '#2B7CE9',
+      highlight: '#2B7CE9'
     },
-    label: function(values, id, selected, hovering) {
-      if (hovering) {
-        values.size = 14;
-        values.color = '#1a5fc7';
+    smooth: { type: 'cubicBezier' },
+    width: 2,
+    font: { 
+      size: 12, 
+      align: 'middle',
+      color: '#2B7CE9',
+      strokeWidth: 0
+    },
+    chosen: {
+      edge: function(values, id, selected, hovering) {
+        if (hovering) {
+          values.width = 3;
+          values.color = '#2B7CE9';
+        }
+      },
+      label: function(values, id, selected, hovering) {
+        if (hovering) {
+          values.size = 14;
+          values.color = '#1a5fc7';
+        }
       }
     }
-  }
-}
+  },
   physics: {
     enabled: true,
     solver: 'forceAtlas2Based',
@@ -142,35 +141,31 @@ const graphData = JSON.stringify({ nodes, edges, options: finalOptions });
       let isPhysicsEnabled = true;
       let currentNodeId = null;
 
-     network.on('click', (params) => {
-  if (params.nodes.length > 0) {
-    const nodeId = params.nodes[0];
-    currentNodeId = nodeId;
-    
-    const nodeData = data.nodes.get(nodeId);
-    
-    popupTitle.textContent = nodeData.label || nodeId;
-    popupDefinition.innerHTML = nodeData.title || 
-      '<i>No definition available. Click "Open Page" for details.</i>';
-    
-    popup.classList.add('active');
-  }
-  
-  // ✅ НОВОЕ: Клик на стрелки (предикаты)
-  if (params.edges.length > 0) {
-    const edgeId = params.edges[0];
-    const edgeData = data.edges.get(edgeId);
-    
-    if (edgeData && edgeData.title) {
-      // Извлекаем ID предиката из URI
-      const predicateUri = edgeData.title;
-      const predicateId = predicateUri.split(/[/#:]/).pop();
-      
-      // Переход на страницу предиката
-      window.location.href = `/terms/${predicateId}`;
-    }
-  }
-});
+      network.on('click', (params) => {
+        if (params.nodes.length > 0) {
+          const nodeId = params.nodes[0];
+          currentNodeId = nodeId;
+          
+          const nodeData = data.nodes.get(nodeId);
+          
+          popupTitle.textContent = nodeData.label || nodeId;
+          popupDefinition.innerHTML = nodeData.title || 
+            '<i>No definition available. Click "Open Page" for details.</i>';
+          
+          popup.classList.add('active');
+        }
+        
+        if (params.edges.length > 0) {
+          const edgeId = params.edges[0];
+          const edgeData = data.edges.get(edgeId);
+          
+          if (edgeData && edgeData.title) {
+            const predicateUri = edgeData.title;
+            const predicateId = predicateUri.split(/[/#:]/).pop();
+            window.location.href = `/terms/${predicateId}`;
+          }
+        }
+      });
 
       popupClose.addEventListener('click', () => {
         popup.classList.remove('active');
