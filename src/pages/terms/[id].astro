@@ -1,7 +1,7 @@
 ---
 import fs from "fs";
 import path from "path";
-import parseRdf from "../../utils/parseRdf.js";  // default import!
+import parseRdf from "../../utils/parseRdf.js";
 import Graph from "../../components/Graph.astro";
 import Prism from "prismjs";
 import "prismjs/components/prism-turtle.js";
@@ -17,10 +17,8 @@ const { id } = Astro.params;
 const filePath = path.resolve(`./terms/${id}.ttl`);
 const ttlText = fs.readFileSync(filePath, "utf8");
 
-// Парсим RDF и получаем triples, nodes, edges
 const { triples, nodes, edges } = parseRdf(ttlText);
 
-// Найти основной термин для заголовка
 const mainTerm = triples.find(t => 
   t.predicate.includes('prefLabel') || t.predicate.includes('label')
 )?.object.replace(/@\w+$/, '') || id;
@@ -36,20 +34,16 @@ const mainTerm = triples.find(t =>
 </head>
 <body>
   <div class="container">
-    <!-- Хедер -->
     <header>
       <h1>📘 SMBA Thesaurus</h1>
       <a href="/">← Back to index</a>
     </header>
 
-    <!-- Заголовок термина -->
     <div class="term-header">
       <h2>{mainTerm}</h2>
     </div>
 
-    <!-- Двухколоночный layout -->
     <div class="term-layout">
-      <!-- Левая колонка: Таблица триплетов -->
       <section class="triples-section">
         <h3>🔗 RDF Triples</h3>
         <div class="table-wrapper">
@@ -64,9 +58,9 @@ const mainTerm = triples.find(t =>
             <tbody>
               {triples.map(triple => (
                 <tr>
-                  <td><code>{triple.subject}</code></td>
-                  <td><code>{triple.predicate}</code></td>
-                  <td><code>{triple.object}</code></td>
+                  <td>{triple.subject}</td>
+                  <td>{triple.predicate}</td>
+                  <td>{triple.object}</td>
                 </tr>
               ))}
             </tbody>
@@ -74,18 +68,17 @@ const mainTerm = triples.find(t =>
         </div>
       </section>
 
-      <!-- Правая колонка: Граф + RDF код -->
       <div class="right-column">
-        <!-- Граф -->
         <section class="graph-section">
           <h3>🕸️ Visual Graph</h3>
           <Graph nodes={nodes} edges={edges} />
         </section>
 
-        <!-- RDF исходник -->
         <section class="code-section">
           <h3>📝 RDF Source</h3>
-          <pre><code class="language-turtle" set:html={Prism.highlight(ttlText, Prism.languages.turtle, "turtle")}></code></pre>
+          <div class="code-wrapper">
+            <pre><code class="language-turtle" set:html={Prism.highlight(ttlText, Prism.languages.turtle, "turtle")}></code></pre>
+          </div>
         </section>
       </div>
     </div>
@@ -111,9 +104,15 @@ const mainTerm = triples.find(t =>
   }
 
   .container {
-    max-width: 1400px;
+    max-width: 98%;
     margin: 0 auto;
-    padding: 2rem;
+    padding: 1.5rem;
+  }
+
+  @media (min-width: 1920px) {
+    .container {
+      max-width: 1900px;
+    }
   }
 
   header {
@@ -154,7 +153,6 @@ const mainTerm = triples.find(t =>
     font-size: 2rem;
   }
 
-  /* ГЛАВНЫЙ LAYOUT: Grid 2 колонки */
   .term-layout {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -162,31 +160,32 @@ const mainTerm = triples.find(t =>
     align-items: start;
   }
 
-  /* Правая колонка: Grid 2 строки (граф больше, код меньше) */
   .right-column {
     display: grid;
-    grid-template-rows: 2fr 1fr;
+    grid-template-rows: 2fr auto;
     gap: 2rem;
     min-height: 800px;
   }
 
-  /* Общие стили секций */
   section {
     background: white;
     padding: 1.5rem;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    display: flex;
+    flex-direction: column;
   }
 
   section h3 {
     margin-bottom: 1rem;
     color: #555;
     font-size: 1.2rem;
+    flex-shrink: 0;
   }
 
-  /* Таблица */
   .table-wrapper {
     overflow-x: auto;
+    flex: 1;
   }
 
   table {
@@ -204,38 +203,61 @@ const mainTerm = triples.find(t =>
     background: #f8f9fa;
     font-weight: 600;
     color: #555;
+    position: sticky;
+    top: 0;
   }
 
-  code {
-    background: #f4f4f4;
-    padding: 0.2rem 0.4rem;
-    border-radius: 3px;
-    font-size: 0.9rem;
-    font-family: 'Courier New', monospace;
+  /* Чередующиеся строки как на референсе */
+  tbody tr:nth-child(even) {
+    background: #f8f9fa;
   }
 
-  /* Граф */
+  tbody tr:hover {
+    background: #e3f2fd;
+  }
+
+  td {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 0.95rem;
+  }
+
   .graph-section {
     display: flex;
     flex-direction: column;
     height: 100%;
   }
 
-  /* RDF код */
-  .code-section pre {
-    max-height: 300px;
-    overflow-y: auto;
+  /* RDF блок - адаптивная высота */
+  .code-section {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .code-wrapper {
+    flex: 1;
+    overflow: hidden;
     background: #2d2d2d;
     border-radius: 4px;
+  }
+
+  .code-wrapper pre {
     margin: 0;
-  }
-
-  .code-section code {
-    background: transparent;
     padding: 0;
+    background: transparent;
+    overflow-x: auto;
+    max-height: 400px;
+    overflow-y: auto;
   }
 
-  /* Адаптивность */
+  .code-wrapper pre code {
+    display: block;
+    padding: 1rem;
+    background: transparent;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    font-family: 'Courier New', monospace;
+  }
+
   @media (max-width: 1024px) {
     .term-layout {
       grid-template-columns: 1fr;
@@ -254,6 +276,7 @@ const mainTerm = triples.find(t =>
   @media (max-width: 768px) {
     .container {
       padding: 1rem;
+      max-width: 100%;
     }
 
     header {
@@ -268,6 +291,11 @@ const mainTerm = triples.find(t =>
 
     section {
       padding: 1rem;
+    }
+
+    th, td {
+      padding: 0.5rem;
+      font-size: 0.85rem;
     }
   }
 </style>
