@@ -1,0 +1,18 @@
+---
+import fs from "fs";
+
+
+const termFiles = fs.readdirSync("./terms").filter(f => f.endsWith(".ttl"));
+
+
+const terms = termFiles.map(f => f.replace(".ttl", ""));
+---
+
+<h1 style="font-family:sans-serif;">RDF Thesaurus</h1>
+<p>Click a term to view its RDF definition:</p>
+
+<ul style="font-family:sans-serif; line-height:1.6;">
+  {terms.map(t => (
+    <li><a href={`/terms/${t}`}>{t}</a></li>
+  ))}
+</ul>

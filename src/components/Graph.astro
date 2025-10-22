@@ -1,0 +1,80 @@
+---
+const { nodes = [], edges = [], options = {} } = Astro.props;
+
+const defaultOptions = {
+  nodes: {
+    shape: 'box',
+    font: { size: 14, face: 'monospace' },
+    borderWidth: 2,
+    color: {
+      border: '#2B7CE9',
+      background: '#D2E5FF',
+      highlight: { border: '#2B7CE9', background: '#FFC107' }
+    }
+  },
+  edges: {
+    arrows: 'to',
+    color: { color: '#848484' },
+    smooth: { type: 'cubicBezier' }
+  },
+  physics: {
+    enabled: true,
+    solver: 'forceAtlas2Based',
+    forceAtlas2Based: {
+      gravitationalConstant: -50,
+      springLength: 100,
+      springConstant: 0.08
+    }
+  }
+};
+
+const finalOptions = { ...defaultOptions, ...options };
+
+const graphData = JSON.stringify({ nodes, edges, options: finalOptions });
+---
+
+<div id="graph-container" style="width: 100%; height: 500px; border: 1px solid #ddd; background: #fafafa;"></div>
+
+<script type="module">
+  import { Network, DataSet } from 'https://unpkg.com/vis-network@9.1.9/standalone/esm/vis-network.min.js';
+
+  const container = document.getElementById('graph-container');
+  const graphDataElement = document.getElementById('graph-data');
+  
+  if (!container) {
+    console.error('Graph container not found');
+  } else if (!graphDataElement) {
+    console.error('Graph data not found');
+  } else {
+    try {
+      const { nodes, edges, options } = JSON.parse(graphDataElement.textContent);
+      
+      const data = {
+        nodes: new DataSet(nodes),
+        edges: new DataSet(edges)
+      };
+
+      const network = new Network(container, data, options);
+      
+      network.on('click', (params) => {
+        if (params.nodes.length > 0) {
+          const nodeId = params.nodes[0];
+          console.log('Clicked node:', nodeId);
+        }
+      });
+
+      console.log('✅ Graph initialized successfully');
+    } catch (error) {
+      console.error('Failed to initialize graph:', error);
+      container.innerHTML = `<div style="padding: 2rem; color: red;">Graph initialization failed: ${error.message}</div>`;
+    }
+  }
+</script>
+
+<script id="graph-data" type="application/json" set:html={graphData}></script>
+
+<style>
+  #graph-container {
+    border-radius: 8px;
+  }
+</style>

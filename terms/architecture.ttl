@@ -1,0 +1,7 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+
+:architecture rdf:type skos:Concept ;
+  skos:prefLabel "Architecture"@en ;
+  skos:definition "The design, structure, and behavior of a system."@en ;
+  skos:narrower :businessArchitecture, :enterpriseArchitecture, :requirementsArchitecture .
