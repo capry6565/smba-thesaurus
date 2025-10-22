@@ -4,47 +4,109 @@ const { nodes = [], edges = [], options = {} } = Astro.props;
 const defaultOptions = {
   nodes: {
     shape: 'box',
-    font: { size: 14, face: 'monospace' },
+    font: { size: 14, face: 'arial', color: '#333' },
     borderWidth: 2,
+    margin: 10,
     color: {
       border: '#2B7CE9',
       background: '#D2E5FF',
-      highlight: { border: '#2B7CE9', background: '#FFC107' }
+      highlight: { 
+        border: '#FFA500', 
+        background: '#FFE5B4' 
+      },
+      hover: {
+        border: '#FFA500',
+        background: '#FFF4E0'
+      }
     }
   },
   edges: {
     arrows: 'to',
-    color: { color: '#848484' },
-    smooth: { type: 'cubicBezier' }
+    color: { color: '#848484', hover: '#2B7CE9' },
+    smooth: { type: 'cubicBezier' },
+    width: 2,
+    font: { size: 12, align: 'middle' }
   },
   physics: {
     enabled: true,
     solver: 'forceAtlas2Based',
     forceAtlas2Based: {
       gravitationalConstant: -50,
-      springLength: 100,
-      springConstant: 0.08
+      centralGravity: 0.01,
+      springLength: 150,
+      springConstant: 0.08,
+      damping: 0.4
+    },
+    stabilization: {
+      iterations: 100,
+      updateInterval: 25
     }
+  },
+  interaction: {
+    dragNodes: true,        // ← перетаскивание
+    dragView: true,         // ← перемещение всего графа
+    zoomView: true,         // ← зум колёсиком
+    hover: true,            // ← эффект при наведении
+    navigationButtons: true, // ← кнопки навигации
+    keyboard: true          // ← управление клавиатурой
+  },
+  layout: {
+    improvedLayout: true,
+    hierarchical: false
   }
 };
 
 const finalOptions = { ...defaultOptions, ...options };
-
 const graphData = JSON.stringify({ nodes, edges, options: finalOptions });
 ---
 
-<div id="graph-container" style="width: 100%; height: 500px; border: 1px solid #ddd; background: #fafafa;"></div>
+<div class="graph-wrapper">
+  <!-- Граф -->
+  <div id="graph-container"></div>
+  
+  <!-- Кнопки управления -->
+  <div class="graph-controls">
+    <button id="freezeBtn" class="control-btn" title="Заморозить/разморозить физику">
+      🔒 Зафиксировать
+    </button>
+    <button id="resetBtn" class="control-btn" title="Сбросить позиции">
+      🔄 Сбросить
+    </button>
+    <button id="fitBtn" class="control-btn" title="Вместить весь граф">
+      🔍 По размеру
+    </button>
+  </div>
+
+  <!-- Кастомный попап -->
+  <div id="nodePopup" class="node-popup">
+    <div class="popup-content">
+      <button class="popup-close">×</button>
+      <h3 id="popupTitle"></h3>
+      <div id="popupDefinition"></div>
+      <div class="popup-actions">
+        <button id="popupOpenBtn" class="popup-btn primary">
+          📄 Открыть страницу
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script id="graph-data" type="application/json" set:html={graphData}></script>
 
 <script type="module">
   import { Network, DataSet } from 'https://unpkg.com/vis-network@9.1.9/standalone/esm/vis-network.min.js';
 
   const container = document.getElementById('graph-container');
   const graphDataElement = document.getElementById('graph-data');
+  const popup = document.getElementById('nodePopup');
+  const popupTitle = document.getElementById('popupTitle');
+  const popupDefinition = document.getElementById('popupDefinition');
+  const popupOpenBtn = document.getElementById('popupOpenBtn');
+  const popupClose = document.querySelector('.popup-close');
   
-  if (!container) {
-    console.error('Graph container not found');
-  } else if (!graphDataElement) {
-    console.error('Graph data not found');
+  if (!container || !graphDataElement) {
+    console.error('Graph elements not found');
   } else {
     try {
       const { nodes, edges, options } = JSON.parse(graphDataElement.textContent);
@@ -56,25 +118,236 @@ const graphData = JSON.stringify({ nodes, edges, options: finalOptions });
 
       const network = new Network(container, data, options);
       
+      let isPhysicsEnabled = true;
+      let currentNodeId = null;
+
+      // ✅ 1. Клик на ноду → попап
       network.on('click', (params) => {
         if (params.nodes.length > 0) {
           const nodeId = params.nodes[0];
-          console.log('Clicked node:', nodeId);
+          currentNodeId = nodeId;
+          
+          // Получаем данные ноды
+          const nodeData = data.nodes.get(nodeId);
+          
+          // Заполняем попап
+          popupTitle.textContent = nodeData.label || nodeId;
+          popupDefinition.innerHTML = nodeData.title || 
+            '<i>Определение отсутствует. Нажмите "Открыть страницу" для подробностей.</i>';
+          
+          // Показываем попап
+          popup.classList.add('active');
         }
       });
 
-      console.log('✅ Graph initialized successfully');
+      // Закрытие попапа
+      popupClose.addEventListener('click', () => {
+        popup.classList.remove('active');
+      });
+
+      popup.addEventListener('click', (e) => {
+        if (e.target === popup) {
+          popup.classList.remove('active');
+        }
+      });
+
+      // Кнопка "Открыть страницу"
+      popupOpenBtn.addEventListener('click', () => {
+        if (currentNodeId) {
+          const termId = currentNodeId.replace(/^:/, '').replace(/^.*[:#/]/, '');
+          window.location.href = `/terms/${termId}`;
+        }
+      });
+
+      // ✅ 2. Кнопка "Зафиксировать"
+      document.getElementById('freezeBtn').addEventListener('click', () => {
+        isPhysicsEnabled = !isPhysicsEnabled;
+        network.setOptions({ physics: { enabled: isPhysicsEnabled } });
+        
+        const btn = document.getElementById('freezeBtn');
+        btn.textContent = isPhysicsEnabled ? '🔒 Зафиксировать' : '▶️ Разморозить';
+        btn.classList.toggle('active', !isPhysicsEnabled);
+      });
+
+      // ✅ 3. Кнопка "Сбросить"
+      document.getElementById('resetBtn').addEventListener('click', () => {
+        network.setOptions({ physics: { enabled: true } });
+        isPhysicsEnabled = true;
+        document.getElementById('freezeBtn').textContent = '🔒 Зафиксировать';
+        document.getElementById('freezeBtn').classList.remove('active');
+        
+        // Перерисовываем граф
+        network.redraw();
+        network.fit();
+      });
+
+      // ✅ 4. Кнопка "По размеру"
+      document.getElementById('fitBtn').addEventListener('click', () => {
+        network.fit({
+          animation: {
+            duration: 500,
+            easingFunction: 'easeInOutQuad'
+          }
+        });
+      });
+
+      // Автофит после стабилизации
+      network.once('stabilizationIterationsDone', () => {
+        network.fit();
+      });
+
+      console.log('✅ Graph initialized with interactive features');
     } catch (error) {
       console.error('Failed to initialize graph:', error);
-      container.innerHTML = `<div style="padding: 2rem; color: red;">Graph initialization failed: ${error.message}</div>`;
+      container.innerHTML = `<div style="padding: 2rem; color: red;">
+        Graph initialization failed: ${error.message}
+      </div>`;
     }
   }
 </script>
 
-<script id="graph-data" type="application/json" set:html={graphData}></script>
-
 <style>
+  .graph-wrapper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+  }
+
   #graph-container {
+    width: 100%;
+    height: 100%;
+    min-height: 500px;
+    border: 1px solid #ddd;
     border-radius: 8px;
+    background: #fafafa;
+  }
+
+  /* Кнопки управления */
+  .graph-controls {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    display: flex;
+    gap: 8px;
+    z-index: 10;
+  }
+
+  .control-btn {
+    padding: 8px 16px;
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.2s;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+
+  .control-btn:hover {
+    background: #f0f0f0;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+  }
+
+  .control-btn.active {
+    background: #2B7CE9;
+    color: white;
+    border-color: #2B7CE9;
+  }
+
+  /* Попап */
+  .node-popup {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(4px);
+  }
+
+  .node-popup.active {
+    display: flex;
+  }
+
+  .popup-content {
+    background: white;
+    padding: 2rem;
+    border-radius: 12px;
+    max-width: 500px;
+    width: 90%;
+    max-height: 80vh;
+    overflow-y: auto;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+    position: relative;
+    animation: popupSlide 0.3s ease;
+  }
+
+  @keyframes popupSlide {
+    from {
+      opacity: 0;
+      transform: translateY(-30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .popup-close {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: none;
+    border: none;
+    font-size: 2rem;
+    cursor: pointer;
+    color: #999;
+    line-height: 1;
+    transition: color 0.2s;
+  }
+
+  .popup-close:hover {
+    color: #333;
+  }
+
+  #popupTitle {
+    margin: 0 0 1rem 0;
+    color: #2B7CE9;
+    font-size: 1.5rem;
+  }
+
+  #popupDefinition {
+    margin-bottom: 1.5rem;
+    color: #555;
+    line-height: 1.6;
+  }
+
+  .popup-actions {
+    display: flex;
+    gap: 10px;
+  }
+
+  .popup-btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.2s;
+  }
+
+  .popup-btn.primary {
+    background: #2B7CE9;
+    color: white;
+  }
+
+  .popup-btn.primary:hover {
+    background: #1a5fc7;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(43, 124, 233, 0.3);
   }
 </style>
