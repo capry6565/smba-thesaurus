@@ -10,14 +10,12 @@ export default function parseRdf(ttlText) {
     return { triples: [], nodes: [], edges: [] };
   }
 
-  // 1. Получаем триплеты для таблицы
   const triples = store.statements.map(t => ({
     subject: cleanUri(t.subject.value),
     predicate: cleanUri(t.predicate.value),
     object: cleanUri(t.object.value)
   }));
 
-  // 2. Строим граф: nodes и edges
   const nodeMap = new Map();
   const edges = [];
 
@@ -26,7 +24,6 @@ export default function parseRdf(ttlText) {
     const predicateUri = statement.predicate.value;
     const objectValue = statement.object.value;
 
-    // Добавляем subject как узел
     if (!nodeMap.has(subjectUri)) {
       nodeMap.set(subjectUri, {
         id: subjectUri,
@@ -40,7 +37,6 @@ export default function parseRdf(ttlText) {
       });
     }
 
-    // Если object это URI (не литерал), добавляем как узел и создаём связь
     if (statement.object.termType === 'NamedNode') {
       if (!nodeMap.has(objectValue)) {
         nodeMap.set(objectValue, {
@@ -55,23 +51,25 @@ export default function parseRdf(ttlText) {
         });
       }
 
-      // Создаём связь (edge)
+      // ✅ ИЗМЕНЕНО: сохраняем префиксы и полный URI предиката
       edges.push({
         from: subjectUri,
         to: objectValue,
-        label: getLabel(predicateUri),
-        title: predicateUri,
-        arrows: 'to'
+        label: cleanUri(predicateUri),  // ← "skos:narrower" вместо "narrower"
+        title: predicateUri,  // ← полный URI для клика
+        arrows: 'to',
+        font: { 
+          size: 12, 
+          align: 'middle',
+          color: '#2B7CE9',  // ← синий цвет
+          strokeWidth: 0
+        }
       });
     } else {
-      // Если object это литерал (текст), можем добавить как отдельный узел для визуализации
-      // (опционально, для простых тезаурусов можно пропустить)
-      
-      // Но для skos:prefLabel и skos:definition можем показать в tooltip
       if (predicateUri.includes('prefLabel') || predicateUri.includes('label')) {
         const node = nodeMap.get(subjectUri);
         if (node) {
-          node.label = objectValue.replace(/@\w+$/, ''); // Убираем языковые теги
+          node.label = objectValue.replace(/@\w+$/, '');
         }
       }
     }
@@ -88,17 +86,15 @@ export default function parseRdf(ttlText) {
   return { triples, nodes, edges };
 }
 
-// Вспомогательные функции
 function cleanUri(uri) {
-  // Убираем префиксы для читаемости
   return uri
     .replace('http://www.w3.org/1999/02/22-rdf-syntax-ns#', 'rdf:')
     .replace('http://www.w3.org/2004/02/skos/core#', 'skos:')
+    .replace('http://purl.org/dc/terms/', 'dct:')
     .replace('http://example.org/', ':');
 }
 
 function getLabel(uri) {
-  // Извлекаем последнюю часть URI как метку
   const parts = uri.split(/[/#:]/);
   return parts[parts.length - 1] || uri;
 }
