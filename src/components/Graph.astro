@@ -43,12 +43,12 @@ const defaultOptions = {
     }
   },
   interaction: {
-    dragNodes: true,        // ← перетаскивание
-    dragView: true,         // ← перемещение всего графа
-    zoomView: true,         // ← зум колёсиком
-    hover: true,            // ← эффект при наведении
-    navigationButtons: true, // ← кнопки навигации
-    keyboard: true          // ← управление клавиатурой
+    dragNodes: true,
+    dragView: true,
+    zoomView: true,
+    hover: true,
+    navigationButtons: false,
+    keyboard: true
   },
   layout: {
     improvedLayout: true,
@@ -61,23 +61,20 @@ const graphData = JSON.stringify({ nodes, edges, options: finalOptions });
 ---
 
 <div class="graph-wrapper">
-  <!-- Граф -->
   <div id="graph-container"></div>
   
-  <!-- Кнопки управления -->
   <div class="graph-controls">
-    <button id="freezeBtn" class="control-btn" title="Заморозить/разморозить физику">
-      🔒 Зафиксировать
+    <button id="freezeBtn" class="control-btn" title="Freeze/unfreeze physics">
+      🔒 Freeze Layout
     </button>
-    <button id="resetBtn" class="control-btn" title="Сбросить позиции">
-      🔄 Сбросить
+    <button id="resetBtn" class="control-btn" title="Reset positions">
+      🔄 Reset
     </button>
-    <button id="fitBtn" class="control-btn" title="Вместить весь граф">
-      🔍 По размеру
+    <button id="fitBtn" class="control-btn" title="Fit all nodes">
+      🔍 Fit to Screen
     </button>
   </div>
 
-  <!-- Кастомный попап -->
   <div id="nodePopup" class="node-popup">
     <div class="popup-content">
       <button class="popup-close">×</button>
@@ -85,7 +82,7 @@ const graphData = JSON.stringify({ nodes, edges, options: finalOptions });
       <div id="popupDefinition"></div>
       <div class="popup-actions">
         <button id="popupOpenBtn" class="popup-btn primary">
-          📄 Открыть страницу
+          📄 Open Page
         </button>
       </div>
     </div>
@@ -121,26 +118,21 @@ const graphData = JSON.stringify({ nodes, edges, options: finalOptions });
       let isPhysicsEnabled = true;
       let currentNodeId = null;
 
-      // ✅ 1. Клик на ноду → попап
       network.on('click', (params) => {
         if (params.nodes.length > 0) {
           const nodeId = params.nodes[0];
           currentNodeId = nodeId;
           
-          // Получаем данные ноды
           const nodeData = data.nodes.get(nodeId);
           
-          // Заполняем попап
           popupTitle.textContent = nodeData.label || nodeId;
           popupDefinition.innerHTML = nodeData.title || 
-            '<i>Определение отсутствует. Нажмите "Открыть страницу" для подробностей.</i>';
+            '<i>No definition available. Click "Open Page" for details.</i>';
           
-          // Показываем попап
           popup.classList.add('active');
         }
       });
 
-      // Закрытие попапа
       popupClose.addEventListener('click', () => {
         popup.classList.remove('active');
       });
@@ -151,7 +143,6 @@ const graphData = JSON.stringify({ nodes, edges, options: finalOptions });
         }
       });
 
-      // Кнопка "Открыть страницу"
       popupOpenBtn.addEventListener('click', () => {
         if (currentNodeId) {
           const termId = currentNodeId.replace(/^:/, '').replace(/^.*[:#/]/, '');
@@ -159,29 +150,25 @@ const graphData = JSON.stringify({ nodes, edges, options: finalOptions });
         }
       });
 
-      // ✅ 2. Кнопка "Зафиксировать"
       document.getElementById('freezeBtn').addEventListener('click', () => {
         isPhysicsEnabled = !isPhysicsEnabled;
         network.setOptions({ physics: { enabled: isPhysicsEnabled } });
         
         const btn = document.getElementById('freezeBtn');
-        btn.textContent = isPhysicsEnabled ? '🔒 Зафиксировать' : '▶️ Разморозить';
+        btn.textContent = isPhysicsEnabled ? '🔒 Freeze Layout' : '▶️ Unfreeze';
         btn.classList.toggle('active', !isPhysicsEnabled);
       });
 
-      // ✅ 3. Кнопка "Сбросить"
       document.getElementById('resetBtn').addEventListener('click', () => {
         network.setOptions({ physics: { enabled: true } });
         isPhysicsEnabled = true;
-        document.getElementById('freezeBtn').textContent = '🔒 Зафиксировать';
+        document.getElementById('freezeBtn').textContent = '🔒 Freeze Layout';
         document.getElementById('freezeBtn').classList.remove('active');
         
-        // Перерисовываем граф
         network.redraw();
         network.fit();
       });
 
-      // ✅ 4. Кнопка "По размеру"
       document.getElementById('fitBtn').addEventListener('click', () => {
         network.fit({
           animation: {
@@ -191,7 +178,6 @@ const graphData = JSON.stringify({ nodes, edges, options: finalOptions });
         });
       });
 
-      // Автофит после стабилизации
       network.once('stabilizationIterationsDone', () => {
         network.fit();
       });
@@ -210,7 +196,7 @@ const graphData = JSON.stringify({ nodes, edges, options: finalOptions });
   .graph-wrapper {
     position: relative;
     width: 100%;
-    height: 600px;  /* ← фиксированная высота */
+    height: 600px;
   }
 
   #graph-container {
@@ -221,7 +207,6 @@ const graphData = JSON.stringify({ nodes, edges, options: finalOptions });
     background: #fafafa;
   }
 
-  /* Кнопки управления */
   .graph-controls {
     position: absolute;
     top: 10px;
@@ -253,7 +238,6 @@ const graphData = JSON.stringify({ nodes, edges, options: finalOptions });
     border-color: #2B7CE9;
   }
 
-  /* Попап */
   .node-popup {
     display: none;
     position: fixed;
