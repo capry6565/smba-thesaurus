@@ -22,6 +22,21 @@ const { triples, nodes, edges } = parseRdf(ttlText);
 const mainTerm = triples.find(t => 
   t.predicate.includes('prefLabel') || t.predicate.includes('label')
 )?.object.replace(/@\w+$/, '') || id;
+
+// Группируем триплеты: убираем subject, группируем по predicate
+const attributeMap = new Map();
+triples.forEach(triple => {
+  const attr = triple.predicate;
+  if (!attributeMap.has(attr)) {
+    attributeMap.set(attr, []);
+  }
+  attributeMap.get(attr).push(triple.object);
+});
+
+const attributes = Array.from(attributeMap.entries()).map(([attr, values]) => ({
+  attribute: attr,
+  value: values.length > 1 ? values.join(', ') : values[0]
+}));
 ---
 
 <!DOCTYPE html>
@@ -50,17 +65,15 @@ const mainTerm = triples.find(t =>
           <table>
             <thead>
               <tr>
-                <th>Subject</th>
-                <th>Predicate</th>
-                <th>Object</th>
+                <th>Attribute</th>
+                <th>Value</th>
               </tr>
             </thead>
             <tbody>
-              {triples.map(triple => (
+              {attributes.map(attr => (
                 <tr>
-                  <td>{triple.subject}</td>
-                  <td>{triple.predicate}</td>
-                  <td>{triple.object}</td>
+                  <td>{attr.attribute}</td>
+                  <td>{attr.value}</td>
                 </tr>
               ))}
             </tbody>
@@ -183,6 +196,11 @@ const mainTerm = triples.find(t =>
     flex-shrink: 0;
   }
 
+  .triples-section {
+    max-height: 800px;
+    overflow-y: auto;
+  }
+
   .table-wrapper {
     overflow-x: auto;
     flex: 1;
@@ -205,9 +223,9 @@ const mainTerm = triples.find(t =>
     color: #555;
     position: sticky;
     top: 0;
+    z-index: 1;
   }
 
-  /* Чередующиеся строки как на референсе */
   tbody tr:nth-child(even) {
     background: #f8f9fa;
   }
@@ -227,7 +245,6 @@ const mainTerm = triples.find(t =>
     height: 100%;
   }
 
-  /* RDF блок - адаптивная высота */
   .code-section {
     display: flex;
     flex-direction: column;
@@ -271,6 +288,10 @@ const mainTerm = triples.find(t =>
     .graph-section {
       height: 500px;
     }
+
+    .triples-section {
+      max-height: 600px;
+    }
   }
 
   @media (max-width: 768px) {
@@ -296,6 +317,10 @@ const mainTerm = triples.find(t =>
     th, td {
       padding: 0.5rem;
       font-size: 0.85rem;
+    }
+
+    .triples-section {
+      max-height: 400px;
     }
   }
 </style>

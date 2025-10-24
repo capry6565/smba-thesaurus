@@ -33,10 +33,7 @@ const defaultOptions = {
       size: 12, 
       align: 'middle',
       color: '#666',
-      strokeWidth: 2,
-      strokeColor: '#ffffff',
-      background: 'rgba(255, 255, 255, 0.8)',
-      vadjust: -8
+      strokeWidth: 0
     },
     chosen: {
       edge: function(values, id, selected, hovering) {
@@ -57,15 +54,15 @@ const defaultOptions = {
     enabled: true,
     solver: 'forceAtlas2Based',
     forceAtlas2Based: {
-      gravitationalConstant: -30,
-      centralGravity: 0.005,
-      springLength: 200,
-      springConstant: 0.05,
-      damping: 0.5,
-      avoidOverlap: 0.5
+      gravitationalConstant: -20,
+      centralGravity: 0.003,
+      springLength: 250,
+      springConstant: 0.03,
+      damping: 0.6,
+      avoidOverlap: 0.8
     },
     stabilization: {
-      iterations: 150,
+      iterations: 200,
       updateInterval: 25
     }
   },
@@ -149,8 +146,7 @@ const graphData = JSON.stringify({ nodes, edges, options: finalOptions });
           
           if (edgeData && edgeData.title) {
             const predicateUri = edgeData.title;
-            const predicateId = predicateUri.split(/[/#:]/).pop();
-            window.open(`/terms/${predicateId}`, '_blank');
+            window.open(predicateUri, '_blank');
           }
           return;
         }
