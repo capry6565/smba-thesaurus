@@ -23,7 +23,6 @@ const mainTerm = triples.find(t =>
   t.predicate.includes('prefLabel') || t.predicate.includes('label')
 )?.object.replace(/@\w+$/, '') || id;
 
-// Группируем триплеты: убираем subject, группируем по predicate
 const attributeMap = new Map();
 triples.forEach(triple => {
   const attr = triple.predicate;
@@ -73,7 +72,7 @@ const attributes = Array.from(attributeMap.entries()).map(([attr, values]) => ({
               {attributes.map(attr => (
                 <tr>
                   <td>{attr.attribute}</td>
-                  <td>{attr.value}</td>
+                  <td class="value-cell">{attr.value}</td>
                 </tr>
               ))}
             </tbody>
@@ -175,9 +174,8 @@ const attributes = Array.from(attributeMap.entries()).map(([attr, values]) => ({
 
   .right-column {
     display: grid;
-    grid-template-rows: 2fr auto;
+    grid-template-rows: 600px auto;
     gap: 2rem;
-    min-height: 800px;
   }
 
   section {
@@ -209,6 +207,7 @@ const attributes = Array.from(attributeMap.entries()).map(([attr, values]) => ({
   table {
     width: 100%;
     border-collapse: collapse;
+    table-layout: fixed;
   }
 
   th, td {
@@ -226,6 +225,14 @@ const attributes = Array.from(attributeMap.entries()).map(([attr, values]) => ({
     z-index: 1;
   }
 
+  th:first-child {
+    width: 30%;
+  }
+
+  th:last-child {
+    width: 70%;
+  }
+
   tbody tr:nth-child(even) {
     background: #f8f9fa;
   }
@@ -237,6 +244,12 @@ const attributes = Array.from(attributeMap.entries()).map(([attr, values]) => ({
   td {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     font-size: 0.95rem;
+  }
+
+  .value-cell {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    word-break: break-word;
   }
 
   .graph-section {
@@ -273,6 +286,8 @@ const attributes = Array.from(attributeMap.entries()).map(([attr, values]) => ({
     font-size: 0.9rem;
     line-height: 1.5;
     font-family: 'Courier New', monospace;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
   }
 
   @media (max-width: 1024px) {
@@ -281,12 +296,7 @@ const attributes = Array.from(attributeMap.entries()).map(([attr, values]) => ({
     }
 
     .right-column {
-      grid-template-rows: auto;
-      min-height: auto;
-    }
-
-    .graph-section {
-      height: 500px;
+      grid-template-rows: 500px auto;
     }
 
     .triples-section {
@@ -321,6 +331,10 @@ const attributes = Array.from(attributeMap.entries()).map(([attr, values]) => ({
 
     .triples-section {
       max-height: 400px;
+    }
+
+    .right-column {
+      grid-template-rows: 400px auto;
     }
   }
 </style>
