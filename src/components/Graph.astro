@@ -28,17 +28,20 @@ const defaultOptions = {
       highlight: '#2B7CE9'
     },
     smooth: { type: 'cubicBezier' },
-    width: 2,
+    width: 1.5,
     font: { 
       size: 12, 
       align: 'middle',
       color: '#666',
-      strokeWidth: 0
+      strokeWidth: 2,
+      strokeColor: '#ffffff',
+      background: 'rgba(255, 255, 255, 0.8)',
+      vadjust: -8
     },
     chosen: {
       edge: function(values, id, selected, hovering) {
         if (hovering) {
-          values.width = 3;
+          values.width = 2.5;
           values.color = '#2B7CE9';
         }
       },
@@ -54,14 +57,15 @@ const defaultOptions = {
     enabled: true,
     solver: 'forceAtlas2Based',
     forceAtlas2Based: {
-      gravitationalConstant: -50,
-      centralGravity: 0.01,
-      springLength: 150,
-      springConstant: 0.08,
-      damping: 0.4
+      gravitationalConstant: -30,
+      centralGravity: 0.005,
+      springLength: 200,
+      springConstant: 0.05,
+      damping: 0.5,
+      avoidOverlap: 0.5
     },
     stabilization: {
-      iterations: 100,
+      iterations: 150,
       updateInterval: 25
     }
   },
@@ -89,9 +93,6 @@ const graphData = JSON.stringify({ nodes, edges, options: finalOptions });
   <div class="graph-controls">
     <button id="freezeBtn" class="control-btn" title="Freeze/unfreeze physics">
       🔒 Freeze Layout
-    </button>
-    <button id="resetBtn" class="control-btn" title="Reset positions">
-      🔄 Reset
     </button>
     <button id="fitBtn" class="control-btn" title="Fit all nodes">
       🔍 Fit to Screen
@@ -142,21 +143,18 @@ const graphData = JSON.stringify({ nodes, edges, options: finalOptions });
       let currentNodeId = null;
 
       network.on('click', (params) => {
-        // Приоритет: сначала проверяем стрелки
         if (params.edges.length > 0 && params.nodes.length === 0) {
-          // Клик ТОЛЬКО на стрелку (не на ноду)
           const edgeId = params.edges[0];
           const edgeData = data.edges.get(edgeId);
           
           if (edgeData && edgeData.title) {
             const predicateUri = edgeData.title;
             const predicateId = predicateUri.split(/[/#:]/).pop();
-            window.location.href = `/terms/${predicateId}`;
+            window.open(`/terms/${predicateId}`, '_blank');
           }
           return;
         }
         
-        // Клик на ноду
         if (params.nodes.length > 0) {
           const nodeId = params.nodes[0];
           currentNodeId = nodeId;
@@ -184,7 +182,8 @@ const graphData = JSON.stringify({ nodes, edges, options: finalOptions });
       popupOpenBtn.addEventListener('click', () => {
         if (currentNodeId) {
           const termId = currentNodeId.replace(/^:/, '').replace(/^.*[:#/]/, '');
-          window.location.href = `/terms/${termId}`;
+          window.open(`/terms/${termId}`, '_blank');
+          popup.classList.remove('active');
         }
       });
 
@@ -195,16 +194,6 @@ const graphData = JSON.stringify({ nodes, edges, options: finalOptions });
         const btn = document.getElementById('freezeBtn');
         btn.textContent = isPhysicsEnabled ? '🔒 Freeze Layout' : '▶️ Unfreeze';
         btn.classList.toggle('active', !isPhysicsEnabled);
-      });
-
-      document.getElementById('resetBtn').addEventListener('click', () => {
-        network.setOptions({ physics: { enabled: true } });
-        isPhysicsEnabled = true;
-        document.getElementById('freezeBtn').textContent = '🔒 Freeze Layout';
-        document.getElementById('freezeBtn').classList.remove('active');
-        
-        network.redraw();
-        network.fit();
       });
 
       document.getElementById('fitBtn').addEventListener('click', () => {
