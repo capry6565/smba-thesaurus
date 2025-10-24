@@ -27,7 +27,12 @@ const defaultOptions = {
       hover: '#2B7CE9',
       highlight: '#2B7CE9'
     },
-    smooth: { type: 'cubicBezier' },
+    smooth: {
+      enabled: true,
+      type: 'cubicBezier',
+      forceDirection: 'vertical',
+      roundness: 0.5
+    },
     width: 1.5,
     font: { 
       size: 12, 
@@ -50,20 +55,31 @@ const defaultOptions = {
       }
     }
   },
+  layout: {
+    hierarchical: {
+      enabled: true,
+      direction: 'UD',
+      sortMethod: 'directed',
+      levelSeparation: 200,
+      nodeSpacing: 250,
+      treeSpacing: 250
+    }
+  },
   physics: {
     enabled: true,
-    solver: 'forceAtlas2Based',
-    forceAtlas2Based: {
-      gravitationalConstant: -20,
-      centralGravity: 0.003,
-      springLength: 250,
-      springConstant: 0.03,
-      damping: 0.6,
-      avoidOverlap: 0.8
+    hierarchicalRepulsion: {
+      centralGravity: 0.0,
+      springLength: 200,
+      springConstant: 0.01,
+      nodeDistance: 200,
+      damping: 0.09,
+      avoidOverlap: 1
     },
     stabilization: {
-      iterations: 200,
-      updateInterval: 25
+      enabled: true,
+      iterations: 500,
+      updateInterval: 25,
+      fit: true
     }
   },
   interaction: {
@@ -73,10 +89,6 @@ const defaultOptions = {
     hover: true,
     navigationButtons: false,
     keyboard: true
-  },
-  layout: {
-    improvedLayout: true,
-    hierarchical: false
   }
 };
 
@@ -205,7 +217,7 @@ const graphData = JSON.stringify({ nodes, edges, options: finalOptions });
         network.fit();
       });
 
-      console.log('✅ Graph initialized with interactive features');
+      console.log('✅ Graph initialized with hierarchical layout');
     } catch (error) {
       console.error('Failed to initialize graph:', error);
       container.innerHTML = `<div style="padding: 2rem; color: red;">

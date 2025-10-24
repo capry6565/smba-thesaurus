@@ -23,6 +23,11 @@ const mainTerm = triples.find(t =>
   t.predicate.includes('prefLabel') || t.predicate.includes('label')
 )?.object.replace(/@\w+$/, '') || id;
 
+// Разделяем на properties и metadata
+const metadataPredicates = ['dct:source', 'dct:creator', 'dct:created', 'dct:modified'];
+const properties = [];
+const metadata = [];
+
 const attributeMap = new Map();
 triples.forEach(triple => {
   const attr = triple.predicate;
@@ -32,10 +37,18 @@ triples.forEach(triple => {
   attributeMap.get(attr).push(triple.object);
 });
 
-const attributes = Array.from(attributeMap.entries()).map(([attr, values]) => ({
-  attribute: attr,
-  value: values.length > 1 ? values.join(', ') : values[0]
-}));
+Array.from(attributeMap.entries()).forEach(([attr, values]) => {
+  const item = {
+    attribute: attr,
+    value: values.length > 1 ? values.join(', ') : values[0]
+  };
+  
+  if (metadataPredicates.some(mp => attr.includes(mp))) {
+    metadata.push(item);
+  } else {
+    properties.push(item);
+  }
+});
 ---
 
 <!DOCTYPE html>
@@ -58,27 +71,55 @@ const attributes = Array.from(attributeMap.entries()).map(([attr, values]) => ({
     </div>
 
     <div class="term-layout">
-      <section class="triples-section">
-        <h3>🔗 RDF Triples</h3>
-        <div class="table-wrapper">
-          <table>
-            <thead>
-              <tr>
-                <th>Attribute</th>
-                <th>Value</th>
-              </tr>
-            </thead>
-            <tbody>
-              {attributes.map(attr => (
+      <div class="left-column">
+        <section class="triples-section">
+          <h3>🔗 RDF Properties</h3>
+          <div class="table-wrapper">
+            <table>
+              <thead>
                 <tr>
-                  <td>{attr.attribute}</td>
-                  <td class="value-cell">{attr.value}</td>
+                  <th>Attribute</th>
+                  <th>Value</th>
                 </tr>
+              </thead>
+              <tbody>
+                {properties.map(prop => (
+                  <tr>
+                    <td>{prop.attribute}</td>
+                    <td class="value-cell">{prop.value}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        {metadata.length > 0 && (
+          <section class="metadata-section">
+            <h3>📋 Metadata</h3>
+            <div class="metadata-list">
+              {metadata.map(meta => (
+                <div class="metadata-item">
+                  <span class="metadata-label">
+                    {meta.attribute.includes('source') && '🔗'}
+                    {meta.attribute.includes('creator') && '👤'}
+                    {meta.attribute.includes('created') && '📅'}
+                    {meta.attribute.includes('modified') && '🔄'}
+                    {' '}{meta.attribute}:
+                  </span>
+                  <span class="metadata-value">
+                    {meta.attribute.includes('source') && meta.value.startsWith('http') ? (
+                      <a href={meta.value} target="_blank" rel="noopener">{meta.value}</a>
+                    ) : (
+                      meta.value
+                    )}
+                  </span>
+                </div>
               ))}
-            </tbody>
-          </table>
-        </div>
-      </section>
+            </div>
+          </section>
+        )}
+      </div>
 
       <div class="right-column">
         <section class="graph-section">
@@ -171,22 +212,19 @@ const attributes = Array.from(attributeMap.entries()).map(([attr, values]) => ({
     align-items: flex-start;
   }
 
-  .triples-section {
+  .left-column {
     flex: 1;
     min-width: 0;
-    max-height: 800px;
-    overflow-y: auto;
-    background: white;
-    padding: 1.5rem;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
   }
 
   .right-column {
     flex: 1;
     min-width: 0;
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-rows: 600px auto;
     gap: 2rem;
   }
 
@@ -204,6 +242,11 @@ const attributes = Array.from(attributeMap.entries()).map(([attr, values]) => ({
     color: #555;
     font-size: 1.2rem;
     flex-shrink: 0;
+  }
+
+  .triples-section {
+    max-height: 500px;
+    overflow-y: auto;
   }
 
   .table-wrapper {
@@ -246,10 +289,51 @@ const attributes = Array.from(attributeMap.entries()).map(([attr, values]) => ({
     overflow-wrap: break-word;
   }
 
+  .metadata-section {
+    background: #f8f9fa;
+    border-left: 4px solid #2B7CE9;
+  }
+
+  .metadata-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .metadata-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .metadata-label {
+    font-weight: 600;
+    color: #555;
+    font-size: 0.9rem;
+  }
+
+  .metadata-value {
+    color: #333;
+    font-size: 0.95rem;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    padding-left: 1.5rem;
+  }
+
+  .metadata-value a {
+    color: #2B7CE9;
+    text-decoration: none;
+  }
+
+  .metadata-value a:hover {
+    text-decoration: underline;
+  }
+
   .graph-section {
     display: flex;
     flex-direction: column;
-    height: 600px;
+    height: 100%;
+    overflow: hidden;
   }
 
   .code-section {
@@ -290,12 +374,12 @@ const attributes = Array.from(attributeMap.entries()).map(([attr, values]) => ({
       flex-direction: column;
     }
 
-    .triples-section {
-      max-height: 600px;
+    .right-column {
+      grid-template-rows: 500px auto;
     }
 
-    .graph-section {
-      height: 500px;
+    .triples-section {
+      max-height: 600px;
     }
   }
 
@@ -328,8 +412,8 @@ const attributes = Array.from(attributeMap.entries()).map(([attr, values]) => ({
       max-height: 400px;
     }
 
-    .graph-section {
-      height: 400px;
+    .right-column {
+      grid-template-rows: 400px auto;
     }
   }
 </style>
