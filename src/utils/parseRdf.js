@@ -51,17 +51,16 @@ export default function parseRdf(ttlText) {
         });
       }
 
-      // ✅ ИЗМЕНЕНО: сохраняем префиксы и полный URI предиката
       edges.push({
         from: subjectUri,
         to: objectValue,
-        label: cleanUri(predicateUri),  // ← "skos:narrower" вместо "narrower"
-        title: predicateUri,  // ← полный URI для клика
+        label: cleanUri(predicateUri),
+        title: predicateUri,
         arrows: 'to',
         font: { 
           size: 12, 
           align: 'middle',
-          color: '#2B7CE9',  // ← синий цвет
+          color: '#666',
           strokeWidth: 0
         }
       });

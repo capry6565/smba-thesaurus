@@ -32,7 +32,7 @@ const defaultOptions = {
     font: { 
       size: 12, 
       align: 'middle',
-      color: '#2B7CE9',
+      color: '#666',
       strokeWidth: 0
     },
     chosen: {
@@ -142,6 +142,21 @@ const graphData = JSON.stringify({ nodes, edges, options: finalOptions });
       let currentNodeId = null;
 
       network.on('click', (params) => {
+        // Приоритет: сначала проверяем стрелки
+        if (params.edges.length > 0 && params.nodes.length === 0) {
+          // Клик ТОЛЬКО на стрелку (не на ноду)
+          const edgeId = params.edges[0];
+          const edgeData = data.edges.get(edgeId);
+          
+          if (edgeData && edgeData.title) {
+            const predicateUri = edgeData.title;
+            const predicateId = predicateUri.split(/[/#:]/).pop();
+            window.location.href = `/terms/${predicateId}`;
+          }
+          return;
+        }
+        
+        // Клик на ноду
         if (params.nodes.length > 0) {
           const nodeId = params.nodes[0];
           currentNodeId = nodeId;
@@ -153,17 +168,6 @@ const graphData = JSON.stringify({ nodes, edges, options: finalOptions });
             '<i>No definition available. Click "Open Page" for details.</i>';
           
           popup.classList.add('active');
-        }
-        
-        if (params.edges.length > 0) {
-          const edgeId = params.edges[0];
-          const edgeData = data.edges.get(edgeId);
-          
-          if (edgeData && edgeData.title) {
-            const predicateUri = edgeData.title;
-            const predicateId = predicateUri.split(/[/#:]/).pop();
-            window.location.href = `/terms/${predicateId}`;
-          }
         }
       });
 
