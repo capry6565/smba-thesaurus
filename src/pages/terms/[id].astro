@@ -166,15 +166,27 @@ const attributes = Array.from(attributeMap.entries()).map(([attr, values]) => ({
   }
 
   .term-layout {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+    display: flex;
     gap: 2rem;
-    align-items: start;
+    align-items: flex-start;
+  }
+
+  .triples-section {
+    flex: 1;
+    min-width: 0;
+    max-height: 800px;
+    overflow-y: auto;
+    background: white;
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
   }
 
   .right-column {
-    display: grid;
-    grid-template-rows: 600px auto;
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
     gap: 2rem;
   }
 
@@ -194,11 +206,6 @@ const attributes = Array.from(attributeMap.entries()).map(([attr, values]) => ({
     flex-shrink: 0;
   }
 
-  .triples-section {
-    max-height: 800px;
-    overflow-y: auto;
-  }
-
   .table-wrapper {
     overflow-x: auto;
     flex: 1;
@@ -207,7 +214,6 @@ const attributes = Array.from(attributeMap.entries()).map(([attr, values]) => ({
   table {
     width: 100%;
     border-collapse: collapse;
-    table-layout: fixed;
   }
 
   th, td {
@@ -225,14 +231,6 @@ const attributes = Array.from(attributeMap.entries()).map(([attr, values]) => ({
     z-index: 1;
   }
 
-  th:first-child {
-    width: 30%;
-  }
-
-  th:last-child {
-    width: 70%;
-  }
-
   tbody tr:nth-child(even) {
     background: #f8f9fa;
   }
@@ -244,23 +242,20 @@ const attributes = Array.from(attributeMap.entries()).map(([attr, values]) => ({
   td {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     font-size: 0.95rem;
-  }
-
-  .value-cell {
     word-wrap: break-word;
     overflow-wrap: break-word;
-    word-break: break-word;
   }
 
   .graph-section {
     display: flex;
     flex-direction: column;
-    height: 100%;
+    height: 600px;
   }
 
   .code-section {
     display: flex;
     flex-direction: column;
+    min-height: 300px;
   }
 
   .code-wrapper {
@@ -292,15 +287,15 @@ const attributes = Array.from(attributeMap.entries()).map(([attr, values]) => ({
 
   @media (max-width: 1024px) {
     .term-layout {
-      grid-template-columns: 1fr;
-    }
-
-    .right-column {
-      grid-template-rows: 500px auto;
+      flex-direction: column;
     }
 
     .triples-section {
       max-height: 600px;
+    }
+
+    .graph-section {
+      height: 500px;
     }
   }
 
@@ -333,8 +328,8 @@ const attributes = Array.from(attributeMap.entries()).map(([attr, values]) => ({
       max-height: 400px;
     }
 
-    .right-column {
-      grid-template-rows: 400px auto;
+    .graph-section {
+      height: 400px;
     }
   }
 </style>
