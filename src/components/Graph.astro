@@ -30,7 +30,7 @@ const defaultOptions = {
     smooth: {
       enabled: true,
       type: 'cubicBezier',
-      forceDirection: 'vertical',
+      forceDirection: 'horizontal',
       roundness: 0.5
     },
     width: 1.5,
@@ -58,18 +58,18 @@ const defaultOptions = {
   layout: {
     hierarchical: {
       enabled: true,
-      direction: 'UD',
+      direction: 'LR',
       sortMethod: 'directed',
-      levelSeparation: 200,
-      nodeSpacing: 250,
-      treeSpacing: 250
+      levelSeparation: 300,
+      nodeSpacing: 150,
+      treeSpacing: 200
     }
   },
   physics: {
     enabled: true,
     hierarchicalRepulsion: {
       centralGravity: 0.0,
-      springLength: 200,
+      springLength: 250,
       springConstant: 0.01,
       nodeDistance: 200,
       damping: 0.09,
@@ -77,7 +77,7 @@ const defaultOptions = {
     },
     stabilization: {
       enabled: true,
-      iterations: 500,
+      iterations: 300,
       updateInterval: 25,
       fit: true
     }
@@ -217,7 +217,7 @@ const graphData = JSON.stringify({ nodes, edges, options: finalOptions });
         network.fit();
       });
 
-      console.log('✅ Graph initialized with hierarchical layout');
+      console.log('✅ Graph initialized with horizontal hierarchical layout');
     } catch (error) {
       console.error('Failed to initialize graph:', error);
       container.innerHTML = `<div style="padding: 2rem; color: red;">
@@ -244,8 +244,8 @@ const graphData = JSON.stringify({ nodes, edges, options: finalOptions });
 
   .graph-controls {
     position: absolute;
-    top: 10px;
-    right: 10px;
+    top: 15px;
+    right: 15px;
     display: flex;
     gap: 8px;
     z-index: 10;
