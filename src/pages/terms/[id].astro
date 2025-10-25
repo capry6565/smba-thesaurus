@@ -25,12 +25,20 @@ const mainTerm = triples.find(t =>
 
 // Разделяем на properties и metadata
 const metadataPredicates = ['dct:source', 'dct:creator', 'dct:created', 'dct:modified'];
+const hiddenPredicates = ['rdf:type', 'skos:inScheme', 'skos:topConceptOf'];
+
 const properties = [];
 const metadata = [];
 
 const attributeMap = new Map();
 triples.forEach(triple => {
   const attr = triple.predicate;
+  
+  // Пропускаем скрытые предикаты
+  if (hiddenPredicates.some(hp => attr.includes(hp))) {
+    return;
+  }
+  
   if (!attributeMap.has(attr)) {
     attributeMap.set(attr, []);
   }
@@ -62,18 +70,17 @@ Array.from(attributeMap.entries()).forEach(([attr, values]) => {
 <body>
   <div class="container">
     <header>
-      <h1>📘 SMBA Thesaurus</h1>
-      <a href="/">← Back to index</a>
+      <div class="header-left">
+        <h1>⚡ SMBA Thesaurus</h1>
+        <span class="term-name">/ {mainTerm}</span>
+      </div>
+      <a href="/" class="back-link">← Back to index</a>
     </header>
-
-    <div class="term-header">
-      <h2>{mainTerm}</h2>
-    </div>
 
     <div class="term-layout">
       <div class="left-column">
         <section class="triples-section">
-          <h3>🔗 RDF Properties</h3>
+          <h3><span class="icon">◆</span> Properties</h3>
           <div class="table-wrapper">
             <table>
               <thead>
@@ -96,7 +103,7 @@ Array.from(attributeMap.entries()).forEach(([attr, values]) => {
 
         {metadata.length > 0 && (
           <section class="metadata-section">
-            <h3>📋 Metadata</h3>
+            <h3><span class="icon">ⓘ</span> Metadata</h3>
             <div class="metadata-list">
               {metadata.map(meta => (
                 <div class="metadata-item">
@@ -123,12 +130,12 @@ Array.from(attributeMap.entries()).forEach(([attr, values]) => {
 
       <div class="right-column">
         <section class="graph-section">
-          <h3>🕸️ Visual Graph</h3>
+          <h3><span class="icon">◉</span> Visual Graph</h3>
           <Graph nodes={nodes} edges={edges} />
         </section>
 
         <section class="code-section">
-          <h3>📝 RDF Source</h3>
+          <h3><span class="icon">⟨⟩</span> RDF Source</h3>
           <div class="code-wrapper">
             <pre><code class="language-turtle" set:html={Prism.highlight(ttlText, Prism.languages.turtle, "turtle")}></code></pre>
           </div>
@@ -136,6 +143,18 @@ Array.from(attributeMap.entries()).forEach(([attr, values]) => {
       </div>
     </div>
   </div>
+
+  <footer>
+    <div class="footer-container">
+      <p>
+        SMBA is an open, community-driven project.
+        <a href="#">Contribute</a> | <a href="#">Documentation</a> | <a href="#">Contact</a>
+      </p>
+      <p style="margin-top: 0.5rem; font-size: 0.9rem;">
+        © 2025 SMBA Community. All rights reserved.
+      </p>
+    </div>
+  </footer>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-turtle.min.js"></script>
@@ -159,7 +178,7 @@ Array.from(attributeMap.entries()).forEach(([attr, values]) => {
   .container {
     max-width: 98%;
     margin: 0 auto;
-    padding: 1.5rem;
+    padding: 0.75rem 1rem;
   }
 
   @media (min-width: 1920px) {
@@ -172,44 +191,45 @@ Array.from(attributeMap.entries()).forEach(([attr, values]) => {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 1.5rem;
-    padding-bottom: 0.75rem;
+    margin-bottom: 0.75rem;
+    padding-bottom: 0.5rem;
     border-bottom: 2px solid #ddd;
+  }
+
+  .header-left {
+    display: flex;
+    align-items: baseline;
+    gap: 1rem;
   }
 
   header h1 {
     font-size: 1.5rem;
     color: #2B7CE9;
+    margin: 0;
   }
 
-  header a {
+  .term-name {
+    font-size: 1.3rem;
+    color: #667eea;
+    font-weight: 600;
+  }
+
+  .back-link {
     color: #2B7CE9;
     text-decoration: none;
     font-weight: 500;
     transition: all 0.2s;
   }
 
-  header a:hover {
+  .back-link:hover {
     text-decoration: underline;
-  }
-
-  .term-header {
-    background: white;
-    padding: 1rem;
-    border-radius: 8px;
-    margin-bottom: 1.5rem;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-  }
-
-  .term-header h2 {
-    color: #2B7CE9;
-    font-size: 1.5rem;
   }
 
   .term-layout {
     display: flex;
-    gap: 2rem;
+    gap: 1.2rem;
     align-items: flex-start;
+    height: calc(100vh - 220px);
     overflow: hidden;
   }
 
@@ -218,8 +238,7 @@ Array.from(attributeMap.entries()).forEach(([attr, values]) => {
     min-width: 0;
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
-    max-height: 1100px;
+    gap: 1rem;
   }
 
   .right-column {
@@ -227,12 +246,13 @@ Array.from(attributeMap.entries()).forEach(([attr, values]) => {
     min-width: 0;
     display: flex;
     flex-direction: column;
-    gap: 2rem;
+    gap: 1rem;
+    height: 100%;
   }
 
   section {
     background: white;
-    padding: 1.5rem;
+    padding: 0.6rem 0.8rem;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     display: flex;
@@ -241,10 +261,18 @@ Array.from(attributeMap.entries()).forEach(([attr, values]) => {
   }
 
   section h3 {
-    margin-bottom: 1rem;
+    margin-bottom: 0.4rem;
     color: #555;
-    font-size: 1.2rem;
+    font-size: 0.95rem;
     flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+
+  .icon {
+    font-size: 1rem;
+    color: #667eea;
   }
 
   .triples-section {
@@ -267,15 +295,15 @@ Array.from(attributeMap.entries()).forEach(([attr, values]) => {
 
   th, td {
     text-align: left;
-    padding: 0.75rem;
+    padding: 0.4rem 0.5rem;
     border-bottom: 1px solid #eee;
   }
 
   th {
-    background: linear-gradient(to bottom, #2B7CE9 3px, #f8f9fa 3px);
+    background: linear-gradient(to bottom, #667eea 3px, #f8f9fa 3px);
     font-weight: 700;
     color: #333;
-    font-size: 0.95rem;
+    font-size: 0.85rem;
     text-transform: uppercase;
     letter-spacing: 0.5px;
     position: sticky;
@@ -292,49 +320,47 @@ Array.from(attributeMap.entries()).forEach(([attr, values]) => {
   }
 
   td {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  font-size: 0.95rem;
-  padding: 0.75rem;
-  border-bottom: 1px solid #eee;
-  overflow-wrap: break-word;
-  hyphens: auto;
-}
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 0.88rem;
+    overflow-wrap: break-word;
+    hyphens: auto;
+  }
 
   .metadata-section {
     background: #f8f9fa;
-    border-left: 4px solid #2B7CE9;
+    border-left: 4px solid #667eea;
     flex: 0 0 auto;
   }
 
   .metadata-list {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: 0.6rem;
   }
 
   .metadata-item {
     display: flex;
     flex-direction: column;
-    gap: 0.25rem;
+    gap: 0.2rem;
   }
 
   .metadata-label {
     font-weight: 600;
     color: #555;
-    font-size: 0.9rem;
+    font-size: 0.85rem;
   }
 
   .metadata-value {
     color: #333;
-    font-size: 0.95rem;
+    font-size: 0.88rem;
     word-wrap: break-word;
     overflow-wrap: break-word;
     word-break: break-word;
-    padding-left: 1.5rem;
+    padding-left: 1.2rem;
   }
 
   .metadata-value a {
-    color: #2B7CE9;
+    color: #667eea;
     text-decoration: none;
     word-break: break-all;
   }
@@ -344,17 +370,18 @@ Array.from(attributeMap.entries()).forEach(([attr, values]) => {
   }
 
   .graph-section {
-  display: flex;
-  flex-direction: column;
-  min-height: 600px;
-}
+    flex: 0 0 400px;
+    min-height: 0;
+    overflow: hidden;
+    padding: 0.6rem 0.8rem 0.4rem 0.8rem;
+  }
 
   .code-section {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow: hidden;
     display: flex;
     flex-direction: column;
-    min-height: 350px;
-    min-width: 0;
-    overflow: hidden;
   }
 
   .code-wrapper {
@@ -363,38 +390,81 @@ Array.from(attributeMap.entries()).forEach(([attr, values]) => {
     border-radius: 4px;
     overflow: hidden;
     min-width: 0;
+    min-height: 0;
   }
 
   .code-wrapper pre {
     margin: 0;
-    padding: 1rem;
+    padding: 0.6rem;
     background: #2d2d2d !important;
+    height: 100%;
     overflow: auto;
-    max-height: 500px;
-    max-width: 100%;
   }
 
   .code-wrapper pre code {
     display: block;
     background: transparent !important;
-    font-size: 0.85rem;
-    line-height: 1.6;
+    font-size: 0.8rem;
+    line-height: 1.5;
     font-family: 'Courier New', monospace;
     white-space: pre;
     color: #f8f8f2;
   }
 
+  footer {
+    background: white;
+    padding: 1rem 0;
+    text-align: center;
+    margin-top: 1.5rem;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
+  }
+
+  .footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+  }
+
+  footer p {
+    margin: 0;
+    color: #333;
+    line-height: 1.5;
+    font-size: 0.9rem;
+  }
+
+  footer a {
+    color: #667eea;
+    text-decoration: none;
+    font-weight: 500;
+  }
+
+  footer a:hover {
+    text-decoration: underline;
+  }
+
   @media (max-width: 1024px) {
     .term-layout {
       flex-direction: column;
+      height: auto;
+    }
+
+    .header-left {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.5rem;
     }
 
     .left-column {
       max-height: none;
+      height: auto;
+    }
+
+    .right-column {
+      height: auto;
     }
 
     .graph-section {
-      height: 500px;
+      flex: 0 0 500px;
     }
 
     .triples-section {
@@ -404,27 +474,27 @@ Array.from(attributeMap.entries()).forEach(([attr, values]) => {
 
   @media (max-width: 768px) {
     .container {
-      padding: 1rem;
+      padding: 0.75rem;
       max-width: 100%;
     }
 
     header {
       flex-direction: column;
       align-items: flex-start;
-      gap: 1rem;
+      gap: 0.75rem;
     }
 
-    .term-header h2 {
-      font-size: 1.25rem;
+    .term-name {
+      font-size: 1.1rem;
     }
 
     section {
-      padding: 1rem;
+      padding: 0.6rem;
     }
 
     th, td {
-      padding: 0.5rem;
-      font-size: 0.85rem;
+      padding: 0.4rem;
+      font-size: 0.8rem;
     }
 
     .triples-section {
@@ -432,7 +502,7 @@ Array.from(attributeMap.entries()).forEach(([attr, values]) => {
     }
 
     .graph-section {
-      height: 400px;
+      flex: 0 0 400px;
     }
   }
 </style>

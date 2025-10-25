@@ -85,10 +85,10 @@ const graphData = JSON.stringify({ nodes, edges, options: finalOptions });
   
   <div class="graph-controls">
     <button id="freezeBtn" class="control-btn" title="Freeze/unfreeze physics">
-      🔒 Freeze Layout
+      ❄️
     </button>
     <button id="fitBtn" class="control-btn" title="Fit to Screen">
-      🔍 Fit to Screen
+      ⊡
     </button>
   </div>
 
@@ -154,11 +154,7 @@ const graphData = JSON.stringify({ nodes, edges, options: finalOptions });
       });
 
       popupClose.addEventListener('click', () => popup.classList.remove('active'));
-      
-      popup.addEventListener('click', (e) => { 
-        if (e.target === popup) popup.classList.remove('active'); 
-      });
-      
+      popup.addEventListener('click', (e) => { if (e.target === popup) popup.classList.remove('active'); });
       popupOpenBtn.addEventListener('click', () => {
         if (currentNodeId) {
           const termId = currentNodeId.replace(/^:/, '').replace(/^.*[:#/]/, '');
@@ -172,7 +168,7 @@ const graphData = JSON.stringify({ nodes, edges, options: finalOptions });
         network.setOptions({ physics: { enabled: isPhysicsEnabled } });
         
         const btn = document.getElementById('freezeBtn');
-        btn.textContent = isPhysicsEnabled ? '🔒 Freeze Layout' : '▶️ Unfreeze';
+        btn.textContent = isPhysicsEnabled ? '❄️' : '▶️';
         btn.classList.toggle('active', !isPhysicsEnabled);
       });
 
@@ -198,7 +194,10 @@ const graphData = JSON.stringify({ nodes, edges, options: finalOptions });
   .graph-wrapper {
     position: relative;
     width: 100%;
-    height: 600px;
+    height: 100%;
+    padding-bottom: 0.6rem;
+    overflow: hidden;
+
   }
 
   #graph-container {
@@ -211,33 +210,38 @@ const graphData = JSON.stringify({ nodes, edges, options: finalOptions });
 
   .graph-controls {
     position: absolute;
-    top: 10px;
-    right: 10px;
+    top: 8px;
+    right: 8px;
     display: flex;
-    gap: 8px;
+    gap: 6px;
     z-index: 10;
   }
 
   .control-btn {
-    padding: 8px 16px;
+    padding: 0.4rem 0.6rem;
     background: white;
     border: 1px solid #ddd;
-    border-radius: 6px;
+    border-radius: 4px;
     cursor: pointer;
-    font-size: 14px;
+    font-size: 1rem;
     transition: all 0.2s;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    min-width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   .control-btn:hover {
     background: #f0f0f0;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
   }
 
   .control-btn.active {
-    background: #2B7CE9;
+    background: #667eea;
     color: white;
-    border-color: #2B7CE9;
+    border-color: #667eea;
   }
 
   .node-popup {
