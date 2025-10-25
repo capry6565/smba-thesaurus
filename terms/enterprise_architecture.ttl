@@ -1,0 +1,22 @@
+@prefix : <https://usmba.ai/> .
+@prefix grddl: <http://www.w3.org/2003/g/data-view#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+
+:enterprise_architecture 
+  rdf:type skos:Concept ;
+  rdfs:label "enterprise architecture"@en ;
+  skos:prefLabel "Enterprise Architecture"@en ;
+  skos:definition "A description of the business processes, information technology, people, operations, information, and projects of an enterprise and the relationships between them."@en ;
+  skos:inScheme :iiba-terms ;
+  skos:topConceptOf :iiba-terms ;
+  skos:broader :architecture ;
+  dct:creator <https://orcid.org/0009-0002-4140-6464> ;
+  dct:source "https://www.iiba.org/career-resources/a-business-analysis-professionals-foundation-for-success/babok/glossary/"@en ;
+  dct:created "2025-01-24"^^xsd:date .

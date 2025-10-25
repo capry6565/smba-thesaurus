@@ -11,22 +11,7 @@
   skos:prefLabel "Architecture"@en ;
   skos:definition "The design, structure, and behaviour of the current and future states of a structure in terms of its components, and the interaction between those components. See also business architecture, enterprise architecture, and requirements architecture."@en ;
   skos:scopeNote "Use this concept to describe the overall structure, design, and interaction of system components, particularly in IT and business analysis contexts. It serves as a general term encompassing more specific forms such as business architecture, enterprise architecture, and requirements architecture, each of which can be modeled as a narrower concept."@en ;
-  skos:narrower :businessArchitecture, :enterpriseArchitecture, :requirementsArchitecture ;
+  skos:narrower :business_architecture, :enterprise_architecture, :requirements_architecture ;
   dct:source "https://www.iiba.org/career-resources/a-business-analysis-professionals-foundation-for-success/babok/glossary/" ;
   dct:creator "Aleksandr Belin (en)" ;
   dct:creator "[ORCID: 0009-0002-4140-6464]" .
-
-:businessArchitecture 
-  rdf:type skos:Concept ;
-  skos:prefLabel "Business Architecture"@en ;
-  skos:definition "The design and structure of business processes, capabilities, and organizational elements."@en .
-
-:enterpriseArchitecture 
-  rdf:type skos:Concept ;
-  skos:prefLabel "Enterprise Architecture"@en ;
-  skos:definition "A comprehensive framework for managing and aligning business processes, information systems, and technology infrastructure."@en .
-
-:requirementsArchitecture 
-  rdf:type skos:Concept ;
-  skos:prefLabel "Requirements Architecture"@en ;
-  skos:definition "The structure and organization of requirements for a system or project."@en .
