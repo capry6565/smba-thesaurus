@@ -10,32 +10,21 @@ const defaultOptions = {
     color: {
       border: '#2B7CE9',
       background: '#D2E5FF',
-      highlight: { 
-        border: '#FFA500', 
-        background: '#FFE5B4' 
-      },
-      hover: {
-        border: '#FFA500',
-        background: '#FFF4E0'
-      }
+      highlight: { border: '#FFA500', background: '#FFE5B4' },
+      hover: { border: '#FFA500', background: '#FFF4E0' }
     }
   },
   edges: {
     arrows: 'to',
-    color: { 
-      color: '#848484', 
-      hover: '#2B7CE9',
-      highlight: '#2B7CE9'
-    },
+    color: { color: '#848484', hover: '#2B7CE9', highlight: '#2B7CE9' },
     smooth: {
       enabled: true,
-      type: 'cubicBezier',
-      forceDirection: 'horizontal',
+      type: 'continuous',
       roundness: 0.5
     },
     width: 1,
-    font: { 
-      size: 11, 
+    font: {
+      size: 11,
       align: 'top',
       color: '#666',
       strokeWidth: 0,
@@ -57,30 +46,24 @@ const defaultOptions = {
     }
   },
   layout: {
-    hierarchical: {
-      enabled: false,
-      direction: 'LR',
-      sortMethod: 'directed',
-      levelSeparation: 300,
-      nodeSpacing: 500,
-      treeSpacing: 500
-    }
+    improvedLayout: true,
+    randomSeed: 2
   },
   physics: {
     enabled: true,
-    hierarchicalRepulsion: {
-      centralGravity: 0.0,
-      springLength: 200,
-      springConstant: 0.01,
-      nodeDistance: 200,
-      damping: 0.09,
+    solver: 'forceAtlas2Based',
+    forceAtlas2Based: {
+      gravitationalConstant: -80,
+      centralGravity: 0.005,
+      springLength: 250,
+      springConstant: 0.02,
       avoidOverlap: 1
     },
     stabilization: {
       enabled: true,
-      iterations: 500,
+      iterations: 400,
       updateInterval: 25,
-      fit: false
+      fit: true
     }
   },
   interaction: {
@@ -141,14 +124,12 @@ const graphData = JSON.stringify({ nodes, edges, options: finalOptions });
   } else {
     try {
       const { nodes, edges, options } = JSON.parse(graphDataElement.textContent);
-      
       const data = {
         nodes: new DataSet(nodes),
         edges: new DataSet(edges)
       };
 
       const network = new Network(container, data, options);
-      
       let isPhysicsEnabled = true;
       let currentNodeId = null;
 
@@ -156,10 +137,8 @@ const graphData = JSON.stringify({ nodes, edges, options: finalOptions });
         if (params.edges.length > 0 && params.nodes.length === 0) {
           const edgeId = params.edges[0];
           const edgeData = data.edges.get(edgeId);
-          
           if (edgeData && edgeData.title) {
-            const predicateUri = edgeData.title;
-            window.open(predicateUri, '_blank');
+            window.open(edgeData.title, '_blank');
           }
           return;
         }
@@ -167,27 +146,19 @@ const graphData = JSON.stringify({ nodes, edges, options: finalOptions });
         if (params.nodes.length > 0) {
           const nodeId = params.nodes[0];
           currentNodeId = nodeId;
-          
           const nodeData = data.nodes.get(nodeId);
-          
           popupTitle.textContent = nodeData.label || nodeId;
-          popupDefinition.innerHTML = nodeData.title || 
-            '<i>No definition available. Click "Open Page" for details.</i>';
-          
+          popupDefinition.innerHTML = nodeData.title || '<i>No definition available. Click "Open Page" for details.</i>';
           popup.classList.add('active');
         }
       });
 
-      popupClose.addEventListener('click', () => {
-        popup.classList.remove('active');
+      popupClose.addEventListener('click', () => popup.classList.remove('active'));
+      
+      popup.addEventListener('click', (e) => { 
+        if (e.target === popup) popup.classList.remove('active'); 
       });
-
-      popup.addEventListener('click', (e) => {
-        if (e.target === popup) {
-          popup.classList.remove('active');
-        }
-      });
-
+      
       popupOpenBtn.addEventListener('click', () => {
         if (currentNodeId) {
           const termId = currentNodeId.replace(/^:/, '').replace(/^.*[:#/]/, '');
@@ -206,19 +177,14 @@ const graphData = JSON.stringify({ nodes, edges, options: finalOptions });
       });
 
       document.getElementById('fitBtn').addEventListener('click', () => {
-        network.fit({
-          animation: {
-            duration: 500,
-            easingFunction: 'easeInOutQuad'
-          }
-        });
+        network.fit({ animation: { duration: 500, easingFunction: 'easeInOutQuad' } });
       });
 
       network.once('stabilizationIterationsDone', () => {
-        network.fit();
+        network.fit({ animation: { duration: 400 } });
       });
 
-      console.log('✅ Graph initialized with hierarchical layout');
+      console.log('✅ Graph initialized with force-directed layout');
     } catch (error) {
       console.error('Failed to initialize graph:', error);
       container.innerHTML = `<div style="padding: 2rem; color: red;">
@@ -288,9 +254,7 @@ const graphData = JSON.stringify({ nodes, edges, options: finalOptions });
     backdrop-filter: blur(4px);
   }
 
-  .node-popup.active {
-    display: flex;
-  }
+  .node-popup.active { display: flex; }
 
   .popup-content {
     background: white;
@@ -306,14 +270,8 @@ const graphData = JSON.stringify({ nodes, edges, options: finalOptions });
   }
 
   @keyframes popupSlide {
-    from {
-      opacity: 0;
-      transform: translateY(-30px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
+    from { opacity: 0; transform: translateY(-30px); }
+    to { opacity: 1; transform: translateY(0); }
   }
 
   .popup-close {
@@ -329,9 +287,7 @@ const graphData = JSON.stringify({ nodes, edges, options: finalOptions });
     transition: color 0.2s;
   }
 
-  .popup-close:hover {
-    color: #333;
-  }
+  .popup-close:hover { color: #333; }
 
   #popupTitle {
     margin: 0 0 1rem 0;
@@ -345,10 +301,7 @@ const graphData = JSON.stringify({ nodes, edges, options: finalOptions });
     line-height: 1.6;
   }
 
-  .popup-actions {
-    display: flex;
-    gap: 10px;
-  }
+  .popup-actions { display: flex; gap: 10px; }
 
   .popup-btn {
     padding: 10px 20px;
