@@ -172,13 +172,13 @@ Array.from(attributeMap.entries()).forEach(([attr, values]) => {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 2rem;
-    padding-bottom: 1rem;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.75rem;
     border-bottom: 2px solid #ddd;
   }
 
   header h1 {
-    font-size: 1.8rem;
+    font-size: 1.5rem;
     color: #2B7CE9;
   }
 
@@ -195,21 +195,22 @@ Array.from(attributeMap.entries()).forEach(([attr, values]) => {
 
   .term-header {
     background: white;
-    padding: 1.5rem;
+    padding: 1rem;
     border-radius: 8px;
-    margin-bottom: 2rem;
+    margin-bottom: 1.5rem;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
   }
 
   .term-header h2 {
     color: #2B7CE9;
-    font-size: 2rem;
+    font-size: 1.5rem;
   }
 
   .term-layout {
     display: flex;
     gap: 2rem;
     align-items: flex-start;
+    overflow: hidden;
   }
 
   .left-column {
@@ -218,13 +219,14 @@ Array.from(attributeMap.entries()).forEach(([attr, values]) => {
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
+    max-height: 1100px;
   }
 
   .right-column {
     flex: 1;
     min-width: 0;
-    display: grid;
-    grid-template-rows: 600px auto;
+    display: flex;
+    flex-direction: column;
     gap: 2rem;
   }
 
@@ -235,6 +237,7 @@ Array.from(attributeMap.entries()).forEach(([attr, values]) => {
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     display: flex;
     flex-direction: column;
+    min-width: 0;
   }
 
   section h3 {
@@ -245,13 +248,16 @@ Array.from(attributeMap.entries()).forEach(([attr, values]) => {
   }
 
   .triples-section {
-    max-height: 500px;
+    flex: 1 1 auto;
+    min-height: 200px;
     overflow-y: auto;
+    display: flex;
+    flex-direction: column;
   }
 
   .table-wrapper {
     overflow-x: auto;
-    flex: 1;
+    flex: 1 1 auto;
   }
 
   table {
@@ -296,6 +302,7 @@ Array.from(attributeMap.entries()).forEach(([attr, values]) => {
   .metadata-section {
     background: #f8f9fa;
     border-left: 4px solid #2B7CE9;
+    flex: 0 0 auto;
   }
 
   .metadata-list {
@@ -336,44 +343,44 @@ Array.from(attributeMap.entries()).forEach(([attr, values]) => {
   }
 
   .graph-section {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    overflow: hidden;
-  }
+  display: flex;
+  flex-direction: column;
+  min-height: 600px;
+}
 
   .code-section {
     display: flex;
     flex-direction: column;
-    min-height: 300px;
+    min-height: 350px;
+    min-width: 0;
+    overflow: hidden;
   }
 
   .code-wrapper {
     flex: 1;
-    overflow: hidden;
     background: #2d2d2d;
     border-radius: 4px;
+    overflow: hidden;
+    min-width: 0;
   }
 
   .code-wrapper pre {
     margin: 0;
-    padding: 0;
-    background: transparent;
-    overflow-x: auto;
-    overflow-y: auto;
-    max-height: 400px;
+    padding: 1rem;
+    background: #2d2d2d !important;
+    overflow: auto;
+    max-height: 500px;
+    max-width: 100%;
   }
 
   .code-wrapper pre code {
     display: block;
-    padding: 1rem;
-    background: transparent;
+    background: transparent !important;
     font-size: 0.85rem;
     line-height: 1.6;
     font-family: 'Courier New', monospace;
-    white-space: pre-wrap;
-    word-wrap: break-word;
-    overflow-wrap: break-word;
+    white-space: pre;
+    color: #f8f8f2;
   }
 
   @media (max-width: 1024px) {
@@ -381,8 +388,12 @@ Array.from(attributeMap.entries()).forEach(([attr, values]) => {
       flex-direction: column;
     }
 
-    .right-column {
-      grid-template-rows: 500px auto;
+    .left-column {
+      max-height: none;
+    }
+
+    .graph-section {
+      height: 500px;
     }
 
     .triples-section {
@@ -403,7 +414,7 @@ Array.from(attributeMap.entries()).forEach(([attr, values]) => {
     }
 
     .term-header h2 {
-      font-size: 1.5rem;
+      font-size: 1.25rem;
     }
 
     section {
@@ -419,8 +430,8 @@ Array.from(attributeMap.entries()).forEach(([attr, values]) => {
       max-height: 400px;
     }
 
-    .right-column {
-      grid-template-rows: 400px auto;
+    .graph-section {
+      height: 400px;
     }
   }
 </style>

@@ -33,23 +33,24 @@ const defaultOptions = {
       forceDirection: 'horizontal',
       roundness: 0.5
     },
-    width: 1.5,
+    width: 1,
     font: { 
-      size: 12, 
-      align: 'middle',
+      size: 11, 
+      align: 'top',
       color: '#666',
-      strokeWidth: 0
+      strokeWidth: 0,
+      background: 'none'
     },
     chosen: {
       edge: function(values, id, selected, hovering) {
         if (hovering) {
-          values.width = 2.5;
+          values.width = 2;
           values.color = '#2B7CE9';
         }
       },
       label: function(values, id, selected, hovering) {
         if (hovering) {
-          values.size = 14;
+          values.size = 13;
           values.color = '#1a5fc7';
         }
       }
@@ -57,19 +58,19 @@ const defaultOptions = {
   },
   layout: {
     hierarchical: {
-      enabled: true,
+      enabled: false,
       direction: 'LR',
       sortMethod: 'directed',
       levelSeparation: 300,
-      nodeSpacing: 150,
-      treeSpacing: 200
+      nodeSpacing: 500,
+      treeSpacing: 500
     }
   },
   physics: {
     enabled: true,
     hierarchicalRepulsion: {
       centralGravity: 0.0,
-      springLength: 250,
+      springLength: 200,
       springConstant: 0.01,
       nodeDistance: 200,
       damping: 0.09,
@@ -77,9 +78,9 @@ const defaultOptions = {
     },
     stabilization: {
       enabled: true,
-      iterations: 300,
+      iterations: 500,
       updateInterval: 25,
-      fit: true
+      fit: false
     }
   },
   interaction: {
@@ -103,7 +104,7 @@ const graphData = JSON.stringify({ nodes, edges, options: finalOptions });
     <button id="freezeBtn" class="control-btn" title="Freeze/unfreeze physics">
       🔒 Freeze Layout
     </button>
-    <button id="fitBtn" class="control-btn" title="Fit all nodes">
+    <button id="fitBtn" class="control-btn" title="Fit to Screen">
       🔍 Fit to Screen
     </button>
   </div>
@@ -217,7 +218,7 @@ const graphData = JSON.stringify({ nodes, edges, options: finalOptions });
         network.fit();
       });
 
-      console.log('✅ Graph initialized with horizontal hierarchical layout');
+      console.log('✅ Graph initialized with hierarchical layout');
     } catch (error) {
       console.error('Failed to initialize graph:', error);
       container.innerHTML = `<div style="padding: 2rem; color: red;">
@@ -244,8 +245,8 @@ const graphData = JSON.stringify({ nodes, edges, options: finalOptions });
 
   .graph-controls {
     position: absolute;
-    top: 15px;
-    right: 15px;
+    top: 10px;
+    right: 10px;
     display: flex;
     gap: 8px;
     z-index: 10;
