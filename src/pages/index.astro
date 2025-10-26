@@ -1,18 +1,650 @@
 ---
-import fs from "fs";
-
-
-const termFiles = fs.readdirSync("./terms").filter(f => f.endsWith(".ttl"));
-
-
-const terms = termFiles.map(f => f.replace(".ttl", ""));
+// Homepage для SMBA Thesaurus
+const terms = [
+  { 
+    title: "Architecture", 
+    description: "The design, structure, and behaviour of the current and future states of a structure in terms of its components, and the interaction between those components.",
+    url: "/terms/architecture"
+  },
+  { 
+    title: "Business Architecture", 
+    description: "The design, structure, and behavior of the current and future states of an enterprise to provide a common understanding of the organization.",
+    url: "/terms/business_architecture"
+  },
+  { 
+    title: "Enterprise Architecture", 
+    description: "A description of the business processes, information technology, people, operations, information, and projects of an enterprise and the relationships between them.",
+    url: "/terms/enterprise_architecture"
+  },
+  { 
+    title: "Requirements Architecture", 
+    description: "The requirements of an initiative and the interrelationships between these requirements.",
+    url: "/terms/requirements_architecture"
+  }
+].sort((a, b) => a.title.localeCompare(b.title));
 ---
 
-<h1 style="font-family:sans-serif;">RDF Thesaurus</h1>
-<p>Click a term to view its RDF definition:</p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SMBA - Unified Semantic Model of Business Analysis</title>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <div class="logo">
+        <img src="/SMBA_Logo_4.jpg" alt="SMBA Logo">
+      </div>
+      <div class="header-text">
+        <h1>SMBA</h1>
+        <p class="subtitle">Unified Semantic Model of Business Analysis</p>
+      </div>
+    </div>
+  </header>
 
-<ul style="font-family:sans-serif; line-height:1.6;">
-  {terms.map(t => (
-    <li><a href={`/terms/${t}`}>{t}</a></li>
-  ))}
-</ul>
+  <main>
+    <div class="container">
+      <!-- Hero Section -->
+    <section class="hero">
+      <div class="hero-content">
+        <h2>The SMBA Thesaurus: A Semantic Foundation for Business Analysis</h2>
+        <p>
+          The Unified Semantic Model of Business Analysis (SMBA) is an <span class="hero-highlight">open, community-driven effort</span> to create 
+          a unified, harmonized, machine-readable, and machine-understandable representation of knowledge about 
+          Business Analysis as a profession.
+        </p>
+        <p>
+          Drawing on authoritative standards such as the <span class="hero-highlight">IIBA BABOK® Guide, PMI-PBA, IREB, and IQBBA</span>, SMBA 
+          integrates their terminology and conceptual structures into a shared semantic foundation. This foundation 
+          is expressed through controlled vocabularies, SKOS-based thesauri, taxonomies, and ontologies that together 
+          form a consistent and logically connected view of BA knowledge.
+        </p>
+        <p>
+          SMBA does not seek ownership of the content drawn from these sources. Its purpose is to build a unified, 
+          comprehensive, and mutually agreed semantic model — a structure that respects original intellectual property 
+          while enabling interoperability and clarity across standards.
+        </p>
+        <p>
+          The ultimate goal is to enable smarter tools and systems — from knowledge management platforms to <span class="hero-highlight">AI- and 
+          LLM-powered assistants</span> — that can accurately interpret and apply Business Analysis knowledge.
+        </p>
+        <p>
+          SMBA welcomes collaboration from practitioners, researchers, and organizations who share the vision of 
+          making Business Analysis knowledge transparent, connected, and ready for the digital age.
+        </p>
+      </div>
+    </section>
+
+    <!-- Features Grid -->
+    <div class="features">
+      <div class="feature-card">
+        <div class="feature-icon">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 2L2 7L12 12L22 7L12 2Z"/>
+            <path d="M2 17L12 22L22 17"/>
+            <path d="M2 12L12 17L22 12"/>
+          </svg>
+        </div>
+        <h3>Unified Terminology</h3>
+        <p>
+          Harmonizes terminology across multiple BA standards into a single, coherent semantic model.
+        </p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M21 16V8C21 6.89543 20.1046 6 19 6H5C3.89543 6 3 6.89543 3 8V16C3 17.1046 3.89543 18 5 18H19C20.1046 18 21 17.1046 21 16Z"/>
+            <path d="M12 12H12.01"/>
+            <path d="M8 12H8.01"/>
+            <path d="M16 12H16.01"/>
+          </svg>
+        </div>
+        <h3>Machine-Readable</h3>
+        <p>
+          Structured using SKOS, RDF, and ontologies for seamless integration with modern AI and knowledge systems.
+        </p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="12" cy="12" r="10"/>
+            <path d="M12 6V12L16 14"/>
+            <path d="M8 12C8 9.79086 9.79086 8 12 8"/>
+          </svg>
+        </div>
+        <h3>Open & Collaborative</h3>
+        <p>
+          Community-driven project respecting intellectual property while fostering interoperability.
+        </p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M4 19.5C4 18.1193 5.11929 17 6.5 17H20"/>
+            <path d="M6.5 2H20V22H6.5C5.11929 22 4 20.8807 4 19.5V4.5C4 3.11929 5.11929 2 6.5 2Z"/>
+            <path d="M8 7H16"/>
+            <path d="M8 11H16"/>
+            <path d="M8 15H12"/>
+          </svg>
+        </div>
+        <h3>Standards-Based</h3>
+        <p>
+          Built on authoritative sources including IIBA BABOK®, PMI-PBA, IREB, and IQBBA.
+        </p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="12" cy="5" r="3"/>
+            <circle cx="5" cy="19" r="3"/>
+            <circle cx="19" cy="19" r="3"/>
+            <path d="M10.5 7.5L7 17"/>
+            <path d="M13.5 7.5L17 17"/>
+          </svg>
+        </div>
+        <h3>Interconnected Knowledge</h3>
+        <p>
+          Creates meaningful relationships between concepts across different BA frameworks.
+        </p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M13 2L3 14H12L11 22L21 10H12L13 2Z"/>
+          </svg>
+        </div>
+        <h3>Future-Ready</h3>
+        <p>
+          Designed for integration with AI-powered assistants and next-generation knowledge platforms.
+        </p>
+      </div>
+    </div>
+
+    <!-- Available Terms Section -->
+    <section class="terms-section">
+      <h2>Available Terms</h2>
+      <p class="terms-count">{terms.length} concepts currently available</p>
+      
+      <div class="search-box">
+        <input 
+          type="text" 
+          id="searchInput" 
+          class="search-input" 
+          placeholder="Search terms by name or description..."
+          autocomplete="off"
+        />
+      </div>
+
+      <ul class="terms-list" id="termsList">
+        {terms.map(term => (
+          <li class="term-item">
+            <a href={term.url} class="term-link">
+              <div class="term-title">{term.title}</div>
+              <div class="term-description">{term.description}</div>
+            </a>
+          </li>
+        ))}
+      </ul>
+
+      <div class="no-results" id="noResults" style="display: none;">
+        No terms found matching your search.
+      </div>
+    </section>
+  </div>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>
+        SMBA is an open, community-driven project. 
+        <a href="https://github.com/capry6565/smba-thesaurus">Contribute</a> | 
+        <a href="https://github.com/capry6565/smba-thesaurus#readme">Documentation</a> | 
+        <a href="mailto:contact@usmba.ai">Contact</a>
+      </p>
+      <p style="margin-top: 0.5rem; font-size: 0.9rem;">
+        © 2025 SMBA Community. All rights reserved.
+      </p>
+    </div>
+  </footer>
+
+  <script>
+    const termsData = [
+      { 
+        title: "Architecture", 
+        description: "The design, structure, and behaviour of the current and future states of a structure in terms of its components, and the interaction between those components.",
+        url: "/terms/architecture"
+      },
+      { 
+        title: "Business Architecture", 
+        description: "The design, structure, and behavior of the current and future states of an enterprise to provide a common understanding of the organization.",
+        url: "/terms/business_architecture"
+      },
+      { 
+        title: "Enterprise Architecture", 
+        description: "A description of the business processes, information technology, people, operations, information, and projects of an enterprise and the relationships between them.",
+        url: "/terms/enterprise_architecture"
+      },
+      { 
+        title: "Requirements Architecture", 
+        description: "The requirements of an initiative and the interrelationships between these requirements.",
+        url: "/terms/requirements_architecture"
+      }
+    ].sort((a, b) => a.title.localeCompare(b.title));
+
+    function renderTerms(filteredTerms) {
+      const termsList = document.getElementById('termsList');
+      const noResults = document.getElementById('noResults');
+      
+      if (filteredTerms.length === 0) {
+        termsList.style.display = 'none';
+        noResults.style.display = 'block';
+        return;
+      }
+      
+      termsList.style.display = 'block';
+      noResults.style.display = 'none';
+      
+      termsList.innerHTML = filteredTerms.map(term => `
+        <li class="term-item">
+          <a href="${term.url}" class="term-link">
+            <div class="term-title">${term.title}</div>
+            <div class="term-description">${term.description}</div>
+          </a>
+        </li>
+      `).join('');
+    }
+
+    const searchInput = document.getElementById('searchInput');
+    searchInput.addEventListener('input', (e) => {
+      const searchTerm = e.target.value.toLowerCase().trim();
+      
+      if (searchTerm === '') {
+        renderTerms(termsData);
+        return;
+      }
+      
+      const filtered = termsData.filter(term => 
+        term.title.toLowerCase().includes(searchTerm) ||
+        term.description.toLowerCase().includes(searchTerm)
+      );
+      
+      renderTerms(filtered);
+    });
+
+    renderTerms(termsData);
+  </script>
+</body>
+</html>
+
+<style is:global>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    background: #f5f5f5;
+    color: #333;
+    line-height: 1.6;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+
+  main {
+    flex: 1 0 auto;
+  }
+
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+
+  header {
+    background: white;
+    padding: 1.5rem 0;
+    border-bottom: 2px solid #2B7CE9;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  }
+
+  header .container {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+  header .logo img {
+    height: 80px;
+    width: auto;
+  }
+
+  header .header-text {
+    display: flex;
+    flex-direction: column;
+  }
+
+  header h1 {
+    font-size: 2.5rem;
+    color: #2B7CE9;
+    font-weight: 700;
+    line-height: 1;
+    margin-bottom: 0.25rem;
+  }
+
+  header .subtitle {
+    font-size: 1.1rem;
+    color: #666;
+    font-weight: 400;
+  }
+
+  .hero {
+    background: white;
+    padding: 3rem;
+    margin: 2rem 0;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  }
+
+  .hero h2 {
+    font-size: 2rem;
+    color: #2B7CE9;
+    margin-bottom: 1.5rem;
+    font-weight: 600;
+  }
+
+  .hero p {
+    font-size: 1.05rem;
+    line-height: 1.8;
+    color: #555;
+    margin-bottom: 0;
+    padding-bottom: 1.5rem;
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid #e8e8e8;
+    position: relative;
+  }
+
+  .hero p:last-child {
+    margin-bottom: 0;
+    padding-bottom: 0;
+    border-bottom: none;
+  }
+
+  .hero p:not(:last-child)::after {
+    content: '• • •';
+    position: absolute;
+    bottom: -0.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    color: #2B7CE9;
+    opacity: 0.3;
+    font-size: 0.8rem;
+    letter-spacing: 0.5rem;
+  }
+
+  .hero p:first-of-type {
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: #333;
+  }
+
+  .hero-highlight {
+    background: linear-gradient(120deg, #FFD93D20 0%, #FF9F4020 100%);
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+    font-weight: 500;
+  }
+
+  .features {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+    margin-bottom: 3rem;
+  }
+
+  .feature-card {
+    background: white;
+    padding: 1.75rem 1.5rem;
+    border-radius: 8px;
+    border: 1px solid #e0e0e0;
+    position: relative;
+    overflow: hidden;
+    min-height: 220px;
+    display: flex;
+    flex-direction: column;
+    transition: all 0.3s ease;
+  }
+
+  .feature-card:hover {
+    border-color: #2B7CE9;
+    box-shadow: 0 4px 12px rgba(43, 124, 233, 0.1);
+  }
+
+  .feature-card:nth-child(1) {
+    background: linear-gradient(135deg, #ffffff 0%, #f0f7ff 100%);
+  }
+
+  .feature-card:nth-child(2) {
+    background: linear-gradient(135deg, #ffffff 0%, #f5f5f5 100%);
+  }
+
+  .feature-card:nth-child(3) {
+    background: linear-gradient(135deg, #ffffff 0%, #f0f7ff 100%);
+  }
+
+  .feature-card:nth-child(4) {
+    background: linear-gradient(135deg, #ffffff 0%, #f5f5f5 100%);
+  }
+
+  .feature-card:nth-child(5) {
+    background: linear-gradient(135deg, #ffffff 0%, #f0f7ff 100%);
+  }
+
+  .feature-card:nth-child(6) {
+    background: linear-gradient(135deg, #ffffff 0%, #f5f5f5 100%);
+  }
+
+  .feature-icon {
+    width: 48px;
+    height: 48px;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .feature-icon svg {
+    width: 100%;
+    height: 100%;
+    fill: none;
+    stroke: #2B7CE9;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    opacity: 0.9;
+  }
+
+  .feature-card h3 {
+    color: #333;
+    font-size: 1.05rem;
+    margin-bottom: 0.75rem;
+    font-weight: 600;
+  }
+
+  .feature-card p {
+    color: #666;
+    line-height: 1.6;
+    font-size: 0.9rem;
+    flex: 1;
+  }
+
+  .terms-section {
+    background: white;
+    padding: 2.5rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  }
+
+  .terms-section h2 {
+    font-size: 1.8rem;
+    color: #2B7CE9;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+  }
+
+  .terms-count {
+    color: #999;
+    font-size: 0.95rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .search-box {
+    margin-bottom: 2rem;
+  }
+
+  .search-input {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+    border: 2px solid #ddd;
+    border-radius: 6px;
+    transition: border-color 0.2s;
+  }
+
+  .search-input:focus {
+    outline: none;
+    border-color: #2B7CE9;
+  }
+
+  .terms-list {
+    list-style: none;
+  }
+
+  .term-item {
+    padding: 1.25rem;
+    border-bottom: 1px solid #f0f0f0;
+    transition: background-color 0.2s;
+  }
+
+  .term-item:last-child {
+    border-bottom: none;
+  }
+
+  .term-item:hover {
+    background-color: #f8f9fa;
+  }
+
+  .term-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+  }
+
+  .term-title {
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: #2B7CE9;
+    margin-bottom: 0.5rem;
+  }
+
+  .term-description {
+    color: #666;
+    line-height: 1.6;
+    font-size: 0.95rem;
+  }
+
+  .no-results {
+    text-align: center;
+    padding: 2rem;
+    color: #999;
+    font-style: italic;
+  }
+
+  footer {
+    flex-shrink: 0;
+    background: white;
+    padding: 2rem 0;
+    text-align: center;
+    margin-top: 3rem;
+    border-top: 1px solid #e0e0e0;
+  }
+
+  footer .container {
+    padding: 0 2rem;
+  }
+
+  footer p {
+    margin: 0;
+    color: #666;
+    font-size: 0.95rem;
+  }
+
+  footer a {
+    color: #2B7CE9;
+    text-decoration: none;
+    font-weight: 500;
+  }
+
+  footer a:hover {
+    text-decoration: underline;
+  }
+
+  @media (max-width: 768px) {
+    .container {
+      padding: 1rem;
+    }
+
+    header .container {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1rem;
+    }
+
+    header .logo img {
+      height: 60px;
+    }
+
+    header h1 {
+      font-size: 2rem;
+    }
+
+    header .subtitle {
+      font-size: 1rem;
+    }
+
+    .hero {
+      padding: 2rem;
+    }
+
+    .hero h2 {
+      font-size: 1.5rem;
+    }
+
+    .features {
+      grid-template-columns: 1fr;
+    }
+
+    .feature-card {
+      min-height: auto;
+    }
+
+    .terms-section {
+      padding: 1.5rem;
+    }
+  }
+</style>
