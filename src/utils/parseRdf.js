@@ -10,12 +10,7 @@ export default function parseRdf(ttlText) {
     return { triples: [], nodes: [], edges: [] };
   }
 
-  // Предикаты которые НЕ показываем на графе
-  const hiddenPredicates = [
-    'http://www.w3.org/1999/02/22-rdf-syntax-ns#type',
-    'http://www.w3.org/2004/02/skos/core#inScheme',
-    'http://www.w3.org/2004/02/skos/core#topConceptOf'
-  ];
+  // ПОКАЗЫВАЕМ ВСЕ ПРЕДИКАТЫ (Semantic Web методология - без фильтрации)
 
   const triples = store.statements.map(t => ({
     subject: cleanUri(t.subject.value),
@@ -31,10 +26,7 @@ export default function parseRdf(ttlText) {
     const predicateUri = statement.predicate.value;
     const objectValue = statement.object.value;
 
-    // Пропускаем технические предикаты
-    if (hiddenPredicates.includes(predicateUri)) {
-      continue;
-    }
+    // УБРАЛИ ФИЛЬТРАЦИЮ hiddenPredicates - показываем всё
 
     if (!nodeMap.has(subjectUri)) {
       nodeMap.set(subjectUri, {
@@ -88,7 +80,7 @@ export default function parseRdf(ttlText) {
 
   const nodes = Array.from(nodeMap.values());
 
-  console.log('✅ RDF parsed:', { 
+  console.log('✅ RDF parsed (all predicates shown):', { 
     triples: triples.length, 
     nodes: nodes.length, 
     edges: edges.length 
@@ -102,6 +94,7 @@ function cleanUri(uri) {
     .replace('http://www.w3.org/1999/02/22-rdf-syntax-ns#', 'rdf:')
     .replace('http://www.w3.org/2004/02/skos/core#', 'skos:')
     .replace('http://purl.org/dc/terms/', 'dct:')
+    .replace('http://www.w3.org/2000/01/rdf-schema#', 'rdfs:')
     .replace('http://example.org/', ':')
     .replace('https://usmba.ai/', ':');
 }
