@@ -1,0 +1,493 @@
+---
+import externalResources from '../../data/externalResources.json';
+import termsMetadata from '../../data/termsMetadata.json';
+
+export async function getStaticPaths() {
+  const { standards, bibliographicResources, publishers, contributors } = externalResources;
+
+  const allResources = [
+    ...standards,
+    ...bibliographicResources,
+    ...publishers,
+    ...contributors
+  ];
+
+  return allResources.map(resource => ({
+    params: { id: resource.id },
+    props: { resource }
+  }));
+}
+
+const { resource } = Astro.props;
+
+// Find all terms that reference this resource
+const relatedTerms = termsMetadata.filter(term => {
+  return term.sources && term.sources.some(source => {
+    const sourceId = source.toLowerCase().replace(/\s+/g, '_');
+    return sourceId === resource.id.toLowerCase() ||
+           source.toLowerCase().includes(resource.id.toLowerCase());
+  });
+});
+
+// Get display title
+const displayTitle = resource.title || resource.label || resource.name || resource.id;
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{displayTitle} | SMBA Thesaurus</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header>
+    <div class="container">
+      <div class="header-left">
+        <div class="header-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M4 19.5C4 18.837 4.26339 18.2011 4.73223 17.7322C5.20107 17.2634 5.83696 17 6.5 17H20" stroke="#1e40af" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M6.5 2H20V22H6.5C5.83696 22 5.20107 21.7366 4.73223 21.2678C4.26339 20.7989 4 20.163 4 19.5V4.5C4 3.83696 4.26339 3.20107 4.73223 2.73223C5.20107 2.26339 5.83696 2 6.5 2Z" stroke="#1e40af" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <span class="breadcrumb-text">SMBA Thesaurus</span>
+        <span class="term-name">/ {displayTitle}</span>
+      </div>
+      <a href="/" class="back-link">
+        <span>Homepage</span>
+      </a>
+    </div>
+  </header>
+
+  <main>
+    <div class="container">
+      <div class="content-layout">
+      <!-- Metadata Section -->
+      <section class="metadata-section">
+        <h2>Metadata</h2>
+
+        {resource.description && (
+          <div class="metadata-item">
+            <div class="metadata-label">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M13 2H6C5.46957 2 4.96086 2.21071 4.58579 2.58579C4.21071 2.96086 4 3.46957 4 4V20C4 20.5304 4.21071 21.0391 4.58579 21.4142C4.96086 21.7893 5.46957 22 6 22H18C18.5304 22 19.0391 21.7893 19.4142 21.4142C19.7893 21.0391 20 20.5304 20 20V9L13 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M13 2V9H20" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <strong>Description</strong>
+            </div>
+            <p>{resource.description}</p>
+          </div>
+        )}
+
+        {resource.publisher && (
+          <div class="metadata-item">
+            <div class="metadata-label">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M17 21V19C17 17.9391 16.5786 16.9217 15.8284 16.1716C15.0783 15.4214 14.0609 15 13 15H5C3.93913 15 2.92172 15.4214 2.17157 16.1716C1.42143 16.9217 1 17.9391 1 19V21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M9 11C11.2091 11 13 9.20914 13 7C13 4.79086 11.2091 3 9 3C6.79086 3 5 4.79086 5 7C5 9.20914 6.79086 11 9 11Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M23 21V19C22.9993 18.1137 22.7044 17.2528 22.1614 16.5523C21.6184 15.8519 20.8581 15.3516 20 15.13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M16 3.13C16.8604 3.35031 17.623 3.85071 18.1676 4.55232C18.7122 5.25392 19.0078 6.11683 19.0078 7.005C19.0078 7.89318 18.7122 8.75608 18.1676 9.45769C17.623 10.1593 16.8604 10.6597 16 10.88" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <strong>Publisher</strong>
+            </div>
+            <p>{resource.publisher}</p>
+          </div>
+        )}
+
+        {resource.issued && (
+          <div class="metadata-item">
+            <div class="metadata-label">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect x="3" y="4" width="18" height="18" rx="2" ry="2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M16 2V6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M8 2V6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M3 10H21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <strong>Issued</strong>
+            </div>
+            <p>{resource.issued}</p>
+          </div>
+        )}
+
+        {resource.identifier && (
+          <div class="metadata-item">
+            <div class="metadata-label">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M10 13C10.4295 13.5741 10.9774 14.0491 11.6066 14.3929C12.2357 14.7367 12.9315 14.9411 13.6467 14.9923C14.3618 15.0435 15.0796 14.9403 15.7513 14.6897C16.4231 14.4392 17.0331 14.047 17.54 13.54L20.54 10.54C21.4508 9.59695 21.9548 8.33394 21.9434 7.02296C21.932 5.71198 21.4061 4.45791 20.4791 3.53087C19.5521 2.60383 18.298 2.07799 16.987 2.0666C15.676 2.0552 14.413 2.55918 13.47 3.46997L11.75 5.17997" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M14 11C13.5705 10.4259 13.0226 9.95083 12.3934 9.60707C11.7642 9.26331 11.0685 9.05888 10.3533 9.00768C9.63819 8.95648 8.92037 9.05965 8.24861 9.31023C7.57685 9.5608 6.96684 9.95302 6.45996 10.46L3.45996 13.46C2.54917 14.403 2.04519 15.666 2.05659 16.977C2.06798 18.288 2.59382 19.5421 3.52086 20.4691C4.4479 21.3961 5.70197 21.922 7.01295 21.9334C8.32393 21.9448 9.58694 21.4408 10.53 20.53L12.24 18.82" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <strong>Identifier</strong>
+            </div>
+            <p>{resource.identifier}</p>
+          </div>
+        )}
+
+        {resource.homepage && (
+          <div class="metadata-item">
+            <div class="metadata-label">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M3 9L12 2L21 9V20C21 20.5304 20.7893 21.0391 20.4142 21.4142C20.0391 21.7893 19.5304 22 19 22H5C4.46957 22 3.96086 21.7893 3.58579 21.4142C3.21071 21.0391 3 20.5304 3 20V9Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M9 22V12H15V22" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <strong>Homepage</strong>
+            </div>
+            <p><a href={resource.homepage} target="_blank" rel="noopener noreferrer">{resource.homepage}</a></p>
+          </div>
+        )}
+
+        {resource.url && (
+          <div class="metadata-item">
+            <div class="metadata-label">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M18 13V19C18 19.5304 17.7893 20.0391 17.4142 20.4142C17.0391 20.7893 16.5304 21 16 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V8C3 7.46957 3.21071 6.96086 3.58579 6.58579C3.96086 6.21071 4.46957 6 5 6H11" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M15 3H21V9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M10 14L21 3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <strong>Source URL</strong>
+            </div>
+            <p><a href={resource.url} target="_blank" rel="noopener noreferrer">{resource.url}</a></p>
+          </div>
+        )}
+
+        {resource.orcid && (
+          <div class="metadata-item">
+            <div class="metadata-label">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M20 21V19C20 17.9391 19.5786 16.9217 18.8284 16.1716C18.0783 15.4214 17.0609 15 16 15H8C6.93913 15 5.92172 15.4214 5.17157 16.1716C4.42143 16.9217 4 17.9391 4 19V21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <circle cx="12" cy="7" r="4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <strong>ORCID</strong>
+            </div>
+            <p><a href={resource.orcid} target="_blank" rel="noopener noreferrer">{resource.orcid}</a></p>
+          </div>
+        )}
+      </section>
+
+      <!-- Related Terms Section -->
+      {relatedTerms.length > 0 && (
+        <section class="terms-section">
+          <h2>Terms Referencing This Resource ({relatedTerms.length})</h2>
+          <div class="terms-grid">
+            {relatedTerms.map(term => (
+              <a href={`/terms/${term.id}`} class="term-card">
+                <h3>{term.title}</h3>
+                <p>{term.description}</p>
+                {term.sources && term.sources.length > 0 && (
+                  <div class="sources">
+                    {term.sources.slice(0, 2).map(source => (
+                      <span class="source-tag">{source}</span>
+                    ))}
+                  </div>
+                )}
+              </a>
+            ))}
+          </div>
+        </section>
+      )}
+
+      {relatedTerms.length === 0 && (
+        <section class="terms-section">
+          <h2>Related Terms</h2>
+          <p class="no-terms">No terms currently reference this resource.</p>
+        </section>
+      )}
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <div class="footer-container">
+      <p>
+        SMBA Thesaurus — A community-driven semantic model for Business Analysis<br>
+        Built with <a href="https://astro.build">Astro</a>, <a href="https://www.w3.org/RDF/">RDF</a>, and <a href="https://www.w3.org/2004/02/skos/">SKOS</a>
+      </p>
+    </div>
+  </footer>
+</body>
+</html>
+
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    line-height: 1.6;
+    color: #0f172a;
+    background: linear-gradient(135deg, #e2e8f0 0%, #cbd5e1 100%);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+
+  header {
+    background: white;
+    padding: 1.5rem 0;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  }
+
+  header .container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+  }
+
+  .header-left {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .header-icon {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+  }
+
+  .breadcrumb-text {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: #64748b;
+    letter-spacing: -0.01em;
+  }
+
+  .term-name {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #1e40af;
+    letter-spacing: -0.02em;
+  }
+
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.5rem 1rem;
+    background: white;
+    color: #1e40af;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 0.9rem;
+    letter-spacing: 0.3px;
+    border-radius: 6px;
+    border: 1.5px solid #1e40af;
+    transition: all 0.2s ease;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+  }
+
+  .back-link:hover {
+    background: #1e40af;
+    color: white;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 6px rgba(30, 64, 175, 0.3);
+  }
+
+  main {
+    flex: 1;
+    padding: 3rem 0;
+  }
+
+  main .container {
+    background: white;
+    border-radius: 16px;
+    padding: 3rem;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+  }
+
+  .content-layout {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  section {
+    padding-bottom: 2rem;
+    border-bottom: 1px solid #e0e0e0;
+  }
+
+  section:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+
+  section h2 {
+    font-size: 2rem;
+    color: #1e40af;
+    margin-bottom: 1.5rem;
+    font-weight: 700;
+  }
+
+  .metadata-item {
+    margin-bottom: 1.75rem;
+    padding-bottom: 1.75rem;
+    border-bottom: 1px solid #f0f0f0;
+  }
+
+  .metadata-item:last-child {
+    margin-bottom: 0;
+    padding-bottom: 0;
+    border-bottom: none;
+  }
+
+  .metadata-label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .metadata-label svg {
+    color: #1e40af;
+    flex-shrink: 0;
+  }
+
+  .metadata-label strong {
+    color: #1e40af;
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+  }
+
+  .metadata-item p {
+    color: #333;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin-left: 26px;
+  }
+
+  .metadata-item a {
+    color: #1e40af;
+    text-decoration: none;
+    word-break: break-all;
+  }
+
+  .metadata-item a:hover {
+    text-decoration: underline;
+    color: #1e3a8a;
+  }
+
+  .terms-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1rem;
+  }
+
+  .term-card {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    text-decoration: none;
+    color: inherit;
+    transition: all 0.2s ease;
+    background: white;
+    height: 100%;
+  }
+
+  .term-card:hover {
+    border-color: #1e40af;
+    box-shadow: 0 6px 12px rgba(30, 64, 175, 0.15);
+    transform: translateY(-2px);
+  }
+
+  .term-card h3 {
+    margin: 0 0 0.5rem 0;
+    font-size: 1rem;
+    color: #1e40af;
+    font-weight: 600;
+  }
+
+  .term-card p {
+    margin: 0 0 0.75rem 0;
+    color: #6b7280;
+    font-size: 0.8rem;
+    line-height: 1.4;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    flex: 1;
+  }
+
+  .sources {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem;
+    margin-top: auto;
+  }
+
+  .source-tag {
+    font-size: 0.65rem;
+    padding: 0.2rem 0.4rem;
+    background: #f3f4f6;
+    color: #6b7280;
+    border-radius: 3px;
+  }
+
+  .no-terms {
+    text-align: center;
+    color: #999;
+    font-style: italic;
+    padding: 2rem 0;
+  }
+
+  footer {
+    flex-shrink: 0;
+    background: white;
+    padding: 2rem 0;
+    text-align: center;
+    margin-top: 3rem;
+    border-top: 1px solid rgba(255,255,255,0.2);
+  }
+
+  footer p {
+    margin: 0;
+    color: #666;
+    font-size: 0.9rem;
+  }
+
+  footer a {
+    color: #1e40af;
+    text-decoration: none;
+    font-weight: 500;
+  }
+
+  footer a:hover {
+    text-decoration: underline;
+    color: #1e3a8a;
+  }
+
+  @media (max-width: 768px) {
+    .header-left {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.25rem;
+    }
+
+    header h1 {
+      font-size: 1.25rem;
+    }
+
+    .resource-name {
+      font-size: 1rem;
+    }
+
+    .terms-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

@@ -1,0 +1,20 @@
+@prefix : <https://usmba.ai/> .
+@prefix grddl: <http://www.w3.org/2003/g/data-view#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+
+:dynamic_systems_development_method a skos:Concept;
+  rdfs:label "dynamic systems development method"@en;
+  dct:creator <https://orcid.org/0009-0002-4140-6464>;
+  skos:definition "A project delivery framework which focuses on fixing cost, quality, and time at the beginning while contingency is managed by varying the features to be delivered."@en;
+  skos:inScheme :iiba-babok-terms;
+  skos:topConceptOf :iiba-babok-terms;
+  skos:prefLabel "dynamic systems development method"@en;
+  skos:altLabel "DSDM"@en;
+  dct:source :IIBA_BABOK_Guide_v3 .

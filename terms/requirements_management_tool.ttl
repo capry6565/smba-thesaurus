@@ -1,0 +1,19 @@
+@prefix : <https://usmba.ai/> .
+@prefix grddl: <http://www.w3.org/2003/g/data-view#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+
+:requirements_management_tool a skos:Concept;
+  rdfs:label "requirements management tool"@en;
+  dct:creator <https://orcid.org/0009-0002-4140-6464>;
+  skos:definition "Special-purpose software that provides support for any combination of the following capabilities: elicitation and collaboration, requirements modelling and/or specification, requirements traceability, versioning and baselining, attribute definition for tracking and monitoring, document generation, and requirements change control."@en;
+  skos:inScheme :iiba-babok-terms;
+  skos:topConceptOf :iiba-babok-terms;
+  skos:prefLabel "requirements management tool"@en;
+  dct:source :IIBA_BABOK_Guide_v3 .

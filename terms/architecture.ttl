@@ -1,17 +1,22 @@
+@prefix : <https://usmba.ai/> .
+@prefix grddl: <http://www.w3.org/2003/g/data-view#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 @prefix skos: <http://www.w3.org/2004/02/skos/core#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix dct: <http://purl.org/dc/terms/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
 
-:architecture 
-  rdf:type skos:Concept ;
-  skos:inScheme "http://usmba.ai/terms" ;
-  skos:topConceptOf "http://usmba.ai/terms" ;
-  rdfs:label "architecture" ;
-  skos:prefLabel "Architecture"@en ;
-  skos:definition "The design, structure, and behaviour of the current and future states of a structure in terms of its components, and the interaction between those components. See also business architecture, enterprise architecture, and requirements architecture."@en ;
-  skos:scopeNote "Use this concept to describe the overall structure, design, and interaction of system components, particularly in IT and business analysis contexts. It serves as a general term encompassing more specific forms such as business architecture, enterprise architecture, and requirements architecture, each of which can be modeled as a narrower concept."@en ;
-  skos:narrower :business_architecture, :enterprise_architecture, :requirements_architecture ;
-  dct:source "https://www.iiba.org/career-resources/a-business-analysis-professionals-foundation-for-success/babok/glossary/" ;
-  dct:creator "Aleksandr Belin (en)" ;
-  dct:creator "[ORCID: 0009-0002-4140-6464]" .
+:architecture a skos:Concept;
+  rdfs:label "architecture"@en;
+  dct:creator <https://orcid.org/0009-0002-4140-6464>;
+  skos:definition "The design, structure, and behaviour of the current and future states of a structure in terms of its components, and the interaction between those components. See also business architecture, enterprise architecture, and requirements architecture."@en;
+  skos:scopeNote "Use this concept to describe the overall structure, design, and interaction of system components, particularly in IT and business analysis contexts. It serves as a general term encompassing more specific forms such as business architecture, enterprise architecture, and requirements architecture, each of which can be modeled as a narrower concept."@en;
+  skos:inScheme :iiba-babok-terms;
+  skos:topConceptOf :iiba-babok-terms;
+  skos:prefLabel "architecture"@en;
+  skos:narrower <https://usmba.ai/business_architecture>, <https://usmba.ai/enterprise_architecture>,
+    <https://usmba.ai/requirements_architecture>;
+  dct:source :IIBA_BABOK_Guide_v3 .

@@ -1,0 +1,20 @@
+@prefix : <https://usmba.ai/> .
+@prefix grddl: <http://www.w3.org/2003/g/data-view#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+
+:commercial_off-the-shelf a skos:Concept;
+  rdfs:label "commercial off-the-shelf"@en;
+  dct:creator <https://orcid.org/0009-0002-4140-6464>;
+  skos:definition "A prepackaged solution available in the marketplace which address all or most of the common needs of a large group of buyers of those solutions. A commercial off-the-shelf solution may require some configuration to meet the specific needs of the enterprise."@en;
+  skos:inScheme :iiba-babok-terms;
+  skos:topConceptOf :iiba-babok-terms;
+  skos:prefLabel "commercial off-the-shelf"@en;
+  skos:altLabel "COTS"@en;
+  dct:source :IIBA_BABOK_Guide_v3 .

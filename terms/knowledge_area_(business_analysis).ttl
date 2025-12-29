@@ -1,0 +1,22 @@
+@prefix : <https://usmba.ai/> .
+@prefix grddl: <http://www.w3.org/2003/g/data-view#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+
+<https://usmba.ai/iiba_babok_guide_knowledge_area_(business_analysis)> a skos:Concept;
+  rdfs:label "knowledge area (business analysis)"@en;
+  dct:creator <https://orcid.org/0009-0002-4140-6464>;
+  skos:definition "An area of expertise that includes several specific business analysis tasks."@en;
+  skos:scopeNote """Use this concept when referring to a defined domain of business analysis expertise that groups related tasks, techniques, and competencies under a common purpose.
+In the BABOK® Guide, knowledge areas represent major sections of the discipline, such as Elicitation and Collaboration or Requirements Analysis and Design Definition.
+Not to be used for academic or organizational knowledge areas outside the business analysis framework."""@en;
+  skos:inScheme :iiba-babok-terms;
+  skos:topConceptOf :iiba-babok-terms;
+  skos:prefLabel "knowledge area (business analysis)"@en;
+  dct:source :IIBA_BABOK_Guide_v3 .

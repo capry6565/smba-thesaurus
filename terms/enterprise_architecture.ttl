@@ -9,14 +9,11 @@
 @prefix foaf: <http://xmlns.com/foaf/0.1/> .
 @prefix dc: <http://purl.org/dc/elements/1.1/> .
 
-:enterprise_architecture 
-  rdf:type skos:Concept ;
-  rdfs:label "enterprise architecture"@en ;
-  skos:prefLabel "Enterprise Architecture"@en ;
-  skos:definition "A description of the business processes, information technology, people, operations, information, and projects of an enterprise and the relationships between them."@en ;
-  skos:inScheme :iiba-terms ;
-  skos:topConceptOf :iiba-terms ;
-  skos:broader :architecture ;
-  dct:creator <https://orcid.org/0009-0002-4140-6464> ;
-  dct:source "https://www.iiba.org/career-resources/a-business-analysis-professionals-foundation-for-success/babok/glossary/"@en ;
-  dct:created "2025-01-24"^^xsd:date .
+:enterprise_architecture a skos:Concept;
+  rdfs:label "enterprise architecture"@en;
+  dct:creator <https://orcid.org/0009-0002-4140-6464>;
+  skos:definition "A description of the business processes, information technology, people, operations, information, and projects of an enterprise and the relationships between them."@en;
+  skos:inScheme :iiba-babok-terms;
+  skos:topConceptOf :iiba-babok-terms;
+  skos:broader <https://usmba.ai/architecture>;
+  dct:source :IIBA_BABOK_Guide_v3 .

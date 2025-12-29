@@ -9,15 +9,12 @@
 @prefix foaf: <http://xmlns.com/foaf/0.1/> .
 @prefix dc: <http://purl.org/dc/elements/1.1/> .
 
-:requirements_architecture 
-  rdf:type skos:Concept ;
-  rdfs:label "requirements architecture"@en ;
-  skos:prefLabel "Requirements Architecture"@en ;
-  skos:definition "The requirements of an initiative and the interrelationships between these requirements."@en ;
-  skos:inScheme :iiba-terms ;
-  skos:topConceptOf :iiba-terms ;
-  skos:broader :architecture ;
-  dct:hasPart :requirement ;
-  dct:creator <https://orcid.org/0009-0002-4140-6464> ;
-  dct:source "https://www.iiba.org/career-resources/a-business-analysis-professionals-foundation-for-success/babok/glossary/"@en ;
-  dct:created "2025-01-24"^^xsd:date .
+:requirements_architecture a skos:Concept;
+  rdfs:label "requirements architecture"@en;
+  dct:creator <https://orcid.org/0009-0002-4140-6464>;
+  skos:definition "The requirements of an initiative and the interrelationships between these requirements."@en;
+  skos:inScheme :iiba-babok-terms;
+  skos:topConceptOf :iiba-babok-terms;
+  skos:broader <https://usmba.ai/architecture>;
+  dct:source :IIBA_BABOK_Guide_v3;
+  dct:hasPart <https://usmba.ai/requirement> .

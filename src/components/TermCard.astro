@@ -1,0 +1,85 @@
+---
+interface Props {
+  id: string;
+  title: string;
+  description: string;
+  sources?: string[];
+  letter?: string;
+}
+
+const { id, title, description, sources = [], letter = '' } = Astro.props;
+const url = `/terms/${id}`;
+---
+
+<a
+  href={url}
+  class="term-card"
+  data-letter={letter}
+  data-sources={JSON.stringify(sources)}
+  data-title={title.toLowerCase()}
+>
+  <h3>{title}</h3>
+  <p>{description}</p>
+  {sources.length > 0 && (
+    <div class="sources">
+      {sources.map(source => (
+        <span class="source-tag">{source}</span>
+      ))}
+    </div>
+  )}
+</a>
+
+<style>
+  .term-card {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    text-decoration: none;
+    color: inherit;
+    transition: all 0.2s ease;
+    background: white;
+    height: 100%;
+  }
+
+  .term-card:hover {
+    border-color: #1e40af;
+    box-shadow: 0 6px 12px rgba(30, 64, 175, 0.15);
+    transform: translateY(-2px);
+  }
+
+  .term-card h3 {
+    margin: 0 0 0.5rem 0;
+    font-size: 1rem;
+    color: #1e40af;
+    font-weight: 600;
+  }
+
+  .term-card p {
+    margin: 0 0 0.75rem 0;
+    color: #64748b;
+    font-size: 0.8rem;
+    line-height: 1.4;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    flex: 1;
+  }
+
+  .sources {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem;
+    margin-top: auto;
+  }
+
+  .source-tag {
+    font-size: 0.65rem;
+    padding: 0.2rem 0.4rem;
+    background: #f1f5f9;
+    color: #475569;
+    border-radius: 3px;
+  }
+</style>

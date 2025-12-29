@@ -5,6 +5,7 @@ import parseRdf from "../../utils/parseRdf.js";
 import Graph from "../../components/Graph.astro";
 import Prism from "prismjs";
 import "prismjs/components/prism-turtle.js";
+import externalResources from "../../data/externalResources.json";
 
 export async function getStaticPaths() {
   const files = fs.readdirSync("./terms").filter(f => f.endsWith(".ttl"));
@@ -19,9 +20,41 @@ const ttlText = fs.readFileSync(filePath, "utf8");
 
 const { triples, nodes, edges } = parseRdf(ttlText);
 
-const mainTerm = triples.find(t => 
+const mainTerm = triples.find(t =>
   t.predicate.includes('prefLabel') || t.predicate.includes('label')
 )?.object.replace(/@\w+$/, '') || id;
+
+// Collect all source IDs for graph navigation
+const allSourceIds = new Set([
+  ...externalResources.standards.map(s => s.id),
+  ...externalResources.bibliographicResources.map(s => s.id),
+  ...externalResources.publishers.map(s => s.id),
+  ...externalResources.contributors.map(s => s.id)
+]);
+
+// Get the main subject URI
+const mainSubjectUri = triples[0]?.subject || `:${id}`;
+
+// Parse original RDF to get raw object URIs (not cleaned)
+import * as $rdf from 'rdflib';
+const store = $rdf.graph();
+$rdf.parse(ttlText, store, 'http://example.org/', 'text/turtle');
+
+// Create a map of cleaned -> original URIs
+const objectUriMap = new Map();
+store.statements.forEach(statement => {
+  const rawObject = statement.object.value;
+  const cleanedObject = rawObject
+    .replace('http://www.w3.org/1999/02/22-rdf-syntax-ns#', 'rdf:')
+    .replace('http://www.w3.org/2004/02/skos/core#', 'skos:')
+    .replace('http://purl.org/dc/terms/', 'dct:')
+    .replace('http://www.w3.org/2000/01/rdf-schema#', 'rdfs:')
+    .replace('http://example.org/', ':')
+    .replace('https://usmba.ai/', ':')
+    .replace('http://usmba.ai/', ':');
+
+  objectUriMap.set(cleanedObject, rawObject);
+});
 
 // Показываем ВСЕ триплы без фильтрации (Semantic Web методология)
 const properties = [];
@@ -29,17 +62,24 @@ const properties = [];
 const attributeMap = new Map();
 triples.forEach(triple => {
   const attr = triple.predicate;
-  
+
   if (!attributeMap.has(attr)) {
     attributeMap.set(attr, []);
   }
-  attributeMap.get(attr).push(triple.object);
+  attributeMap.get(attr).push({
+    value: triple.object,
+    subject: triple.subject,
+    rawUri: objectUriMap.get(triple.object) || triple.object
+  });
 });
 
-Array.from(attributeMap.entries()).forEach(([attr, values]) => {
+Array.from(attributeMap.entries()).forEach(([attr, items]) => {
   properties.push({
     attribute: attr,
-    value: values.length > 1 ? values.join(', ') : values[0]
+    value: items.map(i => i.value).join(', '),
+    subject: items[0].subject,
+    objects: items.map(i => i.value),
+    rawObjects: items.map(i => i.rawUri)
   });
 });
 ---
@@ -50,13 +90,24 @@ Array.from(attributeMap.entries()).forEach(([attr, values]) => {
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{mainTerm} | SMBA Thesaurus</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css">
 </head>
 <body>
   <div class="container">
     <header>
       <div class="header-left">
-        <h1>⚡ SMBA Thesaurus</h1>
+        <div class="header-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M9 3H4C3.44772 3 3 3.44772 3 4V9C3 9.55228 3.44772 10 4 10H9C9.55228 10 10 9.55228 10 9V4C10 3.44772 9.55228 3 9 3Z" stroke="#1e40af" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M20 3H15C14.4477 3 14 3.44772 14 4V9C14 9.55228 14.4477 10 15 10H20C20.5523 10 21 9.55228 21 9V4C21 3.44772 20.5523 3 20 3Z" stroke="#1e40af" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M9 14H4C3.44772 14 3 14.4477 3 15V20C3 20.5523 3.44772 21 4 21H9C9.55228 21 10 20.5523 10 20V15C10 14.4477 9.55228 14 9 14Z" stroke="#1e40af" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M20 14H15C14.4477 14 14 14.4477 14 15V20C14 20.5523 14.4477 21 15 21H20C20.5523 21 21 20.5523 21 20V15C21 14.4477 20.5523 14 20 14Z" stroke="#1e40af" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <span class="breadcrumb-text">SMBA Thesaurus</span>
         <span class="term-name">/ {mainTerm}</span>
       </div>
       <a href="/" class="back-link">
@@ -67,7 +118,15 @@ Array.from(attributeMap.entries()).forEach(([attr, values]) => {
     <div class="term-layout">
       <div class="left-column">
         <section class="triples-section">
-          <h3><span class="icon">◆</span> Properties</h3>
+          <h3>
+            <span class="icon">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect x="4" y="4" width="8" height="8" rx="1" stroke="currentColor" stroke-width="1.5"/>
+                <path d="M8 2V4M8 12V14M2 8H4M12 8H14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+              </svg>
+            </span>
+            Properties
+          </h3>
           <div class="table-wrapper">
             <table>
               <thead>
@@ -78,7 +137,13 @@ Array.from(attributeMap.entries()).forEach(([attr, values]) => {
               </thead>
               <tbody>
                 {properties.map(prop => (
-                  <tr>
+                  <tr
+                    class="property-row"
+                    data-subject={prop.subject}
+                    data-predicate={prop.attribute}
+                    data-objects={JSON.stringify(prop.objects)}
+                    data-raw-objects={JSON.stringify(prop.rawObjects)}
+                  >
                     <td>{prop.attribute}</td>
                     <td class="value-cell">{prop.value}</td>
                   </tr>
@@ -147,6 +212,102 @@ Array.from(attributeMap.entries()).forEach(([attr, values]) => {
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-turtle.min.js"></script>
+
+  <script define:vars={{ sourceIds: Array.from(allSourceIds) }}>
+    // Make source IDs available globally for graph navigation
+    window.sourceIds = new Set(sourceIds);
+  </script>
+
+  <script>
+    // Bidirectional highlighting between table rows and graph
+    document.addEventListener('DOMContentLoaded', () => {
+      const propertyRows = document.querySelectorAll('.property-row');
+      let highlightTimeout = null;
+
+      // Wait for graph to be ready
+      const waitForGraph = setInterval(() => {
+        if (window.graphNetwork && window.graphData) {
+          clearInterval(waitForGraph);
+          initializeHighlighting();
+        }
+      }, 100);
+
+      function initializeHighlighting() {
+        const network = window.graphNetwork;
+        const data = window.graphData;
+
+        // Table row hover -> highlight ONLY graph nodes (not edges)
+        propertyRows.forEach(row => {
+          row.addEventListener('mouseenter', () => {
+            const rawObjects = JSON.parse(row.dataset.rawObjects || '[]');
+
+            // Find matching nodes using raw URIs
+            const allNodes = data.nodes.get();
+            const matchingNodes = [];
+
+            allNodes.forEach(node => {
+              // Match using raw URIs
+              if (rawObjects.includes(node.id)) {
+                matchingNodes.push(node.id);
+              }
+            });
+
+            console.log('Row hover -> raw objects:', rawObjects);
+            console.log('Row hover -> matching nodes:', matchingNodes);
+
+            // Highlight ONLY nodes in graph (no edges, no focus/zoom)
+            if (matchingNodes.length > 0) {
+              network.selectNodes(matchingNodes, false);
+            }
+
+            // Highlight the row
+            row.style.background = '#dbeafe';
+            row.style.borderLeft = '4px solid #1e40af';
+          });
+
+          row.addEventListener('mouseleave', () => {
+            // Clear selection immediately
+            network.unselectAll();
+
+            // Remove row highlight
+            row.style.background = '';
+            row.style.borderLeft = '';
+          });
+        });
+
+        // Graph node hover -> highlight table row
+        network.on('hoverNode', (params) => {
+          clearRowHighlights();
+          const nodeId = params.node;
+
+          console.log('Node hover -> node ID:', nodeId);
+
+          propertyRows.forEach(row => {
+            const rawObjects = JSON.parse(row.dataset.rawObjects || '[]');
+
+            console.log('Checking row raw objects:', rawObjects);
+
+            // Highlight row if this node is in the raw objects
+            if (rawObjects.includes(nodeId)) {
+              row.style.background = '#e3f2fd';
+              row.style.borderLeft = '4px solid #2196F3';
+            }
+          });
+        });
+
+        network.on('blurNode', () => {
+          clearRowHighlights();
+        });
+
+        function clearRowHighlights() {
+          propertyRows.forEach(row => {
+            row.style.background = '';
+            row.style.borderLeft = '';
+          });
+        }
+      }
+    });
+  </script>
 </body>
 </html>
 
@@ -164,9 +325,9 @@ Array.from(attributeMap.entries()).forEach(([attr, values]) => {
   }
 
   body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    background: #f5f5f5;
-    color: #333;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: #f1f5f9;
+    color: #0f172a;
     line-height: 1.6;
     display: flex;
     flex-direction: column;
@@ -180,9 +341,15 @@ Array.from(attributeMap.entries()).forEach(([attr, values]) => {
     padding: 0.75rem 1rem;
   }
 
+  @media (min-width: 1400px) {
+    .container {
+      max-width: 96%;
+    }
+  }
+
   @media (min-width: 1920px) {
     .container {
-      max-width: 1900px;
+      max-width: 1800px;
     }
   }
 
@@ -197,23 +364,29 @@ Array.from(attributeMap.entries()).forEach(([attr, values]) => {
 
   .header-left {
     display: flex;
-    align-items: baseline;
+    align-items: center;
     gap: 1rem;
+    flex-wrap: wrap;
   }
 
-  header h1 {
-    font-size: 1.2rem;
-    color: #2B7CE9;
-    margin: 0;
+  .header-icon {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+  }
+
+  .breadcrumb-text {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: #64748b;
+    letter-spacing: -0.01em;
   }
 
   .term-name {
-    font-size: 1.8rem;
+    font-size: 1.5rem;
     font-weight: 700;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    color: #1e40af;
+    letter-spacing: -0.02em;
   }
 
   .back-link {
@@ -221,22 +394,22 @@ Array.from(attributeMap.entries()).forEach(([attr, values]) => {
   align-items: center;
   padding: 0.5rem 1rem;
   background: white;
-  color: #667eea;
+  color: #1e40af;
   text-decoration: none;
   font-weight: 700;
   font-size: 0.9rem;
   letter-spacing: 0.3px;
   border-radius: 6px;
-  border: 1.5px solid #667eea;
+  border: 1.5px solid #1e40af;
   transition: all 0.2s ease;
   box-shadow: 0 1px 3px rgba(0,0,0,0.08);
 }
 
 .back-link:hover {
-  background: #667eea;
+  background: #1e40af;
   color: white;
   transform: translateY(-1px);
-  box-shadow: 0 2px 6px rgba(102, 126, 234, 0.3);
+  box-shadow: 0 2px 6px rgba(30, 64, 175, 0.3);
 }
 
 .back-link:active {
@@ -287,7 +460,7 @@ Array.from(attributeMap.entries()).forEach(([attr, values]) => {
 
   .icon {
     font-size: 1rem;
-    color: #667eea;
+    color: #1e40af;
   }
 
   .triples-section {
@@ -315,9 +488,9 @@ Array.from(attributeMap.entries()).forEach(([attr, values]) => {
   }
 
   th {
-    background: linear-gradient(to bottom, #667eea 3px, #f8f9fa 3px);
+    background: linear-gradient(to bottom, #1e40af 3px, #f8f9fa 3px);
     font-weight: 700;
-    color: #333;
+    color: #0f172a;
     font-size: 0.85rem;
     text-transform: uppercase;
     letter-spacing: 0.5px;
@@ -326,12 +499,18 @@ Array.from(attributeMap.entries()).forEach(([attr, values]) => {
     z-index: 1;
   }
 
+  tbody tr {
+    transition: background-color 0.2s ease, border-left 0.2s ease;
+    border-left: 4px solid transparent;
+  }
+
   tbody tr:nth-child(even) {
     background: #f8f9fa;
   }
 
   tbody tr:hover {
-    background: #e3f2fd;
+    background: #e3f2fd !important;
+    cursor: pointer;
   }
 
   td {
@@ -343,7 +522,7 @@ Array.from(attributeMap.entries()).forEach(([attr, values]) => {
 
   .metadata-section {
     background: #f8f9fa;
-    border-left: 4px solid #667eea;
+    border-left: 4px solid #1e40af;
     flex: 0 0 auto;
   }
 
@@ -375,13 +554,14 @@ Array.from(attributeMap.entries()).forEach(([attr, values]) => {
   }
 
   .metadata-value a {
-    color: #667eea;
+    color: #1e40af;
     text-decoration: none;
     word-break: break-all;
   }
 
   .metadata-value a:hover {
     text-decoration: underline;
+    color: #1e3a8a;
   }
 
   .graph-section {
@@ -447,13 +627,14 @@ Array.from(attributeMap.entries()).forEach(([attr, values]) => {
   }
 
   footer a {
-    color: #667eea;
+    color: #1e40af;
     text-decoration: none;
     font-weight: 500;
   }
 
   footer a:hover {
     text-decoration: underline;
+    color: #1e3a8a;
   }
 
   @media (max-width: 1024px) {

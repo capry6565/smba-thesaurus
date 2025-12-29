@@ -1,0 +1,22 @@
+@prefix : <https://usmba.ai/> .
+@prefix grddl: <http://www.w3.org/2003/g/data-view#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+
+<https://usmba.ai/iiba_babok_guide_product_(business_analysis)> a skos:Concept;
+  rdfs:label "product (business analysis)"@en;
+  dct:creator <https://orcid.org/0009-0002-4140-6464>;
+  skos:definition "A solution or component of a solution that is the result of an initiative."@en;
+  skos:scopeNote """Use this concept when referring to a solution or solution component created as the outcome of a business analysis or change initiative.
+It encompasses both complete solutions and partial deliverables (e.g., features, services, or system components).
+Not to be used for commercial products marketed externally, but for outputs of initiatives addressing business needs."""@en;
+  skos:inScheme :iiba-babok-terms;
+  skos:topConceptOf :iiba-babok-terms;
+  skos:prefLabel "product (business analysis)"@en;
+  dct:source :Agile_Extension_to_the_BABOK_Guide, :IIBA_BABOK_Guide_v3 .

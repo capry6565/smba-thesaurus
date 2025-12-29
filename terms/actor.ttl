@@ -1,0 +1,22 @@
+@prefix : <https://usmba.ai/> .
+@prefix grddl: <http://www.w3.org/2003/g/data-view#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+
+:actor a skos:Concept;
+  rdfs:label "actor"@en;
+  dct:contributor <https://orcid.org/0009-0000-6729-5489>;
+  dct:creator <https://orcid.org/0009-0002-4140-6464>;
+  skos:definition "A human, device, or system that plays some specified role in interacting with a solution."@en;
+  skos:scopeNote "Business analysis. Apply this concept to contexts where an entity performs a role through direct interaction with the solution. It is distinct from 'Stakeholder', which may include those without direct involvement."@en;
+  skos:inScheme :iiba-babok-terms;
+  skos:topConceptOf :iiba-babok-terms;
+  skos:prefLabel "actor"@en;
+  skos:note "This concept is polysemous. Other senses of 'Actor' exist in UML modeling and performing arts, but this vocabulary adopts the business analysis interpretation."@en;
+  dct:source :IIBA_BABOK_Guide_v3 .

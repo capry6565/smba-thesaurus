@@ -1,0 +1,21 @@
+@prefix : <https://usmba.ai/> .
+@prefix grddl: <http://www.w3.org/2003/g/data-view#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+
+:business-ba a skos:Concept;
+  rdfs:label "business-ba"@en;
+  dct:creator <https://orcid.org/0009-0002-4140-6464>;
+  skos:definition "See enterprise"@en;
+  skos:scopeNote "Use this concept to redirect interpretation to “enterprise” as defined in business analysis contexts. In the BABOK® Guide and similar standards, the term “business” is often used informally but typically refers to the broader notion of an enterprise - a system of one or more organizations working toward shared goals. Prefer using the term enterprise for semantic clarity."@en;
+  skos:inScheme :iiba-babok-terms;
+  skos:topConceptOf :iiba-babok-terms;
+  skos:prefLabel "business (business analysis)"@en;
+  skos:exactMatch <https://usmba.ai/enterprise>;
+  dct:source :IIBA_BABOK_Guide_v3 .

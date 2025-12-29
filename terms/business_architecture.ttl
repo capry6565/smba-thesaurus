@@ -9,15 +9,12 @@
 @prefix foaf: <http://xmlns.com/foaf/0.1/> .
 @prefix dc: <http://purl.org/dc/elements/1.1/> .
 
-:business_architecture 
-  rdf:type skos:Concept ;
-  rdfs:label "business architecture"@en ;
-  skos:prefLabel "Business Architecture"@en ;
-  skos:definition "The design, structure, and behavior of the current and future states of an enterprise to provide a common understanding of the organization. It is used to align the enterprise's strategic objectives and tactical demands."@en ;
-  skos:inScheme :iiba-terms ;
-  skos:topConceptOf :iiba-terms ;
-  skos:broader :architecture ;
-  dct:hasPart :requirement ;
-  dct:creator <https://orcid.org/0009-0002-4140-6464> ;
-  dct:source "https://www.iiba.org/career-resources/a-business-analysis-professionals-foundation-for-success/babok/glossary/"@en ;
-  dct:created "2025-01-24"^^xsd:date .
+:business_architecture a skos:Concept;
+  rdfs:label "business architecture"@en;
+  dct:creator <https://orcid.org/0009-0002-4140-6464>, :Business_Analysis_Competency_Model_v4;
+  skos:definition "The design, structure, and behavior of the current and future states of an enterprise to provide a common understanding of the organization. It is used to align the enterprise’s strategic objectives and tactical demands."@en;
+  skos:inScheme :iiba-babok-terms;
+  skos:topConceptOf :iiba-babok-terms;
+  skos:prefLabel "business architecture"@en;
+  skos:broader <https://usmba.ai/architecture>;
+  dct:source :IIBA_BABOK_Guide_v3 .

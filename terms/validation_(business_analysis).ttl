@@ -1,0 +1,23 @@
+@prefix : <https://usmba.ai/> .
+@prefix grddl: <http://www.w3.org/2003/g/data-view#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+
+<https://usmba.ai/iiba_babok_guide_validation_(business_analysis)> a skos:Concept;
+  rdfs:label "validation (business analysis)"@en;
+  dct:creator <https://orcid.org/0009-0002-4140-6464>;
+  skos:definition "The process of checking that a deliverable is suitable for its intended use. See also requirements validation."@en;
+  skos:scopeNote """Use this concept when referring to the process of assessing whether a deliverable, requirement, or solution meets stakeholder needs and is fit for its intended purpose.
+Validation focuses on confirming that the right solution has been built, not merely that it has been built correctly.
+See also requirements validation for validation activities specific to requirement quality and suitability."""@en;
+  skos:inScheme :iiba-babok-terms;
+  skos:topConceptOf :iiba-babok-terms;
+  skos:prefLabel "validation (business analysis)"@en;
+  dct:source :IIBA_BABOK_Guide_v3, :Business_Analysis_Competency_Model_v4;
+  dct:relation <https://usmba.ai/requirements_validation> .

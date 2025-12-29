@@ -1,0 +1,2253 @@
+[
+  {
+    "id": "acceptance_criteria",
+    "title": "acceptance criteria",
+    "description": "Criteria associated with requirements, products, or the delivery cycle that must be met in order to achieve stakeholder acceptance.",
+    "sources": [
+      "Agile Extension To The BABOK Guide",
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "A",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "actor",
+    "title": "actor",
+    "description": "A human, device, or system that plays some specified role in interacting with a solution.",
+    "sources": [
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "A",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "adaptive_approach",
+    "title": "adaptive approach",
+    "description": "An approach where the solution evolves based on a cycle of learning and discovery, with feedback loops which encourage making decisions as late as possible.",
+    "sources": [
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "A",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "allocation",
+    "title": "allocation",
+    "description": "",
+    "sources": [
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "A",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "artifact",
+    "title": "artifact",
+    "description": "Any solution-relevant object that is created as part of business analysis efforts.",
+    "sources": [
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "A",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "assumption",
+    "title": "assumption",
+    "description": "An influencing factor that is believed to be true but has not been confirmed to be accurate, or that could be true now but may not be in the future.",
+    "sources": [
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "A",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "behavioural_business_rule",
+    "title": "behavioural business rule",
+    "description": "BABOK: A business rule that places an obligation (or prohibition) on conduct, action, practice, or procedure; a business rule whose purpose is to shape (govern) day-to-day business activity. Also known as operative rule.",
+    "sources": [
+      "IIBA BABOK Guide V3",
+      "SBVR Specification"
+    ],
+    "letter": "B",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "behavioural_characteristics",
+    "title": "behavioural characteristics",
+    "description": "Your demonstrated character traits on the job that are observed by others or by you.",
+    "sources": [
+      "IIBA BABOK Guide V3",
+      "Business Analysis Competency Model V4"
+    ],
+    "letter": "B",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "benchmarking",
+    "title": "benchmarking",
+    "description": "A comparison of a decision, process, service, or system's cost, time, quality, or other metrics to those of leading peers to identify opportunities for improvement.",
+    "sources": [
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "B",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "body_of_knowledge",
+    "title": "body of knowledge",
+    "description": "The aggregated knowledge and generally accepted practices on a topic.",
+    "sources": [
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "B",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "brainstorming",
+    "title": "brainstorming",
+    "description": "A team activity that seeks to produce a broad or diverse set of options through the rapid and uncritical generation of ideas.",
+    "sources": [
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "B",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "business-ba",
+    "title": "business (business analysis)",
+    "description": "See enterprise",
+    "sources": [
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "B",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "business_analysis",
+    "title": "business analysis",
+    "description": "The practice of enabling change in the context of an enterprise by defining needs and recommending solutions that deliver value to stakeholders.",
+    "sources": [
+      "IIBA BABOK Guide V3",
+      "Business Analysis Competency Model V4"
+    ],
+    "letter": "B",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "business_analysis_approach",
+    "title": "business analysis approach",
+    "description": "The set of processes, rules, guidelines, heuristics, and activities that are used to perform business analysis in a specific context.",
+    "sources": [
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "B",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "business_analysis_communication_plan",
+    "title": "business analysis communication plan",
+    "description": "A description of the types of communication the business analyst will perform during business analysis, the recipients of those communications, and the form and frequency of those communications.",
+    "sources": [
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "B",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "business_analysis_effort",
+    "title": "business analysis effort",
+    "description": "The scope of activities a business analyst is engaged in during the life cycle of an initiative.",
+    "sources": [
+      "IIBA BABOK Guide V3",
+      "Business Analysis Competency Model V4"
+    ],
+    "letter": "B",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "business_analysis_information",
+    "title": "business analysis information",
+    "description": "Any kind of information at any level of detail that is used as an input to business analysis work, or as an output of business analysis work.",
+    "sources": [
+      "IIBA BABOK Guide V3",
+      "Business Analysis Competency Model V4"
+    ],
+    "letter": "B",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "business_analysis_package",
+    "title": "business analysis package",
+    "description": "A document, presentation, or other collection of text, matrices, diagrams and models, representing business analysis information.",
+    "sources": [
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "B",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "business_analysis_plan",
+    "title": "business analysis plan",
+    "description": "A description of the planned activities the business analyst will execute in order to perform the business analysis work involved in a specific initiative.",
+    "sources": [
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "B",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "business_analyst",
+    "title": "business analyst",
+    "description": "Any person who performs business analysis, no matter their job title or organizational role.",
+    "sources": [
+      "IIBA BABOK Guide V3",
+      "Business Analysis Competency Model V4"
+    ],
+    "letter": "B",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "business_case",
+    "title": "business case",
+    "description": "A justification for a course of action based on the benefits to be realized by using the proposed solution, as compared to the cost, effort, and other considerations to acquire and live with that solution.",
+    "sources": [
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "B",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "business_decision",
+    "title": "business decision",
+    "description": "A decision that can be made based on strategy, executive judgment, consensus, and business rules, and that is generally made in response to events or at defined points in a business process.",
+    "sources": [
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "B",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "business_domain",
+    "title": "business domain",
+    "description": "See domain.",
+    "sources": [
+      "Agile Extension To The BABOK Guide",
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "B",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "business_economic",
+    "title": "business (business world)",
+    "description": "An economic system where any commercial, industrial, or professional activity is performed for profit.",
+    "sources": [
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "B",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "business_goal",
+    "title": "business goal",
+    "description": "A state or condition that an organization is seeking to establish and maintain, usually expressed qualitatively rather than quantitatively.",
+    "sources": [
+      "Agile Extension To The BABOK Guide",
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "B",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "business_need",
+    "title": "business need",
+    "description": "A problem or opportunity of strategic or tactical importance to be addressed.",
+    "sources": [
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "B",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "business_objective",
+    "title": "business objective",
+    "description": "An objective, measurable result to indicate that a business goal has been achieved.",
+    "sources": [
+      "Agile Extension To The BABOK Guide",
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "B",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "business_policy",
+    "title": "business policy",
+    "description": "A non-practicable directive that controls and influences the actions of an enterprise.",
+    "sources": [
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "B",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "business_problem",
+    "title": "business problem",
+    "description": "An issue of strategic or tactical importance preventing an enterprise or organization from achieving its goals.",
+    "sources": [
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "B",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "business_process",
+    "title": "business process",
+    "description": "An end-to-end set of activities which collectively responds to an event, and transforms information, materials, and other resources into outputs that deliver value directly to the customers of the process. It may be internal to an organization, or it may span several organizations.",
+    "sources": [
+      "IIBA BABOK Guide V3",
+      "Business Analysis Competency Model V4"
+    ],
+    "letter": "B",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "business_process_management",
+    "title": "business process management",
+    "description": "A management discipline that determines how manual and automated processes are created, modified, cancelled, and governed.",
+    "sources": [
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "B",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "business_process_re-engineering",
+    "title": "business process re-engineering",
+    "description": "Rethinking and redesigning business processes to generate improvements in performance measures.",
+    "sources": [
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "B",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "business_requirement",
+    "title": "business requirement",
+    "description": "A representation of goals, objectives and outcomes that describe why a change has been initiated and how success will be assessed.",
+    "sources": [
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "B",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "business_rule",
+    "title": "business rule",
+    "description": "SBVR: rule that is practicable and that is under business jurisdiction",
+    "sources": [
+      "Agile Extension To The BABOK Guide",
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "B",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "capability",
+    "title": "capability",
+    "description": "The set of activities the enterprise performs, the knowledge it has, the products and services it provides, the functions it supports, and the methods it uses to make decisions.",
+    "sources": [
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "C",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "cause-and-effect_diagram",
+    "title": "cause-and-effect diagram",
+    "description": "See fishbone diagram.",
+    "sources": [
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "C",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "change",
+    "title": "change",
+    "description": "The act of transformation in response to a need.",
+    "sources": [
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "C",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "change_agent",
+    "title": "change agent",
+    "description": "One who is a catalyst for change.",
+    "sources": [
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "C",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "change_control",
+    "title": "change control",
+    "description": "Controlling changes to requirements and designs so that the impact of requested changes is understood and agreed-to before the changes are made.",
+    "sources": [
+      "IIBA BABOK Guide V3",
+      "Business Analysis Competency Model V4"
+    ],
+    "letter": "C",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "change_management",
+    "title": "change management",
+    "description": "Planned activities, tools, and techniques to address the human side of change during a change initiative, primarily addressing the needs of the people who will be most affected by the change.",
+    "sources": [
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "C",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "change_strategy",
+    "title": "change strategy",
+    "description": "A plan to move from the current state to the future state to achieve the desired business objectives.",
+    "sources": [
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "C",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "change_team",
+    "title": "change team",
+    "description": "A cross-functional group of individuals who are mandated to implement a change. This group may be comprised of product owners, business analysts, developers, project managers, implementation subject matter experts (SMEs), or any other individual with the relevant set of skills and competencies required to implement the change.",
+    "sources": [
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "C",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "checklist_(business_analysis)",
+    "title": "checklist (business analysis)",
+    "description": "A standard set of quality elements that reviewers use for requirements verification.",
+    "sources": [
+      "IIBA BABOK Guide V3",
+      "Business Analysis Competency Model V4"
+    ],
+    "letter": "C",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "collaboration",
+    "title": "collaboration",
+    "description": "The act of two or more people working together towards a common goal.",
+    "sources": [
+      "Agile Extension To The BABOK Guide",
+      "IIBA BABOK Guide V3",
+      "Business Analysis Competency Model V4"
+    ],
+    "letter": "C",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "commercial_off-the-shelf",
+    "title": "commercial off-the-shelf",
+    "description": "A prepackaged solution available in the marketplace which address all or most of the common needs of a large group of buyers of those solutions. A commercial off-the-shelf solution may require some configuration to meet the specific needs of the enterprise.",
+    "sources": [
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "C",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "competitive_analysis",
+    "title": "competitive analysis",
+    "description": "A structured assessment which captures the key characteristics of an industry to predict the long-term profitability prospects and to determine the practices of the most significant competitors.",
+    "sources": [
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "C",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "component",
+    "title": "component",
+    "description": "A uniquely identifiable element of a larger whole that fulfills a clear function.",
+    "sources": [
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "C",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "concept_model",
+    "title": "concept model",
+    "description": "An analysis model that develops the meaning of core concepts for a problem domain, defines their collective structure, and specifies the appropriate vocabulary needed to communicate about it consistently.",
+    "sources": [
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "C",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "constraint_(business_analysis)",
+    "title": "constraint (business analysis)",
+    "description": "An influencing factor that cannot be changed, and that places a limit or restriction on a possible solution or solution option.",
+    "sources": [
+      "Agile Extension To The BABOK Guide",
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "C",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "context",
+    "title": "context",
+    "description": "The circumstances that influence, are influenced by, and provide understanding of the change.",
+    "sources": [
+      "Agile Extension To The BABOK Guide",
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "C",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "core_concept_(business_analysis)",
+    "title": "core_concept_(business_analysis)",
+    "description": "One of six ideas that are fundamental to the practice of business analysis: Change, Need, Solution, Context, Stakeholder, and Value.",
+    "sources": [
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "C",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "cost-benefit_analysis",
+    "title": "cost-benefit analysis",
+    "description": "An analysis which compares and quantifies the financial and non-financial costs of making a change or implementing a solution compared to the benefits gained.",
+    "sources": [
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "C",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "create_read_update_and_delete_matrix",
+    "title": "create, read, update, and delete matrix",
+    "description": "A two-dimensional matrix showing which user roles have permission to access specific information entities, and to create new records in those entities, view the data in existing records, update or modify the data in existing records, or delete existing records. The same type of matrix can be used to show which processes, instead of users, have the create, read, update and delete rights.",
+    "sources": [
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "C",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "customer",
+    "title": "customer",
+    "description": "A stakeholder who uses or may use products or services produced by the enterprise and may have contractual or moral rights that the enterprise is obliged to meet.",
+    "sources": [
+      "Agile Extension To The BABOK Guide",
+      "IIBA BABOK Guide V3",
+      "Business Analysis Competency Model V4"
+    ],
+    "letter": "C",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "decision_analysis",
+    "title": "decision analysis",
+    "description": "An approach to decision making that examines and models the possible consequences of different decisions, and assists in making an optimal decision under conditions of uncertainty.",
+    "sources": [
+      "Agile Extension To The BABOK Guide",
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "D",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "decomposition",
+    "title": "decomposition",
+    "description": "A technique that subdivides a problem into its component parts in order to facilitate analysis and understanding of those components.",
+    "sources": [
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "D",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "definitional_business_rule",
+    "title": "definitional business rule",
+    "description": "BABOK: A rule that indicates something is necessarily true (or untrue); a rule that is intended as a definitional criterion for concepts, knowledge, or information. Also known as a structural rule.",
+    "sources": [
+      "IIBA BABOK Guide V3",
+      "SBVR Specification"
+    ],
+    "letter": "D",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "deliverable",
+    "title": "deliverable",
+    "description": "Any unique and verifiable work product or service that a party has agreed to deliver.",
+    "sources": [
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "D",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "design",
+    "title": "design",
+    "description": "A usable representation of a solution. For more information see Key Terms and Requirements and Designs.",
+    "sources": [
+      "Agile Extension To The BABOK Guide",
+      "IIBA BABOK Guide V3",
+      "Business Analysis Competency Model V4"
+    ],
+    "letter": "D",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "document_analysis_(business_analysis)",
+    "title": "document analysis (business analysis)",
+    "description": "An examination of the documentation of an existing system in order to elicit requirements.",
+    "sources": [
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "D",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "domain",
+    "title": "domain",
+    "description": "The sphere of knowledge that defines a set of common requirements, terminology, and functionality for any program or initiative solving a problem.",
+    "sources": [
+      "Agile Extension To The BABOK Guide",
+      "IIBA BABOK Guide V3",
+      "Business Analysis Competency Model V4"
+    ],
+    "letter": "D",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "domain_subject_matter_expert",
+    "title": "domain subject matter expert",
+    "description": "A stakeholder with in-depth knowledge of a topic relevant to the business need or solution scope.",
+    "sources": [
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "D",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "dynamic_systems_development_method",
+    "title": "dynamic systems development method",
+    "description": "A project delivery framework which focuses on fixing cost, quality, and time at the beginning while contingency is managed by varying the features to be delivered.",
+    "sources": [
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "D",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "elicitation",
+    "title": "elicitation",
+    "description": "Iterative derivation and extraction of information from stakeholders or other sources.",
+    "sources": [
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "E",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "end_user",
+    "title": "end user",
+    "description": "A stakeholder who directly interacts with the solution.",
+    "sources": [
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "E",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "enterprise",
+    "title": "enterprise",
+    "description": "A system of one or more organizations and the solutions they use to pursue a shared set of common goals.",
+    "sources": [
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "E",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "enterprise_readiness_assessment",
+    "title": "enterprise readiness assessment",
+    "description": "An assessment that describes the enterprise is prepared to accept the change associated with a solution and is able to use it effectively.",
+    "sources": [
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "E",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "entity-relationship_diagram",
+    "title": "entity-relationship diagram",
+    "description": "A graphical representation of the entities relevant to a chosen problem domain and the relationships between them.",
+    "sources": [
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "E",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "estimate",
+    "title": "estimate",
+    "description": "A quantitative assessment of a planned outcome, resource requirements, and schedule where uncertainties and unknowns are systematically factored into the assessment.",
+    "sources": [
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "E",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "evaluation",
+    "title": "evaluation",
+    "description": "The systematic and objective assessment of a solution to determine its status and efficacy in meeting objectives over time, and to  identify ways to improve the solution to better meet objectives. See also indicator; metric, monitoring.",
+    "sources": [
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "E",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "event_(business_analysis)",
+    "title": "event (business analysis)",
+    "description": "An occurrence or incident to which an organizational unit, system, or process must respond.",
+    "sources": [
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "E",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "evolutionary_prototype",
+    "title": "evolutionary prototype",
+    "description": "A prototype that is continuously modified and updated in response to feedback from stakeholders.",
+    "sources": [
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "E",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "experiment",
+    "title": "experiment",
+    "description": "Elicitation performed in a controlled manner to make a discovery, test a hypothesis, or demonstrate a known fact.",
+    "sources": [
+      "Agile Extension To The BABOK Guide",
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "E",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "external_interface",
+    "title": "external interface",
+    "description": "An interaction that is outside the proposed solution. It can be another hardware system, software system, or a human interaction with which the proposed solution will interact.",
+    "sources": [
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "E",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "facilitation",
+    "title": "facilitation",
+    "description": "The art of leading and encouraging people through systematic efforts toward agreed-upon objectives in a manner that enhances involvement, collaboration, productivity, and synergy.",
+    "sources": [
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "F",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "feasibility_study",
+    "title": "feasibility study",
+    "description": "An evaluation of proposed alternatives to determine if they are technically, organizationally, and economically possible within the constraints of the enterprise, and whether they will deliver the desired benefits to the enterprise.",
+    "sources": [
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "F",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "feature",
+    "title": "feature",
+    "description": "A distinguishing characteristic of a solution that implements a cohesive set of requirements and which delivers value for a set of stakeholders.",
+    "sources": [
+      "Agile Extension To The BABOK Guide",
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "F",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "fishbone_diagram",
+    "title": "fishbone diagram",
+    "description": "A diagramming technique used in root cause analysis to identify underlying causes of an observed problem, and the relationships that exist between those causes. Also known as an Ishikawa or cause-and-effect diagram.",
+    "sources": [
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "F",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "focus_group",
+    "title": "focus group",
+    "description": "A group formed to elicit ideas and attitudes about a specific product, service, or opportunity in an interactive group environment. The participants share their impressions, preferences, and needs, guided by a moderator.",
+    "sources": [
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "F",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "force_field_analysis",
+    "title": "force field analysis",
+    "description": "A graphical method for depicting the forces that support and oppose a change. Involves identifying the forces, depicting them on opposite sides of a line (supporting and opposing forces) and then estimating the strength of each set of forces.",
+    "sources": [
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "F",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "functional_requirement",
+    "title": "functional requirement",
+    "description": "A capability that a solution must have in terms of the behaviour and information the solution will manage.",
+    "sources": [
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "F",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "gap_analysis",
+    "title": "gap analysis",
+    "description": "A comparison of the current state and desired future state of an enterprise in order to identify differences that need to be addressed.",
+    "sources": [
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "G",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "goal",
+    "title": "goal",
+    "description": "See business goal.",
+    "sources": [
+      "Agile Extension To The BABOK Guide",
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "G",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "governance_process_(change)",
+    "title": "governance process (change)",
+    "description": "A process by which appropriate decision makers use relevant information to make decisions regarding a change or solution, including the means for obtaining approvals and priorities.",
+    "sources": [
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "G",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "guideline_(business_analysis)",
+    "title": "guideline (business analysis)",
+    "description": "An instruction or description on why or how to undertake a task.",
+    "sources": [
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "G",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "horizontal_prototype",
+    "title": "horizontal prototype",
+    "description": "A prototype that is used to explore requirements and designs at one level of a proposed solution, such as the customer-facing view or the interface to another organization.",
+    "sources": [
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "H",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "impact_analysis",
+    "title": "impact analysis",
+    "description": "An assessment of the effects a proposed change will have on a stakeholder or stakeholder group, project, or system.",
+    "sources": [
+      "IIBA BABOK Guide V3",
+      "Business Analysis Competency Model V4"
+    ],
+    "letter": "I",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "implementation_subject_matter_expert",
+    "title": "implementation subject matter expert",
+    "description": "A stakeholder who has specialized knowledge regarding the implementation of one or more solution components.",
+    "sources": [
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "I",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "indicator",
+    "title": "indicator",
+    "description": "A specific numerical measurement that indicates progress toward achieving an impact, output, activity, or input. See also metric.",
+    "sources": [
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "I",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "initiative",
+    "title": "initiative",
+    "description": "A specific project, program, or action taken to solve some business problem(s) or achieve some specific change objective(s).",
+    "sources": [
+      "Agile Extension To The BABOK Guide",
+      "IIBA BABOK Guide V3",
+      "Business Analysis Competency Model V4"
+    ],
+    "letter": "I",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "input_(business_analysis)",
+    "title": "input (business analysis)",
+    "description": "Information consumed or transformed to produce an output. An input is the information necessary for a task to begin.",
+    "sources": [
+      "IIBA BABOK Guide V3",
+      "Business Analysis Competency Model V4"
+    ],
+    "letter": "I",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "inspection",
+    "title": "inspection",
+    "description": "A formal review of a work product by qualified individuals that follows a predefined process, and uses predefined criteria, for defect identification and removal.",
+    "sources": [
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "I",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "interface",
+    "title": "interface",
+    "description": "A shared boundary between any two persons and/or systems through which information is communicated.",
+    "sources": [
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "I",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "interoperability",
+    "title": "interoperability",
+    "description": "Ability of systems to communicate by exchanging data or services.",
+    "sources": [
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "I",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "interview",
+    "title": "interview",
+    "description": "Eliciting information from a person or group of people in an informal or formal setting by asking relevant questions and recording the responses.",
+    "sources": [
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "I",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "Ishikawa_diagram",
+    "title": "Ishikawa diagram",
+    "description": "See fishbone diagram.",
+    "sources": [
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "I",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "iteration_(business_analysis)",
+    "title": "iteration (business analysis)",
+    "description": "A single instance of progressive cycles of analysis, development, testing, or execution.",
+    "sources": [
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "I",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "knowledge_area_(business_analysis)",
+    "title": "knowledge area (business analysis)",
+    "description": "An area of expertise that includes several specific business analysis tasks.",
+    "sources": [
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "K",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "lessons_learned_process",
+    "title": "lessons learned process",
+    "description": "A process improvement technique used to learn about and improve on a process or project. A lessons learned session involves a special meeting in which the team explores what worked, what didn't work, what could be learned from the just-completed iteration, and how to adapt processes and techniques before continuing or starting anew.",
+    "sources": [
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "L",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "life_cycle",
+    "title": "life_cycle",
+    "description": "A series of changes an item or object undergoes from inception to retirement.",
+    "sources": [
+      "IIBA BABOK Guide V3",
+      "Business Analysis Competency Model V4"
+    ],
+    "letter": "L",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "matrix",
+    "title": "matrix",
+    "description": "A textual form of modelling used to represent information that can be categorized, cross-referenced, and represented in a table format.",
+    "sources": [
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "M",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "metadata",
+    "title": "metadata",
+    "description": "A description of data to help understand how to use that data, either in terms of the structure and specification of the data, or the description of a specific instance of an object.",
+    "sources": [
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "M",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "methodology",
+    "title": "methodology",
+    "description": "A body of methods, techniques, procedures, working concepts, and rules used to solve a problem.",
+    "sources": [
+      "Agile Extension To The BABOK Guide",
+      "IIBA BABOK Guide V3",
+      "Business Analysis Competency Model V4"
+    ],
+    "letter": "M",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "metric",
+    "title": "metric",
+    "description": "A quantifiable level of an indicator measured at a specified point in time.",
+    "sources": [
+      "Agile Extension To The BABOK Guide",
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "M",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "mission_statement",
+    "title": "mission statement",
+    "description": "A formal declaration of values and goals that expresses the core purpose of the enterprise.",
+    "sources": [
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "M",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "model",
+    "title": "model",
+    "description": "A representation and simplification of reality developed to convey information to a specific audience to support analysis, communication, and understanding.",
+    "sources": [
+      "Agile Extension To The BABOK Guide",
+      "IIBA BABOK Guide V3",
+      "Business Analysis Competency Model V4"
+    ],
+    "letter": "M",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "monitoring",
+    "title": "monitoring",
+    "description": "Collecting data on a continuous basis from a solution in order to determine how well a solution is implemented compared to expected results. See also metric; indicator.",
+    "sources": [
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "M",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "need",
+    "title": "need",
+    "description": "A problem or opportunity to be addressed.",
+    "sources": [
+      "Agile Extension To The BABOK Guide",
+      "IIBA BABOK Guide V3",
+      "Business Analysis Competency Model V4"
+    ],
+    "letter": "N",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "non-functional_requirement",
+    "title": "non-functional requirement",
+    "description": "A type of requirement that describes the performance or quality attributes a solution must meet. Non-functional requirements are usually measurable and act as constraints on the design of a solution as a whole.",
+    "sources": [
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "N",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "objective",
+    "title": "objective",
+    "description": "See business objective.",
+    "sources": [
+      "Agile Extension To The BABOK Guide",
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "O",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "observation_(business_analysis)",
+    "title": "observation (business analysis)",
+    "description": "Studying and analyzing one or more stakeholders in their work environment in order to elicit requirements.",
+    "sources": [
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "O",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "online_analytical_processing",
+    "title": "online analytical processing",
+    "description": "A business intelligence approach that allows users to analyze large amounts of data from different points of view.",
+    "sources": [
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "O",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "operational_support",
+    "title": "operational support",
+    "description": "A stakeholder who is responsible for the day-to-day management and maintenance of a system or product.",
+    "sources": [
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "O",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "operative_business_rule",
+    "title": "operative business rule",
+    "description": "See behavioural business rule.",
+    "sources": [
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "O",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "organization",
+    "title": "organization",
+    "description": "An autonomous group of people under the management of a single individual or board, that works towards common goals and objectives.",
+    "sources": [
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "O",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "organizational_capability",
+    "title": "organizational capability",
+    "description": "A function inside the enterprise, made up of components such as processes, technologies, and information and used by organizations to achieve their goals.",
+    "sources": [
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "O",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "organizational_unit",
+    "title": "organizational unit",
+    "description": "Any recognized association of people within an organization or enterprise.",
+    "sources": [
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "O",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "organization_modelling",
+    "title": "organization modelling",
+    "description": "The analysis technique used to describe roles, responsibilities and reporting structures that exist within an enterprise.",
+    "sources": [
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "O",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "peer_review",
+    "title": "peer_review",
+    "description": "A formal or informal review of a work product to identify errors or opportunities for improvement. See also inspection.",
+    "sources": [
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "P",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "plan",
+    "title": "plan",
+    "description": "A detailed scheme for doing or achieving something usually comprising a set of events, dependencies, expected sequence, schedule, results or outcomes, materials and resources needed, and how stakeholders need to be involved.",
+    "sources": [
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "P",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "predictive_approach",
+    "title": "predictive approach",
+    "description": "An approach where planning and baselines are established early in the life cycle of the initiative in order to maximize control and minimize risk.",
+    "sources": [
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "P",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "prioritization",
+    "title": "prioritization",
+    "description": "Determining the relative importance of a set of items in order to determine the order in which they will be addressed.",
+    "sources": [
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "P",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "process",
+    "title": "process",
+    "description": "A set of activities designed to accomplish a specific objective by taking one or more defined inputs and turning them into defined outputs.",
+    "sources": [
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "P",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "process_model",
+    "title": "process model",
+    "description": "A set of diagrams and supporting information about a process and factors that could influence the process. Some process models are used to simulate the performance of the process.",
+    "sources": [
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "P",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "product_(business_analysis)",
+    "title": "product (business analysis)",
+    "description": "A solution or component of a solution that is the result of an initiative.",
+    "sources": [
+      "Agile Extension To The BABOK Guide",
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "P",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "product_backlog",
+    "title": "product backlog",
+    "description": "A set of user stories, requirements, or features that have been identified as candidates for potential implementation, prioritized, and estimated.",
+    "sources": [
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "P",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "product_vision_statement",
+    "title": "product vision statement",
+    "description": "A brief statement or paragraph that describes the goals of the solution and how it supports the strategy of the organization or enterprise.",
+    "sources": [
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "P",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "project",
+    "title": "project",
+    "description": "A temporary endeavour undertaken to create a unique product, service, or result.",
+    "sources": [
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "P",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "project_manager",
+    "title": "project manager",
+    "description": "A stakeholder who is responsible for managing the work required to deliver a solution that meets a business need, and for ensuring that the project's objectives are met while balancing the project constraints, including scope, budget, schedule, resources, quality, and risk.",
+    "sources": [
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "P",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "project_scope",
+    "title": "project scope",
+    "description": "The work that must be performed to deliver a product, service, or result with the specified features and functions.",
+    "sources": [
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "P",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "proof_of_concept",
+    "title": "proof_of_concept",
+    "description": "A model created to validate the design of a solution without modelling the appearance, materials used in the creation of work, or processes and workflows ultimately used by the stakeholders.",
+    "sources": [
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "P",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "prototype",
+    "title": "prototype",
+    "description": "A partial or simulated approximation of the solution for the purpose of eliciting or verifying requirements with stakeholders.",
+    "sources": [
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "P",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "quality",
+    "title": "quality",
+    "description": "The degree to which a set of inherent characteristics fulfills needs.",
+    "sources": [
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "Q",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "quality_assurance",
+    "title": "quality assurance",
+    "description": "set of activities performed to ensure that a process will deliver products that meet an appropriate level of quality.",
+    "sources": [
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "Q",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "quality_attributes",
+    "title": "quality attributes",
+    "description": "A set of measures used to judge the overall quality of a system. See also non-functional requirements.",
+    "sources": [
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "Q",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "questionnaire",
+    "title": "questionnaire",
+    "description": "A set of defined questions, with a choice of answers, used to collect information from respondents.",
+    "sources": [
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "Q",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "regulator",
+    "title": "regulator",
+    "description": "A stakeholder from outside the organization who is responsible for the definition and enforcement of standards.",
+    "sources": [
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "R",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "repository",
+    "title": "repository",
+    "description": "A real or virtual facility where all information on a specific topic is stored and is available for retrieval.",
+    "sources": [
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "R",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "request_for_information",
+    "title": "request for information",
+    "description": "A formal elicitation method intended to collect information regarding a vendor's capabilities or any other information relevant to a potential upcoming procurement.",
+    "sources": [
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "R",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "request_for_proposal",
+    "title": "request for proposal",
+    "description": "A requirements document issued when an organization is seeking a formal proposal from vendors. An RFP typically requires that the proposals be submitted following a specific process and using sealed bids which will be evaluated against a formal evaluation methodology.",
+    "sources": [
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "R",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "request_for_quote",
+    "title": "request for quote",
+    "description": "A procurement method of soliciting price and solution options from vendors.",
+    "sources": [
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "R",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "request_for_tender",
+    "title": "request for tender",
+    "description": "An open invitation to vendors to submit a proposal for goods or services.",
+    "sources": [
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "R",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "requirement",
+    "title": "requirement",
+    "description": "A usable representation of a need.",
+    "sources": [
+      "Agile Extension To The BABOK Guide",
+      "IIBA BABOK Guide V3",
+      "Business Analysis Competency Model V4"
+    ],
+    "letter": "R",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "requirements_allocation",
+    "title": "requirements allocation",
+    "description": "The process of assigning requirements to be implemented by specific solution components.",
+    "sources": [
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "R",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "requirements_artifact",
+    "title": "requirements artifact",
+    "description": "A business analysis artifact containing information about requirements such as a diagram, matrix, document or model.",
+    "sources": [
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "R",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "requirements_attribute",
+    "title": "requirements attribute",
+    "description": "A characteristic or property of a requirement used to assist with requirements management.",
+    "sources": [
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "R",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "requirements_defect",
+    "title": "requirements defect",
+    "description": "A problem or error in a requirement. Defects may occur because a requirement is poor quality (see requirements verification) or because it does not describe a need that, if met, would provide value to stakeholders (see requirements validation).",
+    "sources": [
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "R",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "requirements_life_cycle",
+    "title": "requirements life cycle",
+    "description": "The stages through which a requirement progresses from inception to retirement.",
+    "sources": [
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "R",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "requirements_management",
+    "title": "requirements management",
+    "description": "Planning, executing, monitoring, and controlling any or all of the work associated with requirements elicitation and collaboration, requirements analysis and design, and requirements life cycle management.",
+    "sources": [
+      "IIBA BABOK Guide V3",
+      "Business Analysis Competency Model V4"
+    ],
+    "letter": "R",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "requirements_management_plan",
+    "title": "requirements management plan",
+    "description": "A subset of the business analysis plan for a specific change initiative, describing specific tools, activities, and roles and responsibilities that will be used on the initiative to manage the requirements.",
+    "sources": [
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "R",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "requirements_management_tool",
+    "title": "requirements management tool",
+    "description": "Special-purpose software that provides support for any combination of the following capabilities: elicitation and collaboration, requirements modelling and/or specification, requirements traceability, versioning and baselining, attribute definition for tracking and monitoring, document generation, and requirements change control.",
+    "sources": [
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "R",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "requirements_model",
+    "title": "requirements model",
+    "description": "An abstract (usually graphical) representation of some aspect of the current or future state.",
+    "sources": [
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "R",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "requirements_package",
+    "title": "requirements package",
+    "description": "A specialized form of a business analysis package primarily concerned with requirements. A requirements package may represent a baseline of a collection of requirements.",
+    "sources": [
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "R",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "requirements_traceability",
+    "title": "requirements traceability",
+    "description": "The ability for tracking the relationships between sets of requirements and designs from the original stakeholder need to the actual implemented solution. Traceability supports change control by ensuring that the source of a requirement or design can be identified and other related requirements and designs potentially affected by a change are known.",
+    "sources": [
+      "IIBA BABOK Guide V3",
+      "Business Analysis Competency Model V4"
+    ],
+    "letter": "R",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "requirements_validation",
+    "title": "requirements validation",
+    "description": "Work done to evaluate requirements to ensure they support the delivery of the expected benefits and are within the solution scope.",
+    "sources": [
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "R",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "requirements_verification",
+    "title": "requirements verification",
+    "description": "Work done to evaluate requirements to ensure they are defined correctly and are at an acceptable level of quality. It ensures the requirements are sufficiently defined and structured so that the solution development team can use them in the design, development, and implementation of the solution.",
+    "sources": [
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "R",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "requirements_workshop",
+    "title": "requirements workshop",
+    "description": "A structured meeting in which a carefully selected group of stakeholders collaborate to define and/or refine requirements under the guidance of a skilled neutral facilitator.",
+    "sources": [
+      "IIBA BABOK Guide V3",
+      "Business Analysis Competency Model V4"
+    ],
+    "letter": "R",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "residual_risk",
+    "title": "residual risk",
+    "description": "The risk remaining after action has been taken or plans have been put in place to deal with the original risk.",
+    "sources": [
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "R",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "return_on_investment_(business_analysis)",
+    "title": "return on investment (business analysis)",
+    "description": "A measure of the profitability of a project or investment.",
+    "sources": [
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "R",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "risk_(business_analysis)",
+    "title": "risk (business analysis)",
+    "description": "The effect of uncertainty on the value of a change, a solution, or the enterprise. See also residual risk.",
+    "sources": [
+      "Agile Extension To The BABOK Guide",
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "R",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "risk_assessment",
+    "title": "risk assessment",
+    "description": "Identifying, analyzing and evaluating risks.",
+    "sources": [
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "R",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "root_cause",
+    "title": "root cause",
+    "description": "The cause of a problem having no deeper cause, usually one of several possible causes.",
+    "sources": [
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "R",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "root_cause_analysis",
+    "title": "root cause analysis",
+    "description": "A structured examination of an identified problem to understand the underlying causes.",
+    "sources": [
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "R",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "scope",
+    "title": "scope",
+    "description": "The boundaries of control, change, a solution, or a need.",
+    "sources": [
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "S",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "scope_model",
+    "title": "scope model",
+    "description": "A model that defines the boundaries of a business domain or solution.",
+    "sources": [
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "S",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "secondary_actor",
+    "title": "secondary actor",
+    "description": "An actor external to the system under design that supports the execution of a use case.",
+    "sources": [
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "S",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "sequence_diagram",
+    "title": "sequence diagram",
+    "description": "A type of diagram that shows objects participating in interactions and the messages exchanged between them.",
+    "sources": [
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "S",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "service_(business_analysis)",
+    "title": "service (business analysis)",
+    "description": "The performance of any duties or work for a stakeholder, from the perspective of the stakeholder.",
+    "sources": [
+      "IIBA BABOK Guide V3",
+      "Business Analysis Competency Model V4"
+    ],
+    "letter": "S",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "software_engineer",
+    "title": "software engineer",
+    "description": "See developer.",
+    "sources": [
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "S",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "solution",
+    "title": "solution",
+    "description": "A specific way of satisfying one or more needs in a context.",
+    "sources": [
+      "Agile Extension To The BABOK Guide",
+      "IIBA BABOK Guide V3",
+      "Business Analysis Competency Model V4"
+    ],
+    "letter": "S",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "solution_component",
+    "title": "solution component",
+    "description": "A sub-part of a solution that can be people, infrastructure, hardware, software, equipment, facilities, and process assets or any combination of these sub-parts.",
+    "sources": [
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "S",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "solution_life_cycle",
+    "title": "solution life cycle",
+    "description": "The stages through which a solution progresses from inception to retirement.",
+    "sources": [
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "S",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "solution_option",
+    "title": "solution option",
+    "description": "One possible way to satisfy one or more needs in a context.",
+    "sources": [
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "S",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "solution_requirement",
+    "title": "solution requirement",
+    "description": "A capability or quality of a solution that meets the stakeholder requirements. Solution requirements can be divided into two sub-categories: functional requirements and non-functional requirements or quality of service requirements.",
+    "sources": [
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "S",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "solution_scope",
+    "title": "solution scope",
+    "description": "The set of capabilities a solution must deliver in order to meet the business need.",
+    "sources": [
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "S",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "sponsor",
+    "title": "sponsor",
+    "description": "A stakeholder who is responsible for initiating the effort to define a business need and develop a solution that meets that need. They authorize the work to be performed and control the budget and scope for the initiative.",
+    "sources": [
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "S",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "stakeholder",
+    "title": "stakeholder",
+    "description": "A group or individual with a relationship to the change, the need, or the solution.",
+    "sources": [
+      "Agile Extension To The BABOK Guide",
+      "IIBA BABOK Guide V3",
+      "Business Analysis Competency Model V4"
+    ],
+    "letter": "S",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "stakeholder_analysis",
+    "title": "stakeholder analysis",
+    "description": "Identifying and analyzing the stakeholders who may be impacted by the change and assess their impact, participation, and needs throughout the business analysis activities.",
+    "sources": [
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "S",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "stakeholder_list",
+    "title": "stakeholder list",
+    "description": "A catalogue of the stakeholders affected by a change, business need, or proposed solution, and a description of their attributes and characteristics related to their involvement in the initiative.",
+    "sources": [
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "S",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "stakeholder_proxy_(business_analyst)",
+    "title": "stakeholder proxy (business analyst)",
+    "description": "The role a business analyst takes when representing the needs of a stakeholder or stakeholder group.",
+    "sources": [
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "S",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "stakeholder_requirement",
+    "title": "stakeholder_requirement",
+    "description": "A description of the needs of a particular stakeholder or class of stakeholders that must be met in order to achieve the business requirements. They may serve as a bridge between business requirements and the various categories of solution requirements.",
+    "sources": [
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "S",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "stated_requirement",
+    "title": "stated requirement",
+    "description": "A requirement articulated by a stakeholder that has not been analyzed, verified, or validated. Stated requirements frequently reflect the desires of a stakeholder rather than the actual need.",
+    "sources": [
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "S",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "statement_of_work",
+    "title": "statement of work",
+    "description": "A written description of the services or tasks that are required to be performed.",
+    "sources": [
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "S",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "state_diagram",
+    "title": "state diagram",
+    "description": "An analysis model showing the life cycle of a data entity or class.",
+    "sources": [
+      "Agile Extension To The BABOK Guide",
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "S",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "strategy",
+    "title": "strategy",
+    "description": "A description of the chosen approach to apply the capabilities of an enterprise in order to reach a desired set of goals or objectives.",
+    "sources": [
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "S",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "structural_rule",
+    "title": "structural rule",
+    "description": "See definitional business rule.",
+    "sources": [
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "S",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "subject_matter_expert",
+    "title": "subject matter expert",
+    "description": "See domain subject matter expert; implementation subject matter expert.",
+    "sources": [
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "S",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "supplier",
+    "title": "supplier",
+    "description": "A stakeholder outside the boundary of a given organization or organizational unit who provides products or services to the organization and may have contractual or moral rights and obligations that must be considered.",
+    "sources": [
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "S",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "survey",
+    "title": "survey",
+    "description": "Collecting and measuring the opinions or experiences of a group of people through a series of questions.",
+    "sources": [
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "S",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "swimlane",
+    "title": "swimlane",
+    "description": "A horizontal or vertical section of a process diagram that shows which activities are performed by a particular actor or role.",
+    "sources": [
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "S",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "system",
+    "title": "system",
+    "description": "A set of interdependent components that interact in various ways to produce a set of desired outcomes.",
+    "sources": [
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "S",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "task_(business_analysis)",
+    "title": "task (business analysis)",
+    "description": "A discrete piece of work that may be performed formally or informally as part of business analysis.",
+    "sources": [
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "T",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "technique",
+    "title": "technique",
+    "description": "A manner, method, or style for conducting a business analysis task or for shaping its output.",
+    "sources": [
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "T",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "temporal_event",
+    "title": "temporal_event",
+    "description": "An event based on time that can trigger the initiation of a process, evaluation of business rules, or some other response.",
+    "sources": [
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "T",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "tester",
+    "title": "tester",
+    "description": "An individual responsible for determining how to verify that the solution meets the requirements defined by the business analyst, and conducting the verification process.",
+    "sources": [
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "T",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "throw-away_prototype",
+    "title": "throw-away prototype",
+    "description": "A prototype used to quickly uncover and clarify requirements or designs using simple tools, sometimes just paper and pencil. It is intended to be discarded when the final system has been developed.",
+    "sources": [
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "T",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "time-box",
+    "title": "time-box",
+    "description": "An agreed-upon period of time in which an activity is conducted or a defined deliverable is intended to be produced.",
+    "sources": [
+      "Agile Extension To The BABOK Guide",
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "T",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "transition_requirement",
+    "title": "transition requirement",
+    "description": "A requirement that describes the capabilities the solution must have and the conditions the solution must meet to facilitate transition from the current state to the future state, but which are not needed once the change is complete. They are differentiated from other requirements types because they are of a temporary nature.",
+    "sources": [
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "T",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "unified_modelling_language™",
+    "title": "unified modelling language™",
+    "description": "A notation specified by the Object Management Group for describing software application structure, behaviour, and architecture. It can also be used for describing business processes and data structures. The most common UML® diagrams used by business analysts are use case diagrams, activity diagrams, state machine diagrams (also known as state diagrams), and class diagrams.",
+    "sources": [
+      "IIBA BABOK Guide V3",
+      "UML Specification"
+    ],
+    "letter": "U",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "user_acceptance_test",
+    "title": "user acceptance test",
+    "description": "Assessing whether the delivered solution meets the needs of the stakeholder group that will be using the solution. The assessment is validated against identified acceptance criteria.",
+    "sources": [
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "U",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "user_story",
+    "title": "user story",
+    "description": "A small, concise statement of functionality or quality needed to deliver value to a specific stakeholder.",
+    "sources": [
+      "Agile Extension To The BABOK Guide",
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "U",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "use_case",
+    "title": "use case",
+    "description": "A description of the observable interaction between an actor (or actors) and a solution that occurs when the actor uses the system to accomplish a specific goal.",
+    "sources": [
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "U",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "use_case_diagram",
+    "title": "use case diagram",
+    "description": "A type of diagram defined by UML® that captures all actors and use cases involved with a system or product.",
+    "sources": [
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "U",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "validated_requirement",
+    "title": "validated requirement",
+    "description": "A requirement that has been reviewed and is determined to support the delivery of the expected benefits, and is within the solution scope.",
+    "sources": [
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "V",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "validation_(business_analysis)",
+    "title": "validation (business analysis)",
+    "description": "The process of checking that a deliverable is suitable for its intended use. See also requirements validation.",
+    "sources": [
+      "IIBA BABOK Guide V3",
+      "Business Analysis Competency Model V4"
+    ],
+    "letter": "V",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "value_(business_analysis)",
+    "title": "value (business analysis)",
+    "description": "The worth, importance, or usefulness of something to a stakeholder in a context.",
+    "sources": [
+      "Agile Extension To The BABOK Guide",
+      "IIBA BABOK Guide V3",
+      "Business Analysis Competency Model V4"
+    ],
+    "letter": "V",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "value_stream_mapping",
+    "title": "value stream mapping",
+    "description": "A complete, fact-based, time-series representation of the stream of activities required to deliver a product or service.",
+    "sources": [
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "V",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "verification_(business_analysis)",
+    "title": "verification (business analysis)",
+    "description": "The process of determining that a deliverable or artifact meets an acceptable standard of quality. See also requirements verification.",
+    "sources": [
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "V",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "verified_requirement",
+    "title": "verified requirement",
+    "description": "A requirement that has been reviewed and is determined to be defined correctly, adheres to standards or guidelines, and is at an acceptable level of detail.",
+    "sources": [
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "V",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "vertical_prototype",
+    "title": "vertical prototype",
+    "description": "A prototype that is used to drill down into a proposed solution to uncover requirement and design considerations through multiple layers of a solution that are not easily understood or that are not discernible on the surface. It may include interaction between several solution components.",
+    "sources": [
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "V",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "viewpoint",
+    "title": "viewpoint",
+    "description": "A set of conventions that define how requirements will be represented, how these representations will be organized, and how they will be related.",
+    "sources": [
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "V",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "walkthrough",
+    "title": "walkthrough",
+    "description": "A review in which participants step through an artifact or set of artifacts with the intention of validating the requirements or designs, and to identify requirements or design errors, inconsistencies, omissions, inaccuracies, or conflicts.",
+    "sources": [
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "W",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "workshop",
+    "title": "workshop",
+    "description": "A facilitated and focused event attended by key stakeholders for the purpose of achieving a defined goal.",
+    "sources": [
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "W",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "work_breakdown_structure",
+    "title": "work breakdown structure",
+    "description": "A deliverable-oriented hierarchical decomposition of the work to be executed to accomplish objectives and create the required deliverables. It organizes and defines the total scope of the project.",
+    "sources": [
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "W",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "work_product_(business_analysis)",
+    "title": "work product (business analysis)",
+    "description": "A document or collection of notes or diagrams used by the business analyst during the requirements development process.",
+    "sources": [
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "W",
+    "created": "2025-12-29"
+  },
+  {
+    "id": "business_architecture",
+    "title": "business architecture",
+    "description": "The design, structure, and behavior of the current and future states of an enterprise to provide a common understanding of the organization. It is used to align the enterprise’s strategic objectives and tactical demands.",
+    "sources": [
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "B",
+    "created": "2025-10-25"
+  },
+  {
+    "id": "enterprise_architecture",
+    "title": "enterprise_architecture",
+    "description": "A description of the business processes, information technology, people, operations, information, and projects of an enterprise and the relationships between them.",
+    "sources": [
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "E",
+    "created": "2025-10-25"
+  },
+  {
+    "id": "requirements_architecture",
+    "title": "requirements_architecture",
+    "description": "The requirements of an initiative and the interrelationships between these requirements.",
+    "sources": [
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "R",
+    "created": "2025-10-25"
+  },
+  {
+    "id": "architecture",
+    "title": "architecture",
+    "description": "The design, structure, and behaviour of the current and future states of a structure in terms of its components, and the interaction between those components. See also business architecture, enterprise architecture, and requirements architecture.",
+    "sources": [
+      "IIBA BABOK Guide V3"
+    ],
+    "letter": "A",
+    "created": "2025-10-22"
+  }
+]

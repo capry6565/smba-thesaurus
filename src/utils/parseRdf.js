@@ -10,8 +10,6 @@ export default function parseRdf(ttlText) {
     return { triples: [], nodes: [], edges: [] };
   }
 
-  // ПОКАЗЫВАЕМ ВСЕ ПРЕДИКАТЫ (Semantic Web методология - без фильтрации)
-
   const triples = store.statements.map(t => ({
     subject: cleanUri(t.subject.value),
     predicate: cleanUri(t.predicate.value),
@@ -26,8 +24,6 @@ export default function parseRdf(ttlText) {
     const predicateUri = statement.predicate.value;
     const objectValue = statement.object.value;
 
-    // УБРАЛИ ФИЛЬТРАЦИЮ hiddenPredicates - показываем всё
-
     if (!nodeMap.has(subjectUri)) {
       nodeMap.set(subjectUri, {
         id: subjectUri,
@@ -41,7 +37,12 @@ export default function parseRdf(ttlText) {
       });
     }
 
-    if (statement.object.termType === 'NamedNode') {
+    // ФИКС: Обрабатываем как Named Node ТАК И Literals которые похожи на URI
+    const isNamedNode = statement.object.termType === 'NamedNode';
+    const isUriLiteral = statement.object.termType === 'Literal' &&
+                         (objectValue.startsWith('http://') || objectValue.startsWith('https://'));
+
+    if (isNamedNode || isUriLiteral) {
       if (!nodeMap.has(objectValue)) {
         nodeMap.set(objectValue, {
           id: objectValue,
@@ -56,19 +57,21 @@ export default function parseRdf(ttlText) {
       }
 
       edges.push({
+        id: `${subjectUri}|${predicateUri}|${objectValue}`,
         from: subjectUri,
         to: objectValue,
         label: cleanUri(predicateUri),
         title: predicateUri,
         arrows: 'to',
-        font: { 
-          size: 12, 
+        font: {
+          size: 12,
           align: 'middle',
           color: '#666',
           strokeWidth: 0
         }
       });
     } else {
+      // Для обычных Literals обновляем labels
       if (predicateUri.includes('prefLabel') || predicateUri.includes('label')) {
         const node = nodeMap.get(subjectUri);
         if (node) {
@@ -96,7 +99,8 @@ function cleanUri(uri) {
     .replace('http://purl.org/dc/terms/', 'dct:')
     .replace('http://www.w3.org/2000/01/rdf-schema#', 'rdfs:')
     .replace('http://example.org/', ':')
-    .replace('https://usmba.ai/', ':');
+    .replace('https://usmba.ai/', ':')
+    .replace('http://usmba.ai/', ':');
 }
 
 function getLabel(uri) {

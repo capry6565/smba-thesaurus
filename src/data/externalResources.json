@@ -1,0 +1,82 @@
+{
+  "standards": [
+    {
+      "id": "SBVR_Specification",
+      "type": "Standard",
+      "label": "Semantics of Business Vocabulary and Rules (SBVR)",
+      "description": "An OMG standard defining a formal vocabulary and rules framework for business semantics.",
+      "url": "https://www.omg.org/spec/SBVR/",
+      "issued": "2019-06-01",
+      "identifier": "OMG SBVR 1.4"
+    },
+    {
+      "id": "UML_Specification",
+      "type": "Standard",
+      "label": "Unified Modeling Language (UML)",
+      "description": "An OMG standard modeling language for specifying, visualizing, constructing, and documenting software system artifacts.",
+      "url": "https://www.omg.org/spec/UML/",
+      "issued": "2017-12-01",
+      "identifier": "OMG UML 2.5.1"
+    }
+  ],
+  "bibliographicResources": [
+    {
+      "id": "Agile_Extension_to_the_BABOK_Guide",
+      "type": "BibliographicResource",
+      "title": "Agile Extension to the BABOK® Guide",
+      "description": "A standard on the practice of business analysis in an agile context. Published jointly by IIBA® and the Agile Alliance®.",
+      "publisher": "International Institute of Business Analysis™ (IIBA®) and Agile Alliance®",
+      "issued": "2013",
+      "identifier": "ISBN 9781927584074",
+      "url": "https://www.iiba.org/career-resources/a-business-analysis-professionals-foundation-for-success/agile-extension/"
+    },
+    {
+      "id": "IIBA_BABOK_Guide_v3",
+      "type": "BibliographicResource",
+      "title": "IIBA BABOK® Guide v3",
+      "description": "",
+      "publisher": "International Institute of Business Analysis™ (IIBA®)",
+      "issued": "2015-04",
+      "identifier": "ISBN 1927584027",
+      "url": "https://www.iiba.org/.../babok/"
+    },
+    {
+      "id": "Business_Analysis_Competency_Model_v4",
+      "type": "BibliographicResource",
+      "title": "The Business Analysis Competency Model® Version 4",
+      "description": "The Business Analysis Competency Model® version 4 identifies the behaviours and techniques associated with each level of business analysis performed at work. It assists readers in understanding the levels of competency in the business analysis profession and supports the four levels of IIBA’s Multi-level Competency-Based Certification program by highlighting key competency components associated with each business analysis task.",
+      "publisher": "International Institute of Business Analysis™ (IIBA®)",
+      "issued": "2017-10-19",
+      "identifier": "ISBN-10: 192758406X",
+      "url": "https://www.amazon.com/dp/192758406X"
+    }
+  ],
+  "publishers": [
+    {
+      "id": "OMG",
+      "type": "Publisher",
+      "name": "Object Management Group",
+      "homepage": "https://www.omg.org/"
+    }
+  ],
+  "contributors": [
+    {
+      "id": "0009-0002-4140-6464",
+      "type": "Contributor",
+      "orcid": "https://orcid.org/0009-0002-4140-6464",
+      "name": "Vladyslav Tykhonenko"
+    },
+    {
+      "id": "0009-0000-6729-5489",
+      "type": "Contributor",
+      "orcid": "https://orcid.org/0009-0000-6729-5489",
+      "name": "Contributor 0009-0000-6729-5489"
+    },
+    {
+      "id": "0009-0000-1610-6991",
+      "type": "Contributor",
+      "orcid": "https://orcid.org/0009-0000-1610-6991",
+      "name": "Contributor 0009-0000-1610-6991"
+    }
+  ]
+}

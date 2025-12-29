@@ -1,27 +1,12 @@
 ---
-// Homepage для SMBA Thesaurus
-const terms = [
-  { 
-    title: "Architecture", 
-    description: "The design, structure, and behaviour of the current and future states of a structure in terms of its components, and the interaction between those components.",
-    url: "/terms/architecture"
-  },
-  { 
-    title: "Business Architecture", 
-    description: "The design, structure, and behavior of the current and future states of an enterprise to provide a common understanding of the organization.",
-    url: "/terms/business_architecture"
-  },
-  { 
-    title: "Enterprise Architecture", 
-    description: "A description of the business processes, information technology, people, operations, information, and projects of an enterprise and the relationships between them.",
-    url: "/terms/enterprise_architecture"
-  },
-  { 
-    title: "Requirements Architecture", 
-    description: "The requirements of an initiative and the interrelationships between these requirements.",
-    url: "/terms/requirements_architecture"
-  }
-].sort((a, b) => a.title.localeCompare(b.title));
+import termsMetadata from '../data/termsMetadata.json';
+import externalResources from '../data/externalResources.json';
+import TermCard from '../components/TermCard.astro';
+import ResourceCard from '../components/ResourceCard.astro';
+
+// Get the last 20 added terms (already sorted by creation date in metadata)
+const recentTerms = termsMetadata.slice(0, 20);
+const totalTermsCount = termsMetadata.length;
 ---
 
 <!DOCTYPE html>
@@ -30,6 +15,9 @@ const terms = [
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SMBA - Unified Semantic Model of Business Analysis</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 </head>
 <body>
   <header>
@@ -51,27 +39,27 @@ const terms = [
       <div class="hero-content">
         <h2>The SMBA Thesaurus: A Semantic Foundation for Business Analysis</h2>
         <p>
-          The Unified Semantic Model of Business Analysis (SMBA) is an <span class="hero-highlight">open, community-driven effort</span> to create 
-          a unified, harmonized, machine-readable, and machine-understandable representation of knowledge about 
+          The Unified Semantic Model of Business Analysis (SMBA) is an <span class="hero-highlight">open, community-driven effort</span> to create
+          a unified, harmonized, machine-readable, and machine-understandable representation of knowledge about
           Business Analysis as a profession.
         </p>
         <p>
-          Drawing on authoritative standards such as the <span class="hero-highlight">IIBA BABOK® Guide, PMI-PBA, IREB, and IQBBA</span>, SMBA 
-          integrates their terminology and conceptual structures into a shared semantic foundation. This foundation 
-          is expressed through controlled vocabularies, SKOS-based thesauri, taxonomies, and ontologies that together 
+          Drawing on authoritative standards such as the <span class="hero-highlight">IIBA BABOK® Guide, PMI-PBA, IREB, and IQBBA</span>, SMBA
+          integrates their terminology and conceptual structures into a shared semantic foundation. This foundation
+          is expressed through controlled vocabularies, SKOS-based thesauri, taxonomies, and ontologies that together
           form a consistent and logically connected view of BA knowledge.
         </p>
         <p>
-          SMBA does not seek ownership of the content drawn from these sources. Its purpose is to build a unified, 
-          comprehensive, and mutually agreed semantic model — a structure that respects original intellectual property 
+          SMBA does not seek ownership of the content drawn from these sources. Its purpose is to build a unified,
+          comprehensive, and mutually agreed semantic model — a structure that respects original intellectual property
           while enabling interoperability and clarity across standards.
         </p>
         <p>
-          The ultimate goal is to enable smarter tools and systems — from knowledge management platforms to <span class="hero-highlight">AI- and 
+          The ultimate goal is to enable smarter tools and systems — from knowledge management platforms to <span class="hero-highlight">AI- and
           LLM-powered assistants</span> — that can accurately interpret and apply Business Analysis knowledge.
         </p>
         <p>
-          SMBA welcomes collaboration from practitioners, researchers, and organizations who share the vision of 
+          SMBA welcomes collaboration from practitioners, researchers, and organizations who share the vision of
           making Business Analysis knowledge transparent, connected, and ready for the digital age.
         </p>
       </div>
@@ -167,34 +155,84 @@ const terms = [
       </div>
     </div>
 
-    <!-- Available Terms Section -->
-    <section class="terms-section">
-      <h2>Available Terms</h2>
-      <p class="terms-count">{terms.length} concepts currently available</p>
-      
-      <div class="search-box">
-        <input 
-          type="text" 
-          id="searchInput" 
-          class="search-input" 
-          placeholder="Search terms by name or description..."
-          autocomplete="off"
-        />
+    <!-- External Resources Section -->
+    <section class="resources-section">
+      <div class="section-header">
+        <h2>Built on Authoritative Sources</h2>
+        <p class="section-subtitle">
+          This thesaurus integrates terminology from the following standards, publications, and resources
+        </p>
       </div>
 
-      <ul class="terms-list" id="termsList">
-        {terms.map(term => (
-          <li class="term-item">
-            <a href={term.url} class="term-link">
-              <div class="term-title">{term.title}</div>
-              <div class="term-description">{term.description}</div>
-            </a>
-          </li>
-        ))}
-      </ul>
+      <!-- Resource Type Filter -->
+      <div class="resource-filter">
+        <button class="filter-btn active" data-filter="all">All</button>
+        <button class="filter-btn" data-filter="standards">Standards</button>
+        <button class="filter-btn" data-filter="publications">Publications</button>
+        <button class="filter-btn" data-filter="organizations">Organizations</button>
+      </div>
 
-      <div class="no-results" id="noResults" style="display: none;">
-        No terms found matching your search.
+      <!-- Standards -->
+      <div class="resource-category" data-category="standards">
+        <div class="resources-grid">
+          {externalResources.standards.map(resource => (
+            <ResourceCard
+              id={resource.id}
+              title={resource.label}
+              description={resource.description}
+            />
+          ))}
+        </div>
+      </div>
+
+      <!-- Bibliographic Resources -->
+      <div class="resource-category" data-category="publications">
+        <div class="resources-grid">
+          {externalResources.bibliographicResources.map(resource => (
+            <ResourceCard
+              id={resource.id}
+              title={resource.title}
+              description={resource.description}
+            />
+          ))}
+        </div>
+      </div>
+
+      <!-- Publishers -->
+      <div class="resource-category" data-category="organizations">
+        <div class="resources-grid">
+          {externalResources.publishers.map(resource => (
+            <ResourceCard
+              id={resource.id}
+              title={resource.name}
+              description=""
+            />
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Recently Added Terms Section -->
+    <section class="terms-section">
+      <div class="terms-header">
+        <div>
+          <h2>Recently Added Terms</h2>
+          <p class="terms-subtitle">Showing the latest 20 of {totalTermsCount} available concepts</p>
+        </div>
+        <a href="/terms/all" class="browse-all-btn">
+          Browse All {totalTermsCount} Terms →
+        </a>
+      </div>
+
+      <div class="terms-grid">
+        {recentTerms.map(term => (
+          <TermCard
+            id={term.id}
+            title={term.title}
+            description={term.description}
+            sources={term.sources}
+          />
+        ))}
       </div>
     </section>
   </div>
@@ -203,124 +241,43 @@ const terms = [
   <footer>
     <div class="container">
       <p>
-        SMBA is an open, community-driven project. 
-        <a href="https://github.com/capry6565/smba-thesaurus">Contribute</a> | 
-        <a href="https://github.com/capry6565/smba-thesaurus#readme">Documentation</a> | 
-        <a href="mailto:contact@usmba.ai">Contact</a>
-      </p>
-      <p style="margin-top: 0.5rem; font-size: 0.9rem;">
-        © 2025 SMBA Community. All rights reserved.
+        SMBA Thesaurus — A community-driven semantic model for Business Analysis<br>
+        Built with <a href="https://astro.build" target="_blank">Astro</a>, <a href="https://www.w3.org/RDF/" target="_blank">RDF</a>, and <a href="https://www.w3.org/2004/02/skos/" target="_blank">SKOS</a>
       </p>
     </div>
   </footer>
-
-  <script>
-    const termsData = [
-      { 
-        title: "Architecture", 
-        description: "The design, structure, and behaviour of the current and future states of a structure in terms of its components, and the interaction between those components.",
-        url: "/terms/architecture"
-      },
-      { 
-        title: "Business Architecture", 
-        description: "The design, structure, and behavior of the current and future states of an enterprise to provide a common understanding of the organization.",
-        url: "/terms/business_architecture"
-      },
-      { 
-        title: "Enterprise Architecture", 
-        description: "A description of the business processes, information technology, people, operations, information, and projects of an enterprise and the relationships between them.",
-        url: "/terms/enterprise_architecture"
-      },
-      { 
-        title: "Requirements Architecture", 
-        description: "The requirements of an initiative and the interrelationships between these requirements.",
-        url: "/terms/requirements_architecture"
-      }
-    ].sort((a, b) => a.title.localeCompare(b.title));
-
-    function renderTerms(filteredTerms) {
-      const termsList = document.getElementById('termsList');
-      const noResults = document.getElementById('noResults');
-      
-      if (filteredTerms.length === 0) {
-        termsList.style.display = 'none';
-        noResults.style.display = 'block';
-        return;
-      }
-      
-      termsList.style.display = 'block';
-      noResults.style.display = 'none';
-      
-      termsList.innerHTML = filteredTerms.map(term => `
-        <li class="term-item">
-          <a href="${term.url}" class="term-link">
-            <div class="term-title">${term.title}</div>
-            <div class="term-description">${term.description}</div>
-          </a>
-        </li>
-      `).join('');
-    }
-
-    const searchInput = document.getElementById('searchInput');
-    searchInput.addEventListener('input', (e) => {
-      const searchTerm = e.target.value.toLowerCase().trim();
-      
-      if (searchTerm === '') {
-        renderTerms(termsData);
-        return;
-      }
-      
-      const filtered = termsData.filter(term => 
-        term.title.toLowerCase().includes(searchTerm) ||
-        term.description.toLowerCase().includes(searchTerm)
-      );
-      
-      renderTerms(filtered);
-    });
-
-    renderTerms(termsData);
-  </script>
 </body>
 </html>
 
-<style is:global>
+<style>
   * {
-    margin: 0;
-    padding: 0;
     box-sizing: border-box;
-  }
-
-  html, body {
-    height: 100%;
     margin: 0;
     padding: 0;
   }
 
   body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-    background: #f5f5f5;
-    color: #333;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
     line-height: 1.6;
+    color: #0f172a;
+    background: linear-gradient(135deg, #e2e8f0 0%, #cbd5e1 100%);
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
-    min-height: 100vh;
-  }
-
-  main {
-    flex: 1 0 auto;
   }
 
   .container {
-    max-width: 1200px;
+    max-width: 1400px;
     margin: 0 auto;
     padding: 0 2rem;
   }
 
+  /* Header */
   header {
     background: white;
-    padding: 1.5rem 0;
-    border-bottom: 2px solid #2B7CE9;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    padding: 1.75rem 0;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    border-bottom: 1px solid #e2e8f0;
   }
 
   header .container {
@@ -329,259 +286,261 @@ const terms = [
     gap: 1.5rem;
   }
 
+  header .logo {
+    display: flex;
+    align-items: center;
+  }
+
   header .logo img {
-    height: 80px;
     width: auto;
+    height: 56px;
   }
 
   header .header-text {
-    display: flex;
-    flex-direction: column;
+    flex: 1;
   }
 
   header h1 {
-    font-size: 2.5rem;
-    color: #2B7CE9;
-    font-weight: 700;
-    line-height: 1;
-    margin-bottom: 0.25rem;
+    font-size: 2.25rem;
+    color: #0f172a;
+    margin-bottom: 0.125rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
   }
 
   header .subtitle {
-    font-size: 1.1rem;
-    color: #666;
-    font-weight: 400;
+    color: #64748b;
+    font-size: 0.9375rem;
+    font-weight: 500;
+    letter-spacing: -0.01em;
   }
 
-  .hero {
+  /* Main */
+  main {
+    flex: 1;
+    padding: 3rem 0;
+  }
+
+  main .container {
     background: white;
+    border-radius: 16px;
     padding: 3rem;
-    margin: 2rem 0;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+  }
+
+  /* Hero Section */
+  .hero {
+    margin-bottom: 3rem;
   }
 
   .hero h2 {
     font-size: 2rem;
-    color: #2B7CE9;
+    color: #1e40af;
     margin-bottom: 1.5rem;
-    font-weight: 600;
+    font-weight: 700;
   }
 
   .hero p {
     font-size: 1.05rem;
     line-height: 1.8;
-    color: #555;
-    margin-bottom: 0;
-    padding-bottom: 1.5rem;
-    margin-bottom: 1.5rem;
-    border-bottom: 1px solid #e8e8e8;
-    position: relative;
-  }
-
-  .hero p:last-child {
-    margin-bottom: 0;
-    padding-bottom: 0;
-    border-bottom: none;
-  }
-
-  .hero p:not(:last-child)::after {
-    content: '• • •';
-    position: absolute;
-    bottom: -0.5rem;
-    left: 50%;
-    transform: translateX(-50%);
-    color: #2B7CE9;
-    opacity: 0.3;
-    font-size: 0.8rem;
-    letter-spacing: 0.5rem;
-  }
-
-  .hero p:first-of-type {
-    font-size: 1.1rem;
-    font-weight: 500;
-    color: #333;
+    color: #475569;
+    margin-bottom: 1rem;
   }
 
   .hero-highlight {
-    background: linear-gradient(120deg, #FFD93D20 0%, #FF9F4020 100%);
-    padding: 0.2rem 0.5rem;
-    border-radius: 4px;
-    font-weight: 500;
+    color: #1e40af;
+    font-weight: 600;
   }
 
+  /* Features Grid */
   .features {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 1.25rem;
+    gap: 1.5rem;
     margin-bottom: 3rem;
   }
 
   .feature-card {
+    padding: 1.5rem;
     background: white;
-    padding: 1.75rem 1.5rem;
-    border-radius: 8px;
-    border: 1px solid #e0e0e0;
-    position: relative;
-    overflow: hidden;
-    min-height: 220px;
-    display: flex;
-    flex-direction: column;
-    transition: all 0.3s ease;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
   }
 
   .feature-card:hover {
-    border-color: #2B7CE9;
-    box-shadow: 0 4px 12px rgba(43, 124, 233, 0.1);
-  }
-
-  .feature-card:nth-child(1) {
-    background: linear-gradient(135deg, #ffffff 0%, #f0f7ff 100%);
-  }
-
-  .feature-card:nth-child(2) {
-    background: linear-gradient(135deg, #ffffff 0%, #f5f5f5 100%);
-  }
-
-  .feature-card:nth-child(3) {
-    background: linear-gradient(135deg, #ffffff 0%, #f0f7ff 100%);
-  }
-
-  .feature-card:nth-child(4) {
-    background: linear-gradient(135deg, #ffffff 0%, #f5f5f5 100%);
-  }
-
-  .feature-card:nth-child(5) {
-    background: linear-gradient(135deg, #ffffff 0%, #f0f7ff 100%);
-  }
-
-  .feature-card:nth-child(6) {
-    background: linear-gradient(135deg, #ffffff 0%, #f5f5f5 100%);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(30, 64, 175, 0.15);
+    border-color: #1e40af;
   }
 
   .feature-icon {
-    width: 48px;
-    height: 48px;
-    margin-bottom: 1rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    width: 40px;
+    height: 40px;
+    margin-bottom: 0.75rem;
   }
 
   .feature-icon svg {
     width: 100%;
     height: 100%;
     fill: none;
-    stroke: #2B7CE9;
+    stroke: #1e40af;
     stroke-width: 2;
     stroke-linecap: round;
     stroke-linejoin: round;
-    opacity: 0.9;
   }
 
   .feature-card h3 {
-    color: #333;
-    font-size: 1.05rem;
-    margin-bottom: 0.75rem;
+    font-size: 1.15rem;
+    margin-bottom: 0.5rem;
+    color: #0f172a;
     font-weight: 600;
   }
 
   .feature-card p {
-    color: #666;
-    line-height: 1.6;
-    font-size: 0.9rem;
-    flex: 1;
+    color: #64748b;
+    font-size: 0.875rem;
+    line-height: 1.5;
   }
 
-  .terms-section {
-    background: white;
-    padding: 2.5rem;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  /* Resources Section */
+  .resources-section {
+    margin-top: 3rem;
+    padding: 3rem 2.5rem;
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    border-radius: 12px;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.05);
   }
 
-  .terms-section h2 {
-    font-size: 1.8rem;
-    color: #2B7CE9;
+  .section-header {
+    text-align: center;
+    margin-bottom: 2.5rem;
+  }
+
+  .section-header h2 {
+    font-size: 2rem;
+    color: #1e40af;
     margin-bottom: 0.5rem;
-    font-weight: 600;
+    font-weight: 700;
   }
 
-  .terms-count {
-    color: #999;
+  .section-subtitle {
+    color: #64748b;
+    font-size: 1rem;
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
+  .resource-filter {
+    display: flex;
+    gap: 0.75rem;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .filter-btn {
+    padding: 0.6rem 1.5rem;
+    background: white;
+    border: 2px solid #cbd5e1;
+    border-radius: 8px;
     font-size: 0.95rem;
+    font-weight: 600;
+    color: #64748b;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .filter-btn:hover {
+    border-color: #1e40af;
+    color: #1e40af;
+    background: #f1f5f9;
+  }
+
+  .filter-btn.active {
+    background: #1e40af;
+    border-color: #1e40af;
+    color: white;
+  }
+
+  .resource-category {
     margin-bottom: 1.5rem;
   }
 
-  .search-box {
+  .resource-category:last-child {
+    margin-bottom: 0;
+  }
+
+  .resource-category.hidden {
+    display: none;
+  }
+
+  .resources-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+  }
+
+  /* Terms Section */
+  .terms-section {
+    margin-top: 3rem;
+  }
+
+  .terms-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
     margin-bottom: 2rem;
+    gap: 2rem;
   }
 
-  .search-input {
-    width: 100%;
-    padding: 0.75rem 1rem;
-    font-size: 1rem;
-    border: 2px solid #ddd;
-    border-radius: 6px;
-    transition: border-color 0.2s;
-  }
-
-  .search-input:focus {
-    outline: none;
-    border-color: #2B7CE9;
-  }
-
-  .terms-list {
-    list-style: none;
-  }
-
-  .term-item {
-    padding: 1.25rem;
-    border-bottom: 1px solid #f0f0f0;
-    transition: background-color 0.2s;
-  }
-
-  .term-item:last-child {
-    border-bottom: none;
-  }
-
-  .term-item:hover {
-    background-color: #f8f9fa;
-  }
-
-  .term-link {
-    text-decoration: none;
-    color: inherit;
-    display: block;
-  }
-
-  .term-title {
-    font-size: 1.15rem;
-    font-weight: 600;
-    color: #2B7CE9;
+  .terms-section h2 {
+    font-size: 2rem;
+    color: #1e40af;
     margin-bottom: 0.5rem;
+    font-weight: 700;
   }
 
-  .term-description {
-    color: #666;
-    line-height: 1.6;
+  .terms-subtitle {
+    color: #64748b;
     font-size: 0.95rem;
   }
 
-  .no-results {
-    text-align: center;
-    padding: 2rem;
-    color: #999;
-    font-style: italic;
+  .browse-all-btn {
+    display: inline-flex;
+    align-items: center;
+    padding: 1rem 2rem;
+    background: #1e40af;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 1rem;
+    transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
+    white-space: nowrap;
+    flex-shrink: 0;
   }
 
+  .browse-all-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(30, 64, 175, 0.3);
+    background: #1e3a8a;
+  }
+
+  .terms-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 1rem;
+  }
+
+  /* Footer */
   footer {
     flex-shrink: 0;
     background: white;
     padding: 2rem 0;
     text-align: center;
     margin-top: 3rem;
-    border-top: 1px solid #e0e0e0;
+    border-top: 1px solid rgba(255,255,255,0.2);
   }
 
   footer .container {
@@ -590,18 +549,40 @@ const terms = [
 
   footer p {
     margin: 0;
-    color: #666;
+    color: #64748b;
     font-size: 0.95rem;
   }
 
   footer a {
-    color: #2B7CE9;
+    color: #1e40af;
     text-decoration: none;
     font-weight: 500;
   }
 
   footer a:hover {
     text-decoration: underline;
+    color: #1e3a8a;
+  }
+
+  /* Responsive */
+  @media (max-width: 1400px) {
+    .terms-grid {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+
+  @media (max-width: 1200px) {
+    .features {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .resources-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .terms-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
   }
 
   @media (max-width: 768px) {
@@ -616,19 +597,19 @@ const terms = [
     }
 
     header .logo img {
-      height: 60px;
+      height: 48px;
     }
 
     header h1 {
-      font-size: 2rem;
+      font-size: 1.75rem;
     }
 
     header .subtitle {
-      font-size: 1rem;
+      font-size: 0.875rem;
     }
 
-    .hero {
-      padding: 2rem;
+    main .container {
+      padding: 2rem 1.5rem;
     }
 
     .hero h2 {
@@ -639,12 +620,57 @@ const terms = [
       grid-template-columns: 1fr;
     }
 
-    .feature-card {
-      min-height: auto;
+    .resources-grid {
+      grid-template-columns: 1fr;
     }
 
-    .terms-section {
-      padding: 1.5rem;
+    .terms-header {
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    .browse-all-btn {
+      text-align: center;
+      justify-content: center;
+    }
+
+    .terms-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 480px) {
+    .terms-grid {
+      grid-template-columns: 1fr;
     }
   }
 </style>
+
+<script>
+  // Resource filter functionality
+  const filterBtns = document.querySelectorAll('.filter-btn');
+  const resourceCategories = document.querySelectorAll('.resource-category');
+
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const filter = btn.dataset.filter;
+
+      // Update active button
+      filterBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      // Show/hide categories
+      resourceCategories.forEach(category => {
+        const categoryType = category.dataset.category;
+
+        if (filter === 'all') {
+          category.classList.remove('hidden');
+        } else if (categoryType === filter) {
+          category.classList.remove('hidden');
+        } else {
+          category.classList.add('hidden');
+        }
+      });
+    });
+  });
+</script>

@@ -1,0 +1,23 @@
+@prefix : <https://usmba.ai/> .
+@prefix grddl: <http://www.w3.org/2003/g/data-view#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+
+<https://usmba.ai/iiba_babok_guide_service_(business_analysis)> a skos:Concept;
+  rdfs:label "service (business analysis)"@en;
+  dct:creator <https://orcid.org/0009-0002-4140-6464>;
+  skos:definition "The performance of any duties or work for a stakeholder, from the perspective of the stakeholder."@en;
+  skos:scopeNote """Use this concept when referring to the performance of work or duties for a stakeholder, viewed from the stakeholder’s perspective.
+It focuses on the value delivered or outcome achieved through that interaction, rather than on technical service components or IT service definitions.
+Not to be used for IT or system-level services, but for business activities providing value to stakeholders."""@en;
+  skos:inScheme :iiba-babok-terms;
+  skos:topConceptOf :iiba-babok-terms;
+  skos:prefLabel "service (business analysis)"@en;
+  dct:source :IIBA_BABOK_Guide_v3, :Business_Analysis_Competency_Model_v4;
+  dct:relation <https://usmba.ai/benchmarking> .

@@ -1,0 +1,22 @@
+@prefix : <https://usmba.ai/> .
+@prefix grddl: <http://www.w3.org/2003/g/data-view#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+
+<https://usmba.ai/iiba_babok_guide_value_(business_analysis)> a skos:Concept;
+  rdfs:label "value (business analysis)"@en;
+  dct:creator <https://orcid.org/0009-0002-4140-6464>;
+  skos:definition "The worth, importance, or usefulness of something to a stakeholder in a context."@en;
+  skos:scopeNote """Use this concept when referring to the perceived worth, importance, or usefulness of an outcome, solution, or change from the perspective of stakeholders within a specific context.
+In business analysis, value may be tangible or intangible, financial or non-financial, and is assessed relative to stakeholder goals and needs.
+Not to be used for general economic or accounting value outside the business analysis discipline."""@en;
+  skos:inScheme :iiba-babok-terms;
+  skos:topConceptOf :iiba-babok-terms;
+  skos:prefLabel "value (business analysis)"@en;
+  dct:source :Agile_Extension_to_the_BABOK_Guide, :IIBA_BABOK_Guide_v3, :Business_Analysis_Competency_Model_v4 .

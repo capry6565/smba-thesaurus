@@ -1,0 +1,1022 @@
+---
+import TermCard from '../../components/TermCard.astro';
+import termsMetadata from '../../data/termsMetadata.json';
+
+// Sort alphabetically by title for catalog view
+const sortedTerms = [...termsMetadata].sort((a, b) =>
+  a.title.localeCompare(b.title)
+);
+
+// Get all unique sources
+const allSources = [...new Set(sortedTerms.flatMap(t => t.sources))].sort();
+
+// Get all letters that have terms
+const availableLetters = [...new Set(sortedTerms.map(t => t.letter))].sort();
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>All Terms - SMBA Thesaurus</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header>
+    <div class="container">
+      <div class="logo">
+        <a href="/">
+          <img src="/SMBA_Logo_4.jpg" alt="SMBA Logo">
+        </a>
+      </div>
+      <div class="header-text">
+        <h1><a href="/">SMBA</a></h1>
+        <p class="subtitle">Unified Semantic Model of Business Analysis</p>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="container">
+      <div class="catalog-header">
+        <h1>All Terms</h1>
+        <a href="/" class="back-link">
+          <span>Homepage</span>
+        </a>
+      </div>
+
+    <div class="filters-container">
+      <!-- Search box -->
+      <div class="search-box">
+        <input
+          type="text"
+          id="searchInput"
+          placeholder="Search terms..."
+          autocomplete="off"
+        />
+      </div>
+
+      <!-- Multi-select sources dropdown -->
+      <div class="filter-group">
+        <label>Filter by Source:</label>
+        <div class="multi-select-wrapper">
+          <button type="button" id="sourcesToggle" class="multi-select-toggle">
+            <span id="sourcesLabel">All Sources</span>
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+              <path d="M4.5 6l3.5 3.5L11.5 6z"/>
+            </svg>
+          </button>
+          <div id="sourcesDropdown" class="multi-select-dropdown">
+            <label class="source-option">
+              <input type="checkbox" value="all" id="sourceAll" checked />
+              <span>All Sources</span>
+            </label>
+            {allSources.map(source => (
+              <label class="source-option">
+                <input type="checkbox" class="source-checkbox" value={source} />
+                <span>{source}</span>
+              </label>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <!-- Letter filter buttons -->
+      <div class="filter-group">
+        <label>Filter by Letter:</label>
+        <div class="letter-filters">
+          <button class="letter-btn active" data-letter="all">All</button>
+          {availableLetters.map(letter => (
+            <button class="letter-btn" data-letter={letter}>{letter}</button>
+          ))}
+        </div>
+      </div>
+    </div>
+
+    <!-- Results counter and items per page selector -->
+    <div class="pagination-header">
+      <div id="resultsCounter" class="results-counter">
+        Showing <span id="rangeStart">1</span>-<span id="rangeEnd">50</span> of <span id="totalCount">219</span> terms
+      </div>
+      <div class="items-per-page">
+        <label>Show:</label>
+        <select id="itemsPerPageSelect">
+          <option value="25">25</option>
+          <option value="50" selected>50</option>
+          <option value="100">100</option>
+          <option value="all">All</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Terms grid -->
+    <div id="termsGrid" class="terms-grid">
+      {sortedTerms.map(term => (
+        <TermCard
+          id={term.id}
+          title={term.title}
+          description={term.description}
+          sources={term.sources}
+          letter={term.letter}
+        />
+      ))}
+    </div>
+
+    <!-- No results message -->
+    <div id="noResults" class="no-results" style="display: none;">
+      <p>No results found</p>
+    </div>
+
+    <!-- Pagination controls -->
+    <div id="paginationControls" class="pagination-controls">
+      <button id="prevPage" class="pagination-btn" disabled>
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+          <path d="M10 12L6 8l4-4"/>
+        </svg>
+        Previous
+      </button>
+      <div id="pageNumbers" class="page-numbers"></div>
+      <button id="nextPage" class="pagination-btn">
+        Next
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+          <path d="M6 12l4-4-4-4"/>
+        </svg>
+      </button>
+    </div>
+    </div>
+  </main>
+
+  <footer>
+    <div class="footer-container">
+      <p>
+        SMBA Thesaurus — A community-driven semantic model for Business Analysis<br>
+        Built with <a href="https://astro.build" target="_blank">Astro</a>, <a href="https://www.w3.org/RDF/" target="_blank">RDF</a>, and <a href="https://www.w3.org/2004/02/skos/" target="_blank">SKOS</a>
+      </p>
+    </div>
+  </footer>
+</body>
+</html>
+
+<style>
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    line-height: 1.6;
+    color: #0f172a;
+    background: linear-gradient(135deg, #e2e8f0 0%, #cbd5e1 100%);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+
+  /* Header */
+  header {
+    background: white;
+    padding: 1.75rem 0;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    border-bottom: 1px solid #e2e8f0;
+  }
+
+  header .container {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+  header .logo {
+    display: flex;
+    align-items: center;
+  }
+
+  header .logo a {
+    display: flex;
+    align-items: center;
+    transition: opacity 0.2s;
+  }
+
+  header .logo a:hover {
+    opacity: 0.8;
+  }
+
+  header .logo img {
+    width: auto;
+    height: 56px;
+  }
+
+  header .header-text {
+    flex: 1;
+  }
+
+  header h1 {
+    font-size: 2.25rem;
+    margin-bottom: 0.125rem;
+  }
+
+  header h1 a {
+    text-decoration: none;
+    color: #0f172a;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+  }
+
+  header .subtitle {
+    color: #64748b;
+    font-size: 0.9375rem;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+  }
+
+  /* Main */
+  main {
+    flex: 1;
+    padding: 3rem 0;
+  }
+
+  main .container {
+    background: white;
+    border-radius: 16px;
+    padding: 3rem;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+  }
+
+  .catalog-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+  }
+
+  .catalog-header h1 {
+    margin: 0;
+    font-size: 2.5rem;
+    color: #1e40af;
+    font-weight: 700;
+  }
+
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.5rem 1rem;
+    background: white;
+    color: #1e40af;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 0.9rem;
+    letter-spacing: 0.3px;
+    border-radius: 6px;
+    border: 1.5px solid #1e40af;
+    transition: all 0.2s ease;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+  }
+
+  .back-link:hover {
+    background: #1e40af;
+    color: white;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 6px rgba(30, 64, 175, 0.3);
+  }
+
+  .back-link:active {
+    transform: translateY(0);
+  }
+
+  .filters-container {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 2rem;
+  }
+
+  .filter-group {
+    margin-bottom: 1.5rem;
+  }
+
+  .filter-group:last-child {
+    margin-bottom: 0;
+  }
+
+  .filter-group label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: #374151;
+  }
+
+  .search-box {
+    margin-bottom: 1.5rem;
+  }
+
+  .search-box input {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+    border: 2px solid #e5e7eb;
+    border-radius: 8px;
+    transition: border-color 0.2s;
+  }
+
+  .search-box input:focus {
+    outline: none;
+    border-color: #1e40af;
+  }
+
+  .multi-select-wrapper {
+    position: relative;
+  }
+
+  .multi-select-toggle {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    background: white;
+    border: 2px solid #e5e7eb;
+    border-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: border-color 0.2s;
+  }
+
+  .multi-select-toggle:hover {
+    border-color: #1e40af;
+  }
+
+  .multi-select-dropdown {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    margin-top: 0.5rem;
+    background: white;
+    border: 2px solid #e5e7eb;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    max-height: 300px;
+    overflow-y: auto;
+    z-index: 10;
+  }
+
+  .multi-select-dropdown.open {
+    display: block;
+  }
+
+  .source-option {
+    display: flex;
+    align-items: center;
+    padding: 0.75rem 1rem;
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
+
+  .source-option:hover {
+    background-color: #f3f4f6;
+  }
+
+  .source-option input {
+    margin-right: 0.75rem;
+    cursor: pointer;
+  }
+
+  .letter-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .letter-btn {
+    padding: 0.5rem 1rem;
+    background: white;
+    border: 2px solid #e5e7eb;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.2s;
+    min-width: 45px;
+  }
+
+  .letter-btn:hover {
+    border-color: #1e40af;
+    color: #1e40af;
+    background: #f1f5f9;
+  }
+
+  .letter-btn.active {
+    background: #1e40af;
+    color: white;
+    border-color: #1e40af;
+  }
+
+  .terms-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .no-results {
+    text-align: center;
+    padding: 3rem;
+    color: #6b7280;
+    font-size: 1.25rem;
+  }
+
+  /* Pagination */
+  .pagination-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    padding: 1rem;
+    background: #f8fafc;
+    border-radius: 8px;
+  }
+
+  .results-counter {
+    color: #64748b;
+    font-size: 0.95rem;
+    font-weight: 500;
+  }
+
+  .results-counter span {
+    color: #1e40af;
+    font-weight: 600;
+  }
+
+  .items-per-page {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .items-per-page label {
+    color: #64748b;
+    font-size: 0.9rem;
+    font-weight: 500;
+  }
+
+  .items-per-page select {
+    padding: 0.5rem 0.75rem;
+    border: 2px solid #e5e7eb;
+    border-radius: 6px;
+    background: white;
+    color: #0f172a;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: border-color 0.2s;
+  }
+
+  .items-per-page select:hover {
+    border-color: #1e40af;
+  }
+
+  .items-per-page select:focus {
+    outline: none;
+    border-color: #1e40af;
+  }
+
+  .pagination-controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 1px solid #e5e7eb;
+  }
+
+  .pagination-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1rem;
+    background: white;
+    border: 2px solid #e5e7eb;
+    border-radius: 6px;
+    color: #64748b;
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .pagination-btn:hover:not(:disabled) {
+    border-color: #1e40af;
+    color: #1e40af;
+    background: #f1f5f9;
+  }
+
+  .pagination-btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+
+  .page-numbers {
+    display: flex;
+    gap: 0.25rem;
+  }
+
+  /* Global styles for dynamically created pagination buttons */
+  :global(.page-number) {
+    min-width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: white;
+    border: 2px solid #e5e7eb;
+    border-radius: 6px;
+    color: #64748b;
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  :global(.page-number:hover:not(.active)) {
+    border-color: #1e40af;
+    color: #1e40af;
+    background: #f1f5f9;
+  }
+
+  :global(.page-number.active) {
+    background: #1e40af !important;
+    color: white !important;
+    border-color: #1e40af !important;
+    font-weight: 700 !important;
+    box-shadow: 0 0 0 3px rgba(30, 64, 175, 0.2) !important;
+    transform: scale(1.05) !important;
+  }
+
+  :global(.page-number.active:hover) {
+    background: #1e3a8a !important;
+    border-color: #1e3a8a !important;
+    box-shadow: 0 0 0 3px rgba(30, 58, 138, 0.3) !important;
+  }
+
+  :global(.page-number.ellipsis) {
+    border: none;
+    cursor: default;
+    pointer-events: none;
+  }
+
+  /* Footer */
+  footer {
+    flex-shrink: 0;
+    background: white;
+    padding: 1rem 0;
+    text-align: center;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
+  }
+
+  .footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+  }
+
+  footer p {
+    margin: 0;
+    color: #333;
+    line-height: 1.5;
+    font-size: 0.9rem;
+  }
+
+  footer a {
+    color: #1e40af;
+    text-decoration: none;
+    font-weight: 500;
+  }
+
+  footer a:hover {
+    text-decoration: underline;
+    color: #1e3a8a;
+  }
+
+  @media (max-width: 768px) {
+    .terms-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .letter-filters {
+      justify-content: center;
+    }
+  }
+</style>
+
+<script>
+  // Get DOM elements
+  const searchInput = document.getElementById('searchInput') as HTMLInputElement;
+  const termsGrid = document.getElementById('termsGrid');
+  const noResults = document.getElementById('noResults');
+  const letterBtns = document.querySelectorAll('.letter-btn');
+  const sourcesToggle = document.getElementById('sourcesToggle');
+  const sourcesDropdown = document.getElementById('sourcesDropdown');
+  const sourcesLabel = document.getElementById('sourcesLabel');
+  const sourceAll = document.getElementById('sourceAll') as HTMLInputElement;
+  const sourceCheckboxes = document.querySelectorAll('.source-checkbox') as NodeListOf<HTMLInputElement>;
+  const itemsPerPageSelect = document.getElementById('itemsPerPageSelect') as HTMLSelectElement;
+  const prevPageBtn = document.getElementById('prevPage') as HTMLButtonElement;
+  const nextPageBtn = document.getElementById('nextPage') as HTMLButtonElement;
+  const pageNumbersContainer = document.getElementById('pageNumbers');
+  const paginationControls = document.getElementById('paginationControls');
+  const rangeStart = document.getElementById('rangeStart');
+  const rangeEnd = document.getElementById('rangeEnd');
+  const totalCount = document.getElementById('totalCount');
+
+  // State
+  let activeFilters = {
+    search: '',
+    letter: 'all',
+    sources: new Set<string>(),
+    page: 1,
+    itemsPerPage: 50
+  };
+
+  // Read URL parameters on load
+  function readUrlParams() {
+    const params = new URLSearchParams(window.location.search);
+
+    if (params.has('search')) {
+      activeFilters.search = params.get('search') || '';
+      searchInput.value = activeFilters.search;
+    }
+
+    if (params.has('letter')) {
+      activeFilters.letter = params.get('letter') || 'all';
+    }
+
+    if (params.has('sources')) {
+      const sources = params.get('sources')?.split(',').filter(Boolean) || [];
+      activeFilters.sources = new Set(sources);
+
+      // Update checkboxes
+      if (sources.length > 0) {
+        sourceAll.checked = false;
+        sourceCheckboxes.forEach(cb => {
+          cb.checked = activeFilters.sources.has(cb.value);
+        });
+        updateSourcesLabel();
+      }
+    }
+
+    if (params.has('page')) {
+      activeFilters.page = parseInt(params.get('page') || '1', 10);
+    }
+
+    if (params.has('itemsPerPage')) {
+      const ipp = params.get('itemsPerPage');
+      if (ipp === 'all') {
+        activeFilters.itemsPerPage = -1;
+        itemsPerPageSelect.value = 'all';
+      } else {
+        activeFilters.itemsPerPage = parseInt(ipp || '50', 10);
+        itemsPerPageSelect.value = ipp || '50';
+      }
+    }
+
+    // Update UI
+    letterBtns.forEach(btn => {
+      btn.classList.toggle('active', btn.dataset.letter === activeFilters.letter);
+    });
+  }
+
+  // Update URL parameters
+  function updateUrlParams() {
+    const params = new URLSearchParams();
+
+    if (activeFilters.search) {
+      params.set('search', activeFilters.search);
+    }
+
+    if (activeFilters.letter !== 'all') {
+      params.set('letter', activeFilters.letter);
+    }
+
+    if (activeFilters.sources.size > 0) {
+      params.set('sources', Array.from(activeFilters.sources).join(','));
+    }
+
+    if (activeFilters.page > 1) {
+      params.set('page', activeFilters.page.toString());
+    }
+
+    if (activeFilters.itemsPerPage !== 50) {
+      params.set('itemsPerPage', activeFilters.itemsPerPage === -1 ? 'all' : activeFilters.itemsPerPage.toString());
+    }
+
+    const newUrl = params.toString()
+      ? `${window.location.pathname}?${params.toString()}`
+      : window.location.pathname;
+
+    window.history.replaceState({}, '', newUrl);
+  }
+
+  // Filter terms
+  function filterTerms() {
+    const termCards = termsGrid?.querySelectorAll('.term-card') || [];
+
+    // First pass: filter by search/letter/source and collect matching terms
+    const matchingCards: HTMLElement[] = [];
+
+    termCards.forEach((card) => {
+      const element = card as HTMLElement;
+      const title = element.dataset.title || '';
+      const letter = element.dataset.letter || '';
+      const sources = JSON.parse(element.dataset.sources || '[]');
+
+      // Search filter
+      const matchesSearch = !activeFilters.search ||
+        title.includes(activeFilters.search.toLowerCase());
+
+      // Letter filter
+      const matchesLetter = activeFilters.letter === 'all' ||
+        letter === activeFilters.letter;
+
+      // Source filter
+      const matchesSource = activeFilters.sources.size === 0 ||
+        sources.some((s: string) => activeFilters.sources.has(s));
+
+      if (matchesSearch && matchesLetter && matchesSource) {
+        matchingCards.push(element);
+      } else {
+        element.style.display = 'none';
+      }
+    });
+
+    const totalMatching = matchingCards.length;
+
+    // Update total count
+    if (totalCount) {
+      totalCount.textContent = totalMatching.toString();
+    }
+
+    // Show/hide no results message
+    if (noResults) {
+      noResults.style.display = totalMatching === 0 ? 'block' : 'none';
+    }
+    if (termsGrid) {
+      termsGrid.style.display = totalMatching === 0 ? 'none' : 'grid';
+    }
+
+    // Calculate pagination
+    const itemsPerPage = activeFilters.itemsPerPage;
+    const showAll = itemsPerPage === -1;
+    const totalPages = showAll ? 1 : Math.ceil(totalMatching / itemsPerPage);
+
+    // Adjust current page if needed
+    if (activeFilters.page > totalPages && totalPages > 0) {
+      activeFilters.page = totalPages;
+    }
+    if (activeFilters.page < 1) {
+      activeFilters.page = 1;
+    }
+
+    // Second pass: show only items for current page
+    if (showAll) {
+      // Show all matching items
+      matchingCards.forEach(card => {
+        card.style.display = 'block';
+      });
+
+      // Update counter
+      if (rangeStart && rangeEnd) {
+        rangeStart.textContent = totalMatching > 0 ? '1' : '0';
+        rangeEnd.textContent = totalMatching.toString();
+      }
+
+      // Hide pagination controls
+      if (paginationControls) {
+        paginationControls.style.display = 'none';
+      }
+    } else {
+      // Calculate range for current page
+      const startIdx = (activeFilters.page - 1) * itemsPerPage;
+      const endIdx = Math.min(startIdx + itemsPerPage, totalMatching);
+
+      // Show only items in current page range
+      matchingCards.forEach((card, idx) => {
+        card.style.display = (idx >= startIdx && idx < endIdx) ? 'block' : 'none';
+      });
+
+      // Update counter
+      if (rangeStart && rangeEnd) {
+        rangeStart.textContent = totalMatching > 0 ? (startIdx + 1).toString() : '0';
+        rangeEnd.textContent = endIdx.toString();
+      }
+
+      // Show/hide pagination controls
+      if (paginationControls) {
+        paginationControls.style.display = totalPages > 1 ? 'flex' : 'none';
+      }
+
+      // Update pagination controls
+      updatePaginationControls(totalPages);
+    }
+
+    updateUrlParams();
+  }
+
+  // Update pagination controls
+  function updatePaginationControls(totalPages: number) {
+    // Update prev/next buttons
+    if (prevPageBtn) {
+      prevPageBtn.disabled = activeFilters.page <= 1;
+    }
+    if (nextPageBtn) {
+      nextPageBtn.disabled = activeFilters.page >= totalPages;
+    }
+
+    // Generate page numbers
+    if (pageNumbersContainer) {
+      pageNumbersContainer.innerHTML = '';
+
+      if (totalPages <= 7) {
+        // Show all pages if 7 or fewer
+        for (let i = 1; i <= totalPages; i++) {
+          pageNumbersContainer.appendChild(createPageButton(i));
+        }
+      } else {
+        // Show smart pagination with ellipsis
+        // Always show: 1 ... (current-1) current (current+1) ... last
+        pageNumbersContainer.appendChild(createPageButton(1));
+
+        if (activeFilters.page > 3) {
+          pageNumbersContainer.appendChild(createEllipsis());
+        }
+
+        const start = Math.max(2, activeFilters.page - 1);
+        const end = Math.min(totalPages - 1, activeFilters.page + 1);
+
+        for (let i = start; i <= end; i++) {
+          pageNumbersContainer.appendChild(createPageButton(i));
+        }
+
+        if (activeFilters.page < totalPages - 2) {
+          pageNumbersContainer.appendChild(createEllipsis());
+        }
+
+        pageNumbersContainer.appendChild(createPageButton(totalPages));
+      }
+    }
+  }
+
+  // Create page button
+  function createPageButton(pageNum: number): HTMLElement {
+    const btn = document.createElement('button');
+    btn.className = 'page-number';
+    btn.textContent = pageNum.toString();
+
+    // Check if this is the active page
+    const isActive = Number(pageNum) === Number(activeFilters.page);
+    if (isActive) {
+      btn.classList.add('active');
+      btn.setAttribute('aria-current', 'page');
+    }
+
+    btn.addEventListener('click', () => {
+      activeFilters.page = Number(pageNum);
+      filterTerms();
+      // Delay scroll to ensure DOM is updated
+      setTimeout(() => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }, 50);
+    });
+    return btn;
+  }
+
+  // Create ellipsis
+  function createEllipsis(): HTMLElement {
+    const ellipsis = document.createElement('span');
+    ellipsis.className = 'page-number ellipsis';
+    ellipsis.textContent = '...';
+    return ellipsis;
+  }
+
+  // Update sources label
+  function updateSourcesLabel() {
+    const selectedCount = activeFilters.sources.size;
+    if (selectedCount === 0) {
+      sourcesLabel!.textContent = 'All Sources';
+    } else if (selectedCount === 1) {
+      sourcesLabel!.textContent = Array.from(activeFilters.sources)[0];
+    } else {
+      sourcesLabel!.textContent = `${selectedCount} sources selected`;
+    }
+  }
+
+  // Search input handler
+  searchInput?.addEventListener('input', (e) => {
+    activeFilters.search = (e.target as HTMLInputElement).value;
+    activeFilters.page = 1; // Reset to first page on search
+    filterTerms();
+  });
+
+  // Letter filter handlers
+  letterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      activeFilters.letter = btn.dataset.letter || 'all';
+      activeFilters.page = 1; // Reset to first page on filter change
+      letterBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      filterTerms();
+    });
+  });
+
+  // Items per page selector
+  itemsPerPageSelect?.addEventListener('change', (e) => {
+    const value = (e.target as HTMLSelectElement).value;
+    if (value === 'all') {
+      activeFilters.itemsPerPage = -1;
+    } else {
+      activeFilters.itemsPerPage = parseInt(value, 10);
+    }
+    activeFilters.page = 1; // Reset to first page
+    filterTerms();
+  });
+
+  // Previous page button
+  prevPageBtn?.addEventListener('click', () => {
+    if (activeFilters.page > 1) {
+      activeFilters.page--;
+      filterTerms();
+      // Delay scroll to ensure DOM is updated
+      setTimeout(() => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }, 50);
+    }
+  });
+
+  // Next page button
+  nextPageBtn?.addEventListener('click', () => {
+    activeFilters.page++;
+    filterTerms();
+    // Delay scroll to ensure DOM is updated
+    setTimeout(() => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }, 50);
+  });
+
+  // Multi-select dropdown toggle
+  sourcesToggle?.addEventListener('click', () => {
+    sourcesDropdown?.classList.toggle('open');
+  });
+
+  // Close dropdown when clicking outside
+  document.addEventListener('click', (e) => {
+    if (!sourcesToggle?.contains(e.target as Node) &&
+        !sourcesDropdown?.contains(e.target as Node)) {
+      sourcesDropdown?.classList.remove('open');
+    }
+  });
+
+  // "All Sources" checkbox handler
+  sourceAll?.addEventListener('change', () => {
+    if (sourceAll.checked) {
+      activeFilters.sources.clear();
+      sourceCheckboxes.forEach(cb => cb.checked = false);
+    }
+    activeFilters.page = 1; // Reset to first page on filter change
+    updateSourcesLabel();
+    filterTerms();
+  });
+
+  // Individual source checkbox handlers
+  sourceCheckboxes.forEach(cb => {
+    cb.addEventListener('change', () => {
+      if (cb.checked) {
+        activeFilters.sources.add(cb.value);
+        sourceAll.checked = false;
+      } else {
+        activeFilters.sources.delete(cb.value);
+        if (activeFilters.sources.size === 0) {
+          sourceAll.checked = true;
+        }
+      }
+      activeFilters.page = 1; // Reset to first page on filter change
+      updateSourcesLabel();
+      filterTerms();
+    });
+  });
+
+  // Initialize on page load
+  readUrlParams();
+  filterTerms();
+</script>
+</Layout>

@@ -1,0 +1,21 @@
+@prefix : <https://usmba.ai/> .
+@prefix grddl: <http://www.w3.org/2003/g/data-view#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+
+<https://usmba.ai/iiba_babok_guide_observation_(business_analysis)> a skos:Concept;
+  rdfs:label "observation (business analysis)"@en;
+  dct:creator <https://orcid.org/0009-0002-4140-6464>;
+  skos:definition "Studying and analyzing one or more stakeholders in their work environment in order to elicit requirements."@en;
+  skos:scopeNote """Use this concept when referring to an elicitation technique in which a business analyst studies stakeholders as they perform their work to understand existing processes, pain points, and information flows.
+It applies within the context of requirements discovery and validation, not to be confused with general data observation, monitoring, or scientific research."""@en;
+  skos:inScheme :iiba-babok-terms;
+  skos:topConceptOf :iiba-babok-terms;
+  skos:prefLabel "observation (business analysis)"@en;
+  dct:source :IIBA_BABOK_Guide_v3 .

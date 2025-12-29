@@ -1,0 +1,20 @@
+@prefix : <https://usmba.ai/> .
+@prefix grddl: <http://www.w3.org/2003/g/data-view#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+
+:lessons_learned_process a skos:Concept;
+  rdfs:label "lessons learned process"@en;
+  dct:creator <https://orcid.org/0009-0002-4140-6464>;
+  skos:definition "A process improvement technique used to learn about and improve on a process or project. A lessons learned session involves a special meeting in which the team explores what worked, what didn't work, what could be learned from the just-completed iteration, and how to adapt processes and techniques before continuing or starting anew."@en;
+  skos:inScheme :iiba-babok-terms;
+  skos:topConceptOf :iiba-babok-terms;
+  skos:prefLabel "lessons learned process"@en;
+  skos:altLabel "retrospective"@en;
+  dct:source :IIBA_BABOK_Guide_v3 .
