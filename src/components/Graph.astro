@@ -4,52 +4,65 @@ const { nodes = [], edges = [], options = {} } = Astro.props;
 const defaultOptions = {
   nodes: {
     shape: 'box',
-    font: { size: 14, face: 'Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif', color: '#333' },
-    borderWidth: 2,
-    margin: 10,
+    font: {
+      size: 13,
+      face: 'Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+      color: '#2c3e50',
+      multi: 'html',
+      bold: { color: '#1a252f' }
+    },
+    borderWidth: 1.5,
+    margin: { top: 12, right: 16, bottom: 12, left: 16 },  // More generous spacing for labels
+    borderWidthSelected: 2,
+    shapeProperties: {
+      borderRadius: 6  // Softer, rounded corners
+    },
     color: {
-      border: '#2B7CE9',
-      background: '#D2E5FF',
-      highlight: { border: '#FF5722', background: '#FFE0B2' },
-      hover: { border: '#FFA500', background: '#FFF4E0' }
+      border: '#7fa3d1',        // Softer blue
+      background: '#e8f1fb',     // Lighter, more subtle blue
+      highlight: { border: '#5a8cc9', background: '#d4e7f8' },
+      hover: { border: '#4a7ab8', background: '#c2ddf5' }
     },
     chosen: {
       node: function(values, id, selected, hovering) {
         if (selected) {
-          values.borderColor = '#FF5722';
-          values.color = '#FFE0B2';
+          values.borderColor = '#4a7ab8';
+          values.color = '#c2ddf5';
+          values.borderWidth = 2.5;
         }
       }
     }
   },
   edges: {
     arrows: 'to',
-    color: { color: '#848484', hover: '#2B7CE9', highlight: '#848484' },
+    color: { color: '#999999', hover: '#2B7CE9', highlight: '#2B7CE9' },
     smooth: {
       enabled: true,
-      type: 'curvedCW',
-      roundness: 0.2
+      type: 'dynamic',  // More organic, Obsidian-like curves
+      roundness: 0.5
     },
-    width: 1,
+    width: 1.5,
     font: {
-      size: 12,
-      align: 'top',
-      color: '#666',
-      strokeWidth: 0,
-      background: '#ffffff',
-      strokeColor: '#ffffff'
+      size: 11,
+      align: 'horizontal',  // Better label positioning
+      color: '#555',
+      strokeWidth: 3,       // White outline around text for readability
+      background: 'transparent',
+      strokeColor: '#ffffff',
+      vadjust: -15          // Move labels away from edges
     },
     chosen: {
       edge: function(values, id, selected, hovering) {
         if (hovering) {
-          values.width = 2;
+          values.width = 2.5;
           values.color = '#2B7CE9';
         }
       },
       label: function(values, id, selected, hovering) {
         if (hovering) {
-          values.size = 13;
+          values.size = 12;
           values.color = '#1a5fc7';
+          values.strokeWidth = 4;
         }
       }
     }
@@ -62,15 +75,16 @@ const defaultOptions = {
     enabled: true,
     solver: 'forceAtlas2Based',
     forceAtlas2Based: {
-      gravitationalConstant: -50,
-      centralGravity: 0.015,
-      springLength: 150,
-      springConstant: 0.05,
-      avoidOverlap: 1.5
+      gravitationalConstant: -70,    // Balanced repulsion
+      centralGravity: 0.012,         // Slight central pull
+      springLength: 160,             // Compact but readable connections
+      springConstant: 0.04,          // Flexible springs for organic feel
+      avoidOverlap: 2.5,             // Strong overlap prevention
+      damping: 0.5                   // Smoother motion
     },
     stabilization: {
       enabled: true,
-      iterations: 400,
+      iterations: 500,               // More iterations for better layout
       updateInterval: 25,
       fit: true
     }
@@ -93,6 +107,18 @@ const graphData = JSON.stringify({ nodes, edges, options: finalOptions });
   <div id="graph-container"></div>
 
   <div class="graph-controls">
+    <button id="expandBtn" class="control-btn" title="Expand to Fullscreen">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M8 3H5C3.89543 3 3 3.89543 3 5V8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M21 8V5C21 3.89543 20.1046 3 19 3H16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M8 21H5C3.89543 21 3 20.1046 3 19V16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M21 16V19C21 20.1046 20.1046 21 19 21H16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <polyline points="15 3 21 3 21 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <polyline points="9 21 3 21 3 15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <line x1="21" y1="3" x2="14" y2="10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <line x1="3" y1="21" x2="10" y2="14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </button>
     <button id="fitBtn" class="control-btn" title="Fit to Screen">
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M8 3H5C4.46957 3 3.96086 3.21071 3.58579 3.58579C3.21071 3.96086 3 4.46957 3 5V8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -110,6 +136,43 @@ const graphData = JSON.stringify({ nodes, edges, options: finalOptions });
         <path d="M5 3L19 12L5 21V3Z" fill="currentColor"/>
       </svg>
     </button>
+  </div>
+</div>
+
+<!-- Fullscreen Modal -->
+<div id="graphModal" class="graph-modal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h3>Graph Visualization</h3>
+      <button id="closeModal" class="close-btn" title="Close">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <line x1="18" y1="6" x2="6" y2="18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          <line x1="6" y1="6" x2="18" y2="18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </button>
+    </div>
+    <div class="modal-graph-wrapper">
+      <div id="graph-modal-container"></div>
+      <div class="modal-controls">
+        <button id="fitBtnModal" class="control-btn" title="Fit to Screen">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M8 3H5C4.46957 3 3.96086 3.21071 3.58579 3.58579C3.21071 3.96086 3 4.46957 3 5V8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M21 8V5C21 4.46957 20.7893 3.96086 20.4142 3.58579C20.0391 3.21071 19.5304 3 19 3H16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M8 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M21 16V19C21 19.5304 20.7893 20.0391 20.4142 20.4142C20.0391 20.7893 19.5304 21 19 21H16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+        <button id="freezeBtnModal" class="control-btn" title="Toggle Physics">
+          <svg id="pauseIconModal" width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="6" y="4" width="4" height="16" fill="currentColor" rx="1"/>
+            <rect x="14" y="4" width="4" height="16" fill="currentColor" rx="1"/>
+          </svg>
+          <svg id="playIconModal" width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="display: none;">
+            <path d="M5 3L19 12L5 21V3Z" fill="currentColor"/>
+          </svg>
+        </button>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -133,6 +196,8 @@ const graphData = JSON.stringify({ nodes, edges, options: finalOptions });
 
       const network = new Network(container, data, options);
       let isPhysicsEnabled = true;
+      let modalNetwork = null;
+      let isModalPhysicsEnabled = true;
 
       // Helper function to extract term ID from URI
       function getTermId(uri) {
@@ -219,6 +284,113 @@ const graphData = JSON.stringify({ nodes, edges, options: finalOptions });
         btn.classList.add('active');
       });
 
+      // Modal functionality
+      const modal = document.getElementById('graphModal');
+      const expandBtn = document.getElementById('expandBtn');
+      const closeModalBtn = document.getElementById('closeModal');
+      const modalContainer = document.getElementById('graph-modal-container');
+
+      expandBtn.addEventListener('click', () => {
+        modal.style.display = 'flex';
+        document.body.style.overflow = 'hidden'; // Prevent background scrolling
+
+        // Initialize modal graph after container is rendered
+        setTimeout(() => {
+          if (!modalNetwork) {
+            const modalData = {
+              nodes: new DataSet(nodes),
+              edges: new DataSet(edges)
+            };
+            modalNetwork = new Network(modalContainer, modalData, options);
+
+          // Setup navigation for modal graph
+          modalNetwork.on('click', (params) => {
+            if (params.edges.length > 0 && params.nodes.length === 0) {
+              const edgeId = params.edges[0];
+              const edgeData = modalData.edges.get(edgeId);
+              if (edgeData && edgeData.title && edgeData.title.startsWith('http')) {
+                window.open(edgeData.title, '_blank');
+              }
+              return;
+            }
+            if (params.nodes.length > 0) {
+              const nodeId = params.nodes[0];
+              if (isTermUri(nodeId)) {
+                const termId = getTermId(nodeId);
+                if (window.sourceIds && window.sourceIds.has(termId)) {
+                  window.location.href = `/sources/${termId}`;
+                } else {
+                  window.location.href = `/terms/${termId}`;
+                }
+              } else if (nodeId.startsWith('http')) {
+                window.open(nodeId, '_blank');
+              }
+            }
+          });
+
+          modalNetwork.once('stabilizationIterationsDone', () => {
+            modalNetwork.fit({ animation: { duration: 400 } });
+            modalNetwork.setOptions({ physics: { enabled: false } });
+            isModalPhysicsEnabled = false;
+            const pauseIconModal = document.getElementById('pauseIconModal');
+            const playIconModal = document.getElementById('playIconModal');
+            const btnModal = document.getElementById('freezeBtnModal');
+            pauseIconModal.style.display = 'none';
+            playIconModal.style.display = 'block';
+            btnModal.classList.add('active');
+          });
+
+          // Modal controls
+          document.getElementById('fitBtnModal').addEventListener('click', () => {
+            modalNetwork.fit({ animation: { duration: 500, easingFunction: 'easeInOutQuad' } });
+          });
+
+          document.getElementById('freezeBtnModal').addEventListener('click', () => {
+            isModalPhysicsEnabled = !isModalPhysicsEnabled;
+            modalNetwork.setOptions({ physics: { enabled: isModalPhysicsEnabled } });
+
+            const pauseIconModal = document.getElementById('pauseIconModal');
+            const playIconModal = document.getElementById('playIconModal');
+            const btnModal = document.getElementById('freezeBtnModal');
+
+            if (isModalPhysicsEnabled) {
+              pauseIconModal.style.display = 'block';
+              playIconModal.style.display = 'none';
+              btnModal.classList.remove('active');
+            } else {
+              pauseIconModal.style.display = 'none';
+              playIconModal.style.display = 'block';
+              btnModal.classList.add('active');
+            }
+          });
+          } else {
+            modalNetwork.redraw();
+            modalNetwork.fit({ animation: { duration: 400 } });
+          }
+        }, 50); // Small delay to ensure container is rendered
+      });
+
+      function closeModal() {
+        modal.style.display = 'none';
+        document.body.style.overflow = ''; // Restore scrolling
+      }
+
+      closeModalBtn.addEventListener('click', closeModal);
+
+      // Close modal on ESC key
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && modal.style.display === 'flex') {
+          closeModal();
+        }
+      });
+
+      // Close modal when clicking outside
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+          closeModal();
+        }
+      });
+
       console.log('✅ Graph initialized with force-directed layout');
     } catch (error) {
       console.error('Failed to initialize graph:', error);
@@ -281,5 +453,106 @@ const graphData = JSON.stringify({ nodes, edges, options: finalOptions });
     background: #667eea;
     color: white;
     border-color: #667eea;
+  }
+
+  /* Modal Styles */
+  .graph-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.75);
+    backdrop-filter: blur(4px);
+    z-index: 9999;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+
+  .modal-content {
+    background: white;
+    border-radius: 12px;
+    width: 95%;
+    height: 90%;
+    max-width: 1600px;
+    max-height: 900px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    overflow: hidden;
+  }
+
+  .modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 1.5rem;
+    border-bottom: 2px solid #e5e7eb;
+    background: #f9fafb;
+  }
+
+  .modal-header h3 {
+    margin: 0;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #1e293b;
+  }
+
+  .close-btn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem;
+    color: #64748b;
+    transition: all 0.2s;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .close-btn:hover {
+    background: #e5e7eb;
+    color: #1e293b;
+  }
+
+  .modal-graph-wrapper {
+    flex: 1;
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+  }
+
+  #graph-modal-container {
+    width: 100%;
+    height: 100%;
+    border: none;
+    background: #ffffff;
+  }
+
+  .modal-controls {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    display: flex;
+    gap: 6px;
+    z-index: 10;
+  }
+
+  @media (max-width: 768px) {
+    .modal-content {
+      width: 100%;
+      height: 100%;
+      max-width: 100%;
+      max-height: 100%;
+      border-radius: 0;
+    }
+
+    .modal-controls {
+      top: 70px;
+      right: 20px;
+    }
   }
 </style>

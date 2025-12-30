@@ -73,10 +73,32 @@ triples.forEach(triple => {
   });
 });
 
+// Helper function to get human-readable source name
+function getSourceName(uri) {
+  // Extract ID from URI (e.g., ":IIBA_BABOK_Guide_v3" -> "IIBA_BABOK_Guide_v3")
+  const id = uri.replace(/^:/, '').replace(/^https?:\/\/usmba\.ai\//, '');
+
+  // Look up in externalResources
+  const standard = externalResources.standards.find(s => s.id === id);
+  if (standard) return standard.label;
+
+  const bibResource = externalResources.bibliographicResources.find(s => s.id === id);
+  if (bibResource) return bibResource.title;
+
+  // If not found, return the URI as-is
+  return uri;
+}
+
 Array.from(attributeMap.entries()).forEach(([attr, items]) => {
+  // For dct:source, convert URIs to human-readable names
+  let displayValue = items.map(i => i.value).join(', ');
+  if (attr === 'dct:source') {
+    displayValue = items.map(i => getSourceName(i.value)).join(', ');
+  }
+
   properties.push({
     attribute: attr,
-    value: items.map(i => i.value).join(', '),
+    value: displayValue,
     subject: items[0].subject,
     objects: items.map(i => i.value),
     rawObjects: items.map(i => i.rawUri)
