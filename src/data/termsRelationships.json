@@ -1,0 +1,92 @@
+[
+  {
+    "from": "architecture",
+    "to": "business_architecture",
+    "type": "narrower"
+  },
+  {
+    "from": "behavioural_business_rule",
+    "to": "business_rule",
+    "type": "broader"
+  },
+  {
+    "from": "business_analysis_plan",
+    "to": "requirements_management_plan",
+    "type": "narrower"
+  },
+  {
+    "from": "business_architecture",
+    "to": "architecture",
+    "type": "broader"
+  },
+  {
+    "from": "business_requirement",
+    "to": "requirement",
+    "type": "broader"
+  },
+  {
+    "from": "business_rule",
+    "to": "behavioural_business_rule",
+    "type": "narrower"
+  },
+  {
+    "from": "definitional_business_rule",
+    "to": "business_rule",
+    "type": "broader"
+  },
+  {
+    "from": "enterprise_architecture",
+    "to": "architecture",
+    "type": "broader"
+  },
+  {
+    "from": "functional_requirement",
+    "to": "requirement",
+    "type": "broader"
+  },
+  {
+    "from": "non-functional_requirement",
+    "to": "requirement",
+    "type": "broader"
+  },
+  {
+    "from": "objective",
+    "to": "business_objective",
+    "type": "narrower"
+  },
+  {
+    "from": "operative_business_rule",
+    "to": "business_rule",
+    "type": "broader"
+  },
+  {
+    "from": "requirement",
+    "to": "business_requirement",
+    "type": "narrower"
+  },
+  {
+    "from": "requirement",
+    "to": "requirements_architecture",
+    "type": "isPartOf"
+  },
+  {
+    "from": "requirements_allocation",
+    "to": "allocation",
+    "type": "broader"
+  },
+  {
+    "from": "requirements_architecture",
+    "to": "architecture",
+    "type": "broader"
+  },
+  {
+    "from": "requirements_management_plan",
+    "to": "business_analysis_plan",
+    "type": "broader"
+  },
+  {
+    "from": "structural_rule",
+    "to": "business_rule",
+    "type": "broader"
+  }
+]

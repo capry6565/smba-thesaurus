@@ -1,6 +1,7 @@
 ---
 import termsMetadata from '../data/termsMetadata.json';
 import externalResources from '../data/externalResources.json';
+import termsRelationships from '../data/termsRelationships.json';
 import TermCard from '../components/TermCard.astro';
 import ResourceCard from '../components/ResourceCard.astro';
 
@@ -155,6 +156,39 @@ const totalTermsCount = termsMetadata.length;
       </div>
     </div>
 
+    <!-- Knowledge Graph Section -->
+    <section class="graph-section">
+      <div class="section-header">
+        <h2>Explore the Knowledge Graph</h2>
+        <p class="section-subtitle">
+          Visualize semantic relationships between Business Analysis terms
+        </p>
+      </div>
+
+      <div class="graph-preview">
+        <div class="graph-placeholder">
+          <div class="placeholder-icon">
+            <svg width="80" height="80" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="12" cy="5" r="3" stroke="currentColor" stroke-width="2"/>
+              <circle cx="5" cy="19" r="3" stroke="currentColor" stroke-width="2"/>
+              <circle cx="19" cy="19" r="3" stroke="currentColor" stroke-width="2"/>
+              <path d="M10.5 7.5L7 17M13.5 7.5L17 17" stroke="currentColor" stroke-width="2"/>
+            </svg>
+          </div>
+          <h3>Interactive Knowledge Graph</h3>
+          <p>Explore the interconnected web of Business Analysis terminology</p>
+          <button id="loadGraphBtn" class="load-graph-btn">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M15 3H19C20.1046 3 21 3.89543 21 5V19C21 20.1046 20.1046 21 19 21H15" stroke="currentColor" stroke-width="2"/>
+              <path d="M10 17L15 12L10 7" stroke="currentColor" stroke-width="2"/>
+              <path d="M15 12H3" stroke="currentColor" stroke-width="2"/>
+            </svg>
+            Load Knowledge Graph
+          </button>
+        </div>
+      </div>
+    </section>
+
     <!-- External Resources Section -->
     <section class="resources-section">
       <div class="section-header">
@@ -246,6 +280,60 @@ const totalTermsCount = termsMetadata.length;
       </p>
     </div>
   </footer>
+
+  <!-- Knowledge Graph Modal -->
+  <div id="knowledgeGraphModal" class="kg-modal">
+    <div class="kg-modal-content">
+      <div class="kg-modal-header">
+        <div>
+          <h3>Knowledge Graph</h3>
+          <p class="kg-modal-subtitle">Semantic relationships between Business Analysis terms</p>
+        </div>
+        <button id="closeGraphModal" class="kg-close-btn" title="Close">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <line x1="18" y1="6" x2="6" y2="18" stroke="currentColor" stroke-width="2"/>
+            <line x1="6" y1="6" x2="18" y2="18" stroke="currentColor" stroke-width="2"/>
+          </svg>
+        </button>
+      </div>
+
+      <div class="kg-controls">
+        <div class="kg-filter-group">
+          <label>Filter by Relationship:</label>
+          <select id="relationshipFilter">
+            <option value="all">All Relationships</option>
+            <option value="broader">Broader</option>
+            <option value="narrower">Narrower</option>
+            <option value="related">Related</option>
+            <option value="isPartOf">Part Of</option>
+          </select>
+        </div>
+        <div class="kg-stats">
+          <span id="visibleNodes">0</span> nodes • <span id="visibleEdges">0</span> connections
+        </div>
+      </div>
+
+      <div class="kg-graph-wrapper">
+        <div id="knowledgeGraphContainer"></div>
+        <div class="kg-graph-controls">
+          <button id="kgFitBtn" class="kg-control-btn" title="Fit to Screen">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+              <path d="M8 3H5C4.46957 3 3.96086 3.21071 3.58579 3.58579C3.21071 3.96086 3 4.46957 3 5V8M21 8V5C21 4.46957 20.7893 3.96086 20.4142 3.58579C20.0391 3.21071 19.5304 3 19 3H16M8 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V16M21 16V19C21 19.5304 20.7893 20.0391 20.4142 20.4142C20.0391 20.7893 19.5304 21 19 21H16" stroke="currentColor" stroke-width="2"/>
+            </svg>
+          </button>
+          <button id="kgFreezeBtn" class="kg-control-btn" title="Toggle Physics">
+            <svg id="kgPauseIcon" width="18" height="18" viewBox="0 0 24 24" fill="none">
+              <rect x="6" y="4" width="4" height="16" fill="currentColor" rx="1"/>
+              <rect x="14" y="4" width="4" height="16" fill="currentColor" rx="1"/>
+            </svg>
+            <svg id="kgPlayIcon" width="18" height="18" viewBox="0 0 24 24" fill="none" style="display: none;">
+              <path d="M5 3L19 12L5 21V3Z" fill="currentColor"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
 </body>
 </html>
 
@@ -644,6 +732,230 @@ const totalTermsCount = termsMetadata.length;
       grid-template-columns: 1fr;
     }
   }
+
+  /* Knowledge Graph Section */
+  .graph-section {
+    margin-top: 3rem;
+    padding: 1rem 1.25rem;
+    background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+    border-radius: 12px;
+  }
+
+  .graph-preview {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 140px;
+  }
+
+  .graph-placeholder {
+    text-align: center;
+    max-width: 500px;
+  }
+
+  .placeholder-icon {
+    margin: 0 auto 0.75rem;
+    color: #1e40af;
+  }
+
+  .graph-placeholder h3 {
+    font-size: 1.25rem;
+    color: #1e40af;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+  }
+
+  .graph-placeholder p {
+    color: #64748b;
+    margin-bottom: 1rem;
+    font-size: 0.9rem;
+  }
+
+  .load-graph-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 1rem 2rem;
+    background: #1e40af;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .load-graph-btn:hover {
+    background: #1e3a8a;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(30, 64, 175, 0.3);
+  }
+
+  .load-graph-btn svg {
+    stroke: currentColor;
+  }
+
+  /* Knowledge Graph Modal */
+  .kg-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(4px);
+    z-index: 10000;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+
+  .kg-modal.active {
+    display: flex;
+  }
+
+  .kg-modal-content {
+    background: white;
+    border-radius: 12px;
+    width: 98%;
+    height: 95%;
+    max-width: 1800px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    overflow: hidden;
+  }
+
+  .kg-modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.25rem 1.5rem;
+    border-bottom: 2px solid #e5e7eb;
+    background: #f9fafb;
+  }
+
+  .kg-modal-header h3 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #1e40af;
+    margin: 0;
+  }
+
+  .kg-modal-subtitle {
+    color: #64748b;
+    font-size: 0.9rem;
+    margin: 0.25rem 0 0 0;
+  }
+
+  .kg-close-btn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem;
+    color: #64748b;
+    transition: all 0.2s;
+    border-radius: 6px;
+  }
+
+  .kg-close-btn:hover {
+    background: #e5e7eb;
+    color: #1e293b;
+  }
+
+  .kg-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 1.5rem;
+    background: white;
+    border-bottom: 1px solid #e5e7eb;
+  }
+
+  .kg-filter-group {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .kg-filter-group label {
+    font-weight: 600;
+    color: #475569;
+    font-size: 0.9rem;
+  }
+
+  .kg-filter-group select {
+    padding: 0.5rem 1rem;
+    border: 2px solid #cbd5e1;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    color: #475569;
+    background: white;
+    cursor: pointer;
+    transition: border-color 0.2s;
+  }
+
+  .kg-filter-group select:focus {
+    outline: none;
+    border-color: #1e40af;
+  }
+
+  .kg-stats {
+    font-size: 0.9rem;
+    color: #64748b;
+    font-weight: 500;
+  }
+
+  .kg-stats span {
+    color: #1e40af;
+    font-weight: 700;
+  }
+
+  .kg-graph-wrapper {
+    flex: 1;
+    position: relative;
+    background: #ffffff;
+    overflow: hidden;
+  }
+
+  #knowledgeGraphContainer {
+    width: 100%;
+    height: 100%;
+  }
+
+  .kg-graph-controls {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    display: flex;
+    gap: 8px;
+    z-index: 100;
+  }
+
+  .kg-control-btn {
+    padding: 0.5rem 0.65rem;
+    background: white;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    color: #64748b;
+  }
+
+  .kg-control-btn:hover {
+    background: #f8fafc;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+    color: #1e40af;
+  }
+
+  .kg-control-btn.active {
+    background: #1e40af;
+    color: white;
+    border-color: #1e40af;
+  }
 </style>
 
 <script>
@@ -673,4 +985,276 @@ const totalTermsCount = termsMetadata.length;
       });
     });
   });
+
+  // Knowledge Graph functionality
+  const loadGraphBtn = document.getElementById('loadGraphBtn');
+  const kgModal = document.getElementById('knowledgeGraphModal');
+  const closeGraphModal = document.getElementById('closeGraphModal');
+  let kgNetwork = null;
+  let kgIsPhysicsEnabled = true;
+  let allGraphData = null;
+
+  // Build graph data from terms metadata and relationships
+  const termsData = JSON.parse(document.getElementById('termsData').textContent);
+  const relationshipsData = JSON.parse(document.getElementById('relationshipsData').textContent);
+
+  function buildGraphData() {
+    const nodes = [];
+    const edges = [];
+    const nodeIds = new Set();
+
+    // Helper to get term metadata
+    const getTermMeta = (termId) => termsData.find(t => t.id === termId);
+
+    // Colors for different relationship types
+    const relationshipColors = {
+      'broader': { color: '#3b82f6', label: 'broader than' },
+      'narrower': { color: '#10b981', label: 'narrower than' },
+      'related': { color: '#f59e0b', label: 'related to' },
+      'isPartOf': { color: '#8b5cf6', label: 'part of' }
+    };
+
+    // Collect all term IDs that have relationships
+    const relatedTermIds = new Set();
+    relationshipsData.forEach(rel => {
+      relatedTermIds.add(rel.from);
+      relatedTermIds.add(rel.to);
+    });
+
+    // Add nodes only for terms that have relationships
+    relatedTermIds.forEach(termId => {
+      const termMeta = getTermMeta(termId);
+      if (termMeta) {
+        nodes.push({
+          id: termId,
+          label: termMeta.title,
+          group: 'term',
+          title: termMeta.description ? termMeta.description.substring(0, 100) + '...' : termMeta.title,
+          color: { background: '#e8f1fb', border: '#7fa3d1' },
+          font: { size: 13, color: '#1e293b' },
+          shape: 'box',
+          margin: { top: 10, right: 14, bottom: 10, left: 14 },
+          borderWidth: 2
+        });
+        nodeIds.add(termId);
+      }
+    });
+
+    // Add edges based on relationships
+    relationshipsData.forEach(rel => {
+      if (nodeIds.has(rel.from) && nodeIds.has(rel.to)) {
+        const relConfig = relationshipColors[rel.type] || { color: '#94a3b8', label: rel.type };
+        edges.push({
+          from: rel.from,
+          to: rel.to,
+          label: relConfig.label,
+          color: { color: relConfig.color },
+          arrows: 'to',
+          relationshipType: rel.type,
+          font: { size: 10, color: '#64748b' }
+        });
+      }
+    });
+
+    return { nodes, edges };
+  }
+
+  // Load graph button click
+  loadGraphBtn.addEventListener('click', async () => {
+    loadGraphBtn.disabled = true;
+    loadGraphBtn.innerHTML = '<span>Loading...</span>';
+
+    // Dynamically load vis-network if not already loaded
+    if (!window.vis) {
+      const script = document.createElement('script');
+      script.type = 'module';
+      script.textContent = `
+        import { Network, DataSet } from 'https://unpkg.com/vis-network@9.1.9/standalone/esm/vis-network.min.js';
+        window.vis = { Network, DataSet };
+        window.dispatchEvent(new Event('visLoaded'));
+      `;
+      document.head.appendChild(script);
+      await new Promise(resolve => window.addEventListener('visLoaded', resolve, { once: true }));
+    }
+
+    // Show modal
+    kgModal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+
+    setTimeout(() => {
+      if (!kgNetwork) {
+        allGraphData = buildGraphData();
+        initializeGraph(allGraphData);
+      }
+    }, 100);
+  });
+
+  function initializeGraph(graphData) {
+    const container = document.getElementById('knowledgeGraphContainer');
+    const data = {
+      nodes: new window.vis.DataSet(graphData.nodes),
+      edges: new window.vis.DataSet(graphData.edges)
+    };
+
+    const options = {
+      nodes: {
+        shape: 'box',
+        margin: { top: 12, right: 16, bottom: 12, left: 16 },
+        borderWidth: 1.5,
+        borderWidthSelected: 2,
+        shapeProperties: { borderRadius: 6 },
+        font: { face: 'Inter, sans-serif', color: '#2c3e50' }
+      },
+      edges: {
+        arrows: 'to',
+        smooth: { enabled: true, type: 'dynamic', roundness: 0.5 },
+        font: { size: 10, align: 'horizontal' }
+      },
+      physics: {
+        enabled: true,
+        solver: 'forceAtlas2Based',
+        forceAtlas2Based: {
+          gravitationalConstant: -70,
+          centralGravity: 0.006,
+          springLength: 160,
+          springConstant: 0.04,
+          avoidOverlap: 2.5,
+          damping: 0.6
+        },
+        stabilization: {
+          enabled: true,
+          iterations: 500,
+          updateInterval: 25,
+          fit: true
+        }
+      },
+      interaction: { hover: true, zoomView: true }
+    };
+
+    kgNetwork = new window.vis.Network(container, data, options);
+
+    // Update stats
+    updateStats(data.nodes.length, data.edges.length);
+
+    // Handle click navigation
+    kgNetwork.on('click', (params) => {
+      if (params.nodes.length > 0) {
+        const termId = params.nodes[0];
+        window.location.href = `/terms/${termId}`;
+      }
+    });
+
+    // Physics complete
+    kgNetwork.once('stabilizationIterationsDone', () => {
+      kgNetwork.fit();
+      kgNetwork.setOptions({ physics: { enabled: false } });
+      kgIsPhysicsEnabled = false;
+      updatePhysicsIcons();
+    });
+
+    // Controls
+    document.getElementById('kgFitBtn').addEventListener('click', () => {
+      kgNetwork.fit({ animation: { duration: 500 } });
+    });
+
+    document.getElementById('kgFreezeBtn').addEventListener('click', () => {
+      kgIsPhysicsEnabled = !kgIsPhysicsEnabled;
+      kgNetwork.setOptions({ physics: { enabled: kgIsPhysicsEnabled } });
+      updatePhysicsIcons();
+    });
+
+    // Filter
+    document.getElementById('relationshipFilter').addEventListener('change', (e) => {
+      const selectedRelType = e.target.value;
+      filterGraph(selectedRelType);
+    });
+  }
+
+  function filterGraph(relType) {
+    if (!kgNetwork || !allGraphData) return;
+
+    let filteredEdges = [...allGraphData.edges];
+
+    // Filter edges by relationship type
+    if (relType !== 'all') {
+      filteredEdges = allGraphData.edges.filter(edge =>
+        edge.relationshipType === relType
+      );
+    }
+
+    // Get unique node IDs from filtered edges
+    const nodeIdSet = new Set();
+    filteredEdges.forEach(edge => {
+      nodeIdSet.add(edge.from);
+      nodeIdSet.add(edge.to);
+    });
+
+    // Filter nodes to only include those connected by filtered edges
+    const filteredNodes = allGraphData.nodes.filter(node =>
+      nodeIdSet.has(node.id)
+    );
+
+    kgNetwork.setData({
+      nodes: new window.vis.DataSet(filteredNodes),
+      edges: new window.vis.DataSet(filteredEdges)
+    });
+
+    updateStats(filteredNodes.length, filteredEdges.length);
+    kgNetwork.fit();
+  }
+
+  function updateStats(nodes, edges) {
+    document.getElementById('visibleNodes').textContent = nodes;
+    document.getElementById('visibleEdges').textContent = edges;
+  }
+
+  function updatePhysicsIcons() {
+    const pauseIcon = document.getElementById('kgPauseIcon');
+    const playIcon = document.getElementById('kgPlayIcon');
+    const btn = document.getElementById('kgFreezeBtn');
+
+    if (kgIsPhysicsEnabled) {
+      pauseIcon.style.display = 'block';
+      playIcon.style.display = 'none';
+      btn.classList.remove('active');
+    } else {
+      pauseIcon.style.display = 'none';
+      playIcon.style.display = 'block';
+      btn.classList.add('active');
+    }
+  }
+
+  function closeKgModal() {
+    kgModal.classList.remove('active');
+    document.body.style.overflow = '';
+    loadGraphBtn.disabled = false;
+    loadGraphBtn.innerHTML = `
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+        <path d="M15 3H19C20.1046 3 21 3.89543 21 5V19C21 20.1046 20.1046 21 19 21H15" stroke="currentColor" stroke-width="2"/>
+        <path d="M10 17L15 12L10 7" stroke="currentColor" stroke-width="2"/>
+        <path d="M15 12H3" stroke="currentColor" stroke-width="2"/>
+      </svg>
+      Load Knowledge Graph
+    `;
+  }
+
+  closeGraphModal.addEventListener('click', closeKgModal);
+
+  // Close on ESC
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && kgModal.classList.contains('active')) {
+      closeKgModal();
+    }
+  });
+
+  // Close on backdrop click
+  kgModal.addEventListener('click', (e) => {
+    if (e.target === kgModal) {
+      closeKgModal();
+    }
+  });
 </script>
+
+<!-- Embed terms data for graph -->
+<script id="termsData" type="application/json" set:html={JSON.stringify(termsMetadata)}></script>
+<script id="relationshipsData" type="application/json" set:html={JSON.stringify(termsRelationships)}></script>
