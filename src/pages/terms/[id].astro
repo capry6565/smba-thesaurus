@@ -657,6 +657,10 @@ Array.from(attributeMap.entries()).forEach(([attr, items]) => {
   }
 
   @media (max-width: 1024px) {
+    .container {
+      min-width: auto;
+    }
+
     .term-layout {
       flex-direction: column;
     }
@@ -690,6 +694,10 @@ Array.from(attributeMap.entries()).forEach(([attr, items]) => {
       max-width: 100%;
     }
 
+    .term-layout {
+      min-width: auto;
+    }
+
     header {
       flex-direction: column;
       align-items: flex-start;
@@ -715,6 +723,13 @@ Array.from(attributeMap.entries()).forEach(([attr, items]) => {
 
     .graph-section {
       flex: 0 0 400px;
+      width: 100%;
+    }
+
+    .left-column,
+    .right-column {
+      width: 100%;
+      min-width: auto;
     }
   }
 </style>
