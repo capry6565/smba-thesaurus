@@ -42,10 +42,11 @@ const availableLetters = [...new Set(sortedTerms.map(t => t.letter))].sort();
   <main>
     <div class="container">
       <div class="catalog-header">
-        <h1>All Terms</h1>
-        <a href="/" class="back-link">
-          <span>Homepage</span>
-        </a>
+        <h1>
+          <a href="/" class="breadcrumb-text">← <strong>SMBA</strong> Thesaurus</a>
+          <span class="breadcrumb-separator">/</span>
+          All Terms
+        </h1>
       </div>
 
     <div class="filters-container">
@@ -54,7 +55,7 @@ const availableLetters = [...new Set(sortedTerms.map(t => t.letter))].sort();
         <input
           type="text"
           id="searchInput"
-          placeholder="Search terms..."
+          placeholder="Enter a term to search in labels and definitions."
           autocomplete="off"
         />
       </div>
@@ -152,11 +153,14 @@ const availableLetters = [...new Set(sortedTerms.map(t => t.letter))].sort();
   <footer>
     <div class="footer-container">
       <p>
-        SMBA Thesaurus — A community-driven semantic model for Business Analysis<br>
+        <strong>SMBA</strong> Thesaurus — A community-driven semantic model for Business Analysis<br>
         Built with <a href="https://astro.build" target="_blank">Astro</a>, <a href="https://www.w3.org/RDF/" target="_blank">RDF</a>, and <a href="https://www.w3.org/2004/02/skos/" target="_blank">SKOS</a>
       </p>
     </div>
   </footer>
+
+  <script data-goatcounter="https://smba.goatcounter.com/count"
+          async src="https://gc.zgo.at/count.js"></script>
 </body>
 </html>
 
@@ -254,9 +258,6 @@ const availableLetters = [...new Set(sortedTerms.map(t => t.letter))].sort();
   }
 
   .catalog-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
     margin-bottom: 2rem;
   }
 
@@ -265,33 +266,29 @@ const availableLetters = [...new Set(sortedTerms.map(t => t.letter))].sort();
     font-size: 2.5rem;
     color: #1e40af;
     font-weight: 700;
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+    flex-wrap: wrap;
   }
 
-  .back-link {
-    display: inline-flex;
-    align-items: center;
-    padding: 0.5rem 1rem;
-    background: white;
+  .breadcrumb-text {
+    font-size: 1rem;
+    font-weight: 600;
     color: #1e40af;
     text-decoration: none;
-    font-weight: 700;
-    font-size: 0.9rem;
-    letter-spacing: 0.3px;
-    border-radius: 6px;
-    border: 1.5px solid #1e40af;
-    transition: all 0.2s ease;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+    transition: color 0.2s ease;
   }
 
-  .back-link:hover {
-    background: #1e40af;
-    color: white;
-    transform: translateY(-1px);
-    box-shadow: 0 2px 6px rgba(30, 64, 175, 0.3);
+  .breadcrumb-text:hover {
+    color: #1e3a8a;
+    text-decoration: underline;
   }
 
-  .back-link:active {
-    transform: translateY(0);
+  .breadcrumb-separator {
+    color: #cbd5e1;
+    font-weight: 300;
+    font-size: 1rem;
   }
 
   .filters-container {
