@@ -129,92 +129,87 @@ Array.from(attributeMap.entries()).forEach(([attr, items]) => {
             <path d="M20 14H15C14.4477 14 14 14.4477 14 15V20C14 20.5523 14.4477 21 15 21H20C20.5523 21 21 20.5523 21 20V15C21 14.4477 20.5523 14 20 14Z" stroke="#1e40af" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
         </div>
-        <span class="breadcrumb-text">SMBA Thesaurus</span>
-        <span class="term-name">/ {mainTerm}</span>
+        <a href="/" class="breadcrumb-text"><strong>SMBA</strong> Thesaurus</a>
+        <span class="breadcrumb-separator">/</span>
+        <span class="term-name">{mainTerm}</span>
       </div>
-      <a href="/" class="back-link">
-        <span>Homepage</span>
-</a>
     </header>
 
     <div class="term-layout">
       <div class="left-column">
-        <section class="triples-section">
-          <h3>
-            <span class="icon">
+        <div class="tabs-container">
+          <div class="tabs-header">
+            <button class="tab-btn active" data-tab="properties">
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <rect x="4" y="4" width="8" height="8" rx="1" stroke="currentColor" stroke-width="1.5"/>
                 <path d="M8 2V4M8 12V14M2 8H4M12 8H14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
               </svg>
-            </span>
-            Properties
-          </h3>
-          <div class="table-wrapper">
-            <table>
-              <thead>
-                <tr>
-                  <th>Attribute</th>
-                  <th>Value</th>
-                </tr>
-              </thead>
-              <tbody>
-                {properties.map(prop => (
-                  <tr
-                    class="property-row"
-                    data-subject={prop.subject}
-                    data-predicate={prop.attribute}
-                    data-objects={JSON.stringify(prop.objects)}
-                    data-raw-objects={JSON.stringify(prop.rawObjects)}
-                  >
-                    <td>{prop.attribute}</td>
-                    <td class="value-cell">{prop.value}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+              Properties
+            </button>
+            <button class="tab-btn" data-tab="rdf">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M4 4L6 4L6 6L4 6Z" fill="currentColor"/>
+                <path d="M4 10L6 10L6 12L4 12Z" fill="currentColor"/>
+                <path d="M10 4L12 4L12 6L10 6Z" fill="currentColor"/>
+                <path d="M10 10L12 10L12 12L10 12Z" fill="currentColor"/>
+                <path d="M7 5L9 5L9 7L7 7Z" fill="currentColor"/>
+                <path d="M7 9L9 9L9 11L7 11Z" fill="currentColor"/>
+              </svg>
+              RDF Source
+            </button>
           </div>
-        </section>
 
-        {/* ЗАКОММЕНТИРОВАНО ПО ПРОСЬБЕ АЛЕКСА (Semantic Web методология - все данные в Properties)
-        {metadata.length > 0 && (
-          <section class="metadata-section">
-            <h3><span class="icon">ⓘ</span> Metadata</h3>
-            <div class="metadata-list">
-              {metadata.map(meta => (
-                <div class="metadata-item">
-                  <span class="metadata-label">
-                    {meta.attribute.includes('source') && '🔗'}
-                    {meta.attribute.includes('creator') && '👤'}
-                    {meta.attribute.includes('created') && '📅'}
-                    {meta.attribute.includes('modified') && '🔄'}
-                    {' '}{meta.attribute}:
-                  </span>
-                  <span class="metadata-value">
-                    {meta.attribute.includes('source') && meta.value.startsWith('http') ? (
-                      <a href={meta.value} target="_blank" rel="noopener">{meta.value}</a>
-                    ) : (
-                      meta.value
-                    )}
-                  </span>
-                </div>
-              ))}
-            </div>
-          </section>
-        )}
-        */}
+          <div class="tab-content active" id="properties-tab">
+            <section class="triples-section">
+              <div class="table-header-line"></div>
+              <div class="table-wrapper">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Attribute</th>
+                      <th>Value</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {properties.map(prop => (
+                      <tr
+                        class="property-row"
+                        data-subject={prop.subject}
+                        data-predicate={prop.attribute}
+                        data-objects={JSON.stringify(prop.objects)}
+                        data-raw-objects={JSON.stringify(prop.rawObjects)}
+                      >
+                        <td>{prop.attribute}</td>
+                        <td class="value-cell">{prop.value}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </section>
+          </div>
+
+          <div class="tab-content" id="rdf-tab">
+            <section class="code-section">
+              <div class="code-wrapper">
+                <button class="copy-btn" id="copyCodeBtn" title="Copy code">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="9" y="9" width="13" height="13" rx="2" stroke="currentColor" stroke-width="2"/>
+                    <path d="M5 15H4C2.89543 15 2 14.1046 2 13V4C2 2.89543 2.89543 2 4 2H13C14.1046 2 15 2.89543 15 4V5" stroke="currentColor" stroke-width="2"/>
+                  </svg>
+                  Copy
+                </button>
+                <pre><code class="language-turtle" set:html={Prism.highlight(ttlText.trim(), Prism.languages.turtle, "turtle")}></code></pre>
+              </div>
+            </section>
+          </div>
+        </div>
       </div>
 
       <div class="right-column">
         <section class="graph-section">
           <h3><span class="icon">◉</span> Visual Graph</h3>
           <Graph nodes={nodes} edges={edges} />
-        </section>
-
-        <section class="code-section">
-          <h3><span class="icon">⟨⟩</span> RDF Source</h3>
-          <div class="code-wrapper">
-            <pre><code class="language-turtle" set:html={Prism.highlight(ttlText.trim(), Prism.languages.turtle, "turtle")}></code></pre>
-          </div>
         </section>
       </div>
     </div>
@@ -235,6 +230,37 @@ Array.from(attributeMap.entries()).forEach(([attr, items]) => {
   <script define:vars={{ sourceIds: Array.from(allSourceIds) }}>
     // Make source IDs available globally for graph navigation
     window.sourceIds = new Set(sourceIds);
+  </script>
+
+  <script>
+    // Make attributes clickable - map prefixes to URIs
+    const prefixMap = {
+      'skos:': 'http://www.w3.org/2004/02/skos/core#',
+      'dct:': 'http://purl.org/dc/terms/',
+      'rdf:': 'http://www.w3.org/1999/02/22-rdf-syntax-ns#',
+      'rdfs:': 'http://www.w3.org/2000/01/rdf-schema#'
+    };
+
+    document.addEventListener('DOMContentLoaded', () => {
+      // Make attribute cells clickable
+      const propertyRows = document.querySelectorAll('.property-row');
+      propertyRows.forEach(row => {
+        const attributeCell = row.querySelector('td:first-child');
+        const attributeValue = attributeCell.textContent.trim();
+
+        // Check if attribute has a known prefix
+        for (const [prefix, baseUri] of Object.entries(prefixMap)) {
+          if (attributeValue.startsWith(prefix)) {
+            const localName = attributeValue.substring(prefix.length);
+            const fullUri = baseUri + localName;
+
+            // Make it a link
+            attributeCell.innerHTML = `<a href="${fullUri}" target="_blank" class="attribute-link">${attributeValue}</a>`;
+            break;
+          }
+        }
+      });
+    });
   </script>
 
   <script>
@@ -327,6 +353,60 @@ Array.from(attributeMap.entries()).forEach(([attr, items]) => {
       }
     });
   </script>
+
+  <script>
+    // Tab switching functionality
+    document.addEventListener('DOMContentLoaded', () => {
+      const tabButtons = document.querySelectorAll('.tab-btn');
+      const tabContents = document.querySelectorAll('.tab-content');
+
+      tabButtons.forEach(button => {
+        button.addEventListener('click', () => {
+          const targetTab = button.dataset.tab;
+
+          // Remove active class from all buttons and contents
+          tabButtons.forEach(btn => btn.classList.remove('active'));
+          tabContents.forEach(content => content.classList.remove('active'));
+
+          // Add active class to clicked button and corresponding content
+          button.classList.add('active');
+          document.getElementById(`${targetTab}-tab`).classList.add('active');
+        });
+      });
+    });
+  </script>
+
+  <script>
+    // Copy code functionality
+    document.addEventListener('DOMContentLoaded', () => {
+      const copyBtn = document.getElementById('copyCodeBtn');
+      if (copyBtn) {
+        copyBtn.addEventListener('click', async () => {
+          const codeElement = document.querySelector('.code-wrapper pre code');
+          if (codeElement) {
+            try {
+              await navigator.clipboard.writeText(codeElement.textContent);
+
+              // Visual feedback
+              const originalText = copyBtn.innerHTML;
+              copyBtn.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M20 6L9 17L4 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>Copied!`;
+
+              setTimeout(() => {
+                copyBtn.innerHTML = originalText;
+              }, 2000);
+            } catch (err) {
+              console.error('Failed to copy:', err);
+            }
+          }
+        });
+      }
+    });
+  </script>
+
+  <script data-goatcounter="https://smba.goatcounter.com/count"
+          async src="//gc.zgo.at/count.js"></script>
 </body>
 </html>
 
@@ -384,7 +464,7 @@ Array.from(attributeMap.entries()).forEach(([attr, items]) => {
   .header-left {
     display: flex;
     align-items: center;
-    gap: 1rem;
+    gap: 0.75rem;
     flex-wrap: wrap;
   }
 
@@ -397,8 +477,21 @@ Array.from(attributeMap.entries()).forEach(([attr, items]) => {
   .breadcrumb-text {
     font-size: 1.125rem;
     font-weight: 600;
-    color: #64748b;
+    color: #1e40af;
+    text-decoration: none;
     letter-spacing: -0.01em;
+    transition: color 0.2s ease;
+  }
+
+  .breadcrumb-text:hover {
+    color: #1e3a8a;
+    text-decoration: underline;
+  }
+
+  .breadcrumb-separator {
+    color: #cbd5e1;
+    font-size: 1.125rem;
+    font-weight: 300;
   }
 
   .term-name {
@@ -408,45 +501,84 @@ Array.from(attributeMap.entries()).forEach(([attr, items]) => {
     letter-spacing: -0.02em;
   }
 
-  .back-link {
-  display: inline-flex;
-  align-items: center;
-  padding: 0.5rem 1rem;
-  background: white;
-  color: #1e40af;
-  text-decoration: none;
-  font-weight: 700;
-  font-size: 0.9rem;
-  letter-spacing: 0.3px;
-  border-radius: 6px;
-  border: 1.5px solid #1e40af;
-  transition: all 0.2s ease;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.08);
-}
-
-.back-link:hover {
-  background: #1e40af;
-  color: white;
-  transform: translateY(-1px);
-  box-shadow: 0 2px 6px rgba(30, 64, 175, 0.3);
-}
-
-.back-link:active {
-  transform: translateY(0);
-}
-
   .term-layout {
     display: flex;
     gap: 1.2rem;
-    align-items: flex-start;
+    align-items: stretch;
+    height: calc(100vh - 180px);
+    max-height: calc(100vh - 180px);
   }
 
   .left-column {
-    flex: 1.4;
+    flex: 0 0 40%;
     min-width: 0;
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    height: 100%;
+    overflow: hidden;
+  }
+
+  .tabs-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    overflow: hidden;
+  }
+
+  .tabs-header {
+    display: flex;
+    gap: 0;
+    background: #e2e8f0;
+    padding: 0;
+    flex-shrink: 0;
+    border-radius: 8px 8px 0 0;
+  }
+
+  .tab-btn {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1rem;
+    border: none;
+    background: transparent;
+    color: #64748b;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    border-radius: 0;
+    transition: all 0.2s ease;
+  }
+
+  .tab-btn svg {
+    width: 16px;
+    height: 16px;
+    stroke: currentColor;
+  }
+
+  .tab-btn:hover {
+    background: rgba(30, 64, 175, 0.1);
+    color: #1e40af;
+  }
+
+  .tab-btn.active {
+    background: white;
+    color: #1e40af;
+  }
+
+  .tab-content {
+    display: none;
+    flex: 1;
+    overflow: hidden;
+  }
+
+  .tab-content.active {
+    display: flex;
+    flex-direction: column;
   }
 
   .right-column {
@@ -454,7 +586,8 @@ Array.from(attributeMap.entries()).forEach(([attr, items]) => {
     min-width: 0;
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    height: 100%;
+    overflow: hidden;
   }
 
   section {
@@ -483,16 +616,27 @@ Array.from(attributeMap.entries()).forEach(([attr, items]) => {
   }
 
   .triples-section {
-    flex: 1 1 auto;
-    min-height: 200px;
+    flex: 1;
+    min-height: 0;
     overflow-y: auto;
     display: flex;
     flex-direction: column;
+    padding: 0;
+  }
+
+  .table-header-line {
+    border-top: 3px solid #1e40af;
+    flex-shrink: 0;
+    line-height: 0;
+    font-size: 0;
   }
 
   .table-wrapper {
     overflow-x: auto;
     flex: 1 1 auto;
+    padding: 0.4rem 0.5rem;
+    border: 1px solid #e5e7eb;
+    border-top: none;
   }
 
   table {
@@ -502,12 +646,12 @@ Array.from(attributeMap.entries()).forEach(([attr, items]) => {
 
   th, td {
     text-align: left;
-    padding: 0.4rem 0.5rem;
+    padding: 0.3rem 0.4rem;
     border-bottom: 1px solid #eee;
   }
 
   th {
-    background: linear-gradient(to bottom, #1e40af 3px, #f8f9fa 3px);
+    background: #f8f9fa;
     font-weight: 700;
     color: #0f172a;
     font-size: 0.85rem;
@@ -537,6 +681,20 @@ Array.from(attributeMap.entries()).forEach(([attr, items]) => {
     font-size: 0.88rem;
     overflow-wrap: break-word;
     hyphens: auto;
+  }
+
+  /* Clickable attribute links */
+  :global(.attribute-link) {
+    color: #1e40af;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.2s ease;
+    border-bottom: 1px dashed #1e40af;
+  }
+
+  :global(.attribute-link:hover) {
+    color: #1e3a8a;
+    border-bottom-style: solid;
   }
 
   .metadata-section {
@@ -584,32 +742,64 @@ Array.from(attributeMap.entries()).forEach(([attr, items]) => {
   }
 
   .graph-section {
-    flex: 0 0 400px;
+    flex: 1;
     padding: 0.6rem 0.8rem 0.4rem 0.8rem;
     min-height: 0;
     overflow: hidden;
   }
 
   .code-section {
-    flex: 0 1 auto;
-    min-height: 200px;
-    max-height: 400px;
+    flex: 1;
+    min-height: 0;
     display: flex;
     flex-direction: column;
     overflow: hidden;
+    padding: 0;
   }
 
   .code-wrapper {
     flex: 1;
     background: #2d2d2d;
-    border-radius: 4px;
+    border-radius: 0;
     overflow: auto;
     min-height: 0;
+    padding: 0.4rem 0.5rem;
+    border: 1px solid #e5e7eb;
+    position: relative;
+  }
+
+  .copy-btn {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.4rem 0.6rem;
+    background: rgba(255, 255, 255, 0.1);
+    color: #e5e7eb;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    z-index: 10;
+  }
+
+  .copy-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.3);
+  }
+
+  .copy-btn svg {
+    stroke: currentColor;
   }
 
   .code-wrapper pre {
     margin: 0;
-    padding: 0.6rem 0.6rem 0 0.6rem;
+    padding: 0;
+    padding-top: 2.5rem;
     background: #2d2d2d !important;
     min-height: 100%;
   }
@@ -618,9 +808,11 @@ Array.from(attributeMap.entries()).forEach(([attr, items]) => {
     display: block;
     background: transparent !important;
     font-size: 0.8rem;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
     line-height: 1.4;
     font-family: 'Courier New', monospace;
-    white-space: pre;
     color: #f8f8f2;
   }
 
