@@ -3,13 +3,12 @@ import externalResources from '../../data/externalResources.json';
 import termsMetadata from '../../data/termsMetadata.json';
 
 export async function getStaticPaths() {
-  const { standards, bibliographicResources, publishers, contributors } = externalResources;
+  const { standards, bibliographicResources, publishers } = externalResources;
 
   const allResources = [
     ...standards,
     ...bibliographicResources,
-    ...publishers,
-    ...contributors
+    ...publishers
   ];
 
   return allResources.map(resource => ({
@@ -19,6 +18,15 @@ export async function getStaticPaths() {
 }
 
 const { resource } = Astro.props;
+
+// Map resource type to category name
+const categoryMap: Record<string, string> = {
+  'Standard': 'Standards',
+  'BibliographicResource': 'Publications',
+  'Organization': 'Organizations'
+};
+
+const categoryName = categoryMap[resource.type] || 'Sources';
 
 // Find all terms that reference this resource
 const relatedTerms = termsMetadata.filter(term => {
@@ -42,20 +50,27 @@ const displayTitle = resource.title || resource.label || resource.name || resour
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
 </head>
 <body>
   <header>
     <div class="container">
       <div class="header-left">
         <div class="header-icon">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M4 19.5C4 18.837 4.26339 18.2011 4.73223 17.7322C5.20107 17.2634 5.83696 17 6.5 17H20" stroke="#1e40af" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
             <path d="M6.5 2H20V22H6.5C5.83696 22 5.20107 21.7366 4.73223 21.2678C4.26339 20.7989 4 20.163 4 19.5V4.5C4 3.83696 4.26339 3.20107 4.73223 2.73223C5.20107 2.26339 5.83696 2 6.5 2Z" stroke="#1e40af" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
         </div>
         <a href="/" class="breadcrumb-text"><strong>SMBA</strong> Thesaurus</a>
         <span class="breadcrumb-separator">/</span>
-        <span class="term-name">{displayTitle}</span>
+        <span class="breadcrumb-category">{categoryName}</span>
+        <span class="breadcrumb-separator">/</span>
+        <span class="breadcrumb-current">{displayTitle}</span>
       </div>
     </div>
   </header>
@@ -63,6 +78,9 @@ const displayTitle = resource.title || resource.label || resource.name || resour
   <main>
     <div class="container">
       <div class="content-layout">
+      <!-- Title Section -->
+      <h1 class="resource-title">{displayTitle}</h1>
+
       <!-- Metadata Section -->
       <section class="metadata-section">
         <h2>Metadata</h2>
@@ -138,6 +156,20 @@ const displayTitle = resource.title || resource.label || resource.name || resour
           </div>
         )}
 
+        {resource.homepage && (
+          <div class="metadata-item">
+            <div class="metadata-label">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+                <path d="M2 12H22" stroke="currentColor" stroke-width="2"/>
+                <path d="M12 2C14.5013 4.73835 15.9228 8.29203 16 12C15.9228 15.708 14.5013 19.2616 12 22C9.49872 19.2616 8.07725 15.708 8 12C8.07725 8.29203 9.49872 4.73835 12 2Z" stroke="currentColor" stroke-width="2"/>
+              </svg>
+              <strong>Homepage</strong>
+            </div>
+            <p><a href={resource.homepage} target="_blank" rel="noopener noreferrer">{resource.homepage}</a></p>
+          </div>
+        )}
+
         {resource.orcid && (
           <div class="metadata-item">
             <div class="metadata-label">
@@ -187,8 +219,11 @@ const displayTitle = resource.title || resource.label || resource.name || resour
   <footer>
     <div class="footer-container">
       <p>
-        SMBA Thesaurus — A community-driven semantic model for Business Analysis<br>
-        Built with <a href="https://astro.build">Astro</a>, <a href="https://www.w3.org/RDF/">RDF</a>, and <a href="https://www.w3.org/2004/02/skos/">SKOS</a>
+        <strong>SMBA</strong> is an open, community-driven project.
+        <a href="#">Contribute</a> | <a href="#">Documentation</a> | <a href="#">Contact</a>
+      </p>
+      <p style="margin-top: 0.5rem; font-size: 0.9rem;">
+        © 2025 SMBA Community. All rights reserved.
       </p>
     </div>
   </footer>
@@ -248,7 +283,7 @@ const displayTitle = resource.title || resource.label || resource.name || resour
   }
 
   .breadcrumb-text {
-    font-size: 1.125rem;
+    font-size: 0.95rem;
     font-weight: 600;
     color: #1e40af;
     text-decoration: none;
@@ -263,15 +298,24 @@ const displayTitle = resource.title || resource.label || resource.name || resour
 
   .breadcrumb-separator {
     color: #cbd5e1;
-    font-size: 1.125rem;
+    font-size: 0.95rem;
     font-weight: 300;
   }
 
-  .term-name {
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: #1e40af;
-    letter-spacing: -0.02em;
+  .breadcrumb-category {
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: #64748b;
+  }
+
+  .breadcrumb-current {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #475569;
+    max-width: 350px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 
   main {
@@ -290,6 +334,14 @@ const displayTitle = resource.title || resource.label || resource.name || resour
     display: flex;
     flex-direction: column;
     gap: 2rem;
+  }
+
+  .resource-title {
+    font-size: 2.5rem;
+    color: #1e40af;
+    font-weight: 800;
+    margin: 0 0 1rem 0;
+    letter-spacing: -0.02em;
   }
 
   section {

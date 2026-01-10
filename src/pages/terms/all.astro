@@ -23,13 +23,18 @@ const availableLetters = [...new Set(sortedTerms.map(t => t.letter))].sort();
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
 </head>
 <body>
   <header>
     <div class="container">
       <div class="logo">
         <a href="/">
-          <img src="/SMBA_Logo_4.jpg" alt="SMBA Logo">
+          <img src="/SMBA_Logo_4.png" alt="SMBA Logo">
         </a>
       </div>
       <div class="header-text">
@@ -153,8 +158,11 @@ const availableLetters = [...new Set(sortedTerms.map(t => t.letter))].sort();
   <footer>
     <div class="footer-container">
       <p>
-        <strong>SMBA</strong> Thesaurus — A community-driven semantic model for Business Analysis<br>
-        Built with <a href="https://astro.build" target="_blank">Astro</a>, <a href="https://www.w3.org/RDF/" target="_blank">RDF</a>, and <a href="https://www.w3.org/2004/02/skos/" target="_blank">SKOS</a>
+        <strong>SMBA</strong> is an open, community-driven project.
+        <a href="#">Contribute</a> | <a href="#">Documentation</a> | <a href="#">Contact</a>
+      </p>
+      <p style="margin-top: 0.5rem; font-size: 0.9rem;">
+        © 2025 SMBA Community. All rights reserved.
       </p>
     </div>
   </footer>
@@ -735,12 +743,15 @@ const availableLetters = [...new Set(sortedTerms.map(t => t.letter))].sort();
     termCards.forEach((card) => {
       const element = card as HTMLElement;
       const title = element.dataset.title || '';
+      const description = element.dataset.description || '';
       const letter = element.dataset.letter || '';
       const sources = JSON.parse(element.dataset.sources || '[]');
 
-      // Search filter
+      // Search filter - search in both title and description
+      const searchTerm = activeFilters.search.toLowerCase();
       const matchesSearch = !activeFilters.search ||
-        title.includes(activeFilters.search.toLowerCase());
+        title.includes(searchTerm) ||
+        description.includes(searchTerm);
 
       // Letter filter
       const matchesLetter = activeFilters.letter === 'all' ||

@@ -19,12 +19,17 @@ const totalTermsCount = termsMetadata.length;
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
 </head>
 <body>
   <header>
     <div class="container">
       <div class="logo">
-        <img src="/SMBA_Logo_4.jpg" alt="SMBA Logo">
+        <img src="/SMBA_Logo_4.png" alt="SMBA Logo">
       </div>
       <div class="header-text">
         <h1>SMBA</h1>
@@ -52,12 +57,12 @@ const totalTermsCount = termsMetadata.length;
         </p>
         <p>
           <strong>SMBA</strong> does not seek ownership of the content drawn from these sources. Its purpose is to build a unified,
-          comprehensive, and mutually agreed semantic model — a structure that respects original intellectual property
+          comprehensive, and mutually agreed semantic model, a structure that respects original intellectual property
           while enabling interoperability and clarity across standards.
         </p>
         <p>
-          The ultimate goal is to enable smarter tools and systems — from knowledge management platforms to <span class="hero-highlight">AI- and
-          LLM-powered assistants</span> — that can accurately interpret and apply Business Analysis knowledge.
+          The ultimate goal is to enable smarter tools and systems, from knowledge management platforms to <span class="hero-highlight">AI- and
+          LLM-powered assistants</span>, that can accurately interpret and apply Business Analysis knowledge.
         </p>
         <p>
           <strong>SMBA</strong> welcomes collaboration from practitioners, researchers, and organizations who share the vision of
@@ -219,7 +224,7 @@ const totalTermsCount = termsMetadata.length;
         </div>
       </div>
 
-      <!-- Bibliographic Resources -->
+      <!-- Publications -->
       <div class="resource-category" data-category="publications">
         <div class="resources-grid">
           {externalResources.bibliographicResources.map(resource => (
@@ -232,14 +237,14 @@ const totalTermsCount = termsMetadata.length;
         </div>
       </div>
 
-      <!-- Publishers -->
+      <!-- Organizations -->
       <div class="resource-category" data-category="organizations">
         <div class="resources-grid">
           {externalResources.publishers.map(resource => (
             <ResourceCard
               id={resource.id}
               title={resource.name}
-              description=""
+              description={resource.description || ""}
             />
           ))}
         </div>
@@ -273,10 +278,13 @@ const totalTermsCount = termsMetadata.length;
   </main>
 
   <footer>
-    <div class="container">
+    <div class="footer-container">
       <p>
-        <strong>SMBA</strong> Thesaurus — A community-driven semantic model for Business Analysis<br>
-        Built with <a href="https://astro.build" target="_blank">Astro</a>, <a href="https://www.w3.org/RDF/" target="_blank">RDF</a>, and <a href="https://www.w3.org/2004/02/skos/" target="_blank">SKOS</a>
+        <strong>SMBA</strong> is an open, community-driven project.
+        <a href="#">Contribute</a> | <a href="#">Documentation</a> | <a href="#">Contact</a>
+      </p>
+      <p style="margin-top: 0.5rem; font-size: 0.9rem;">
+        © 2025 SMBA Community. All rights reserved.
       </p>
     </div>
   </footer>
@@ -552,21 +560,26 @@ const totalTermsCount = termsMetadata.length;
   }
 
   .resource-category {
-    margin-bottom: 1.5rem;
+    margin-top: 1.5rem;
   }
 
-  .resource-category:last-child {
-    margin-bottom: 0;
+  .resource-category:first-of-type {
+    margin-top: 0;
   }
 
   .resource-category.hidden {
     display: none;
   }
 
+  .resource-category.hidden + .resource-category:not(.hidden) {
+    margin-top: 0;
+  }
+
   .resources-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 1rem;
+    align-items: start;
   }
 
   /* Terms Section */
@@ -625,20 +638,22 @@ const totalTermsCount = termsMetadata.length;
   footer {
     flex-shrink: 0;
     background: white;
-    padding: 2rem 0;
+    padding: 1rem 0;
     text-align: center;
-    margin-top: 3rem;
-    border-top: 1px solid rgba(255,255,255,0.2);
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
   }
 
-  footer .container {
-    padding: 0 2rem;
+  .footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
   }
 
   footer p {
     margin: 0;
-    color: #64748b;
-    font-size: 0.95rem;
+    color: #333;
+    line-height: 1.5;
+    font-size: 0.9rem;
   }
 
   footer a {
