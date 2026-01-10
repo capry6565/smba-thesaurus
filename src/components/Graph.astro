@@ -210,7 +210,7 @@ const graphData = JSON.stringify({ nodes, edges, options: finalOptions });
         return uri.startsWith(':') || uri.includes('usmba.ai');
       }
 
-      // Direct navigation on node click
+      // Direct navigation on node click - always open in new tab
       network.on('click', (params) => {
         // Click on edge - open predicate URL if external
         if (params.edges.length > 0 && params.nodes.length === 0) {
@@ -222,7 +222,7 @@ const graphData = JSON.stringify({ nodes, edges, options: finalOptions });
           return;
         }
 
-        // Click on node - navigate to term or source page
+        // Click on node - navigate to term or source page in NEW TAB
         if (params.nodes.length > 0) {
           const nodeId = params.nodes[0];
 
@@ -231,9 +231,9 @@ const graphData = JSON.stringify({ nodes, edges, options: finalOptions });
 
             // Check if this is a source (from externalResources)
             if (window.sourceIds && window.sourceIds.has(termId)) {
-              window.location.href = `/sources/${termId}`;
+              window.open(`/sources/${termId}`, '_blank');
             } else {
-              window.location.href = `/terms/${termId}`;
+              window.open(`/terms/${termId}`, '_blank');
             }
           } else if (nodeId.startsWith('http')) {
             // External URL - open in new tab
@@ -304,7 +304,7 @@ const graphData = JSON.stringify({ nodes, edges, options: finalOptions });
             };
             modalNetwork = new Network(modalContainer, modalData, options);
 
-          // Setup navigation for modal graph
+          // Setup navigation for modal graph - always open in new tab
           modalNetwork.on('click', (params) => {
             if (params.edges.length > 0 && params.nodes.length === 0) {
               const edgeId = params.edges[0];
@@ -319,9 +319,9 @@ const graphData = JSON.stringify({ nodes, edges, options: finalOptions });
               if (isTermUri(nodeId)) {
                 const termId = getTermId(nodeId);
                 if (window.sourceIds && window.sourceIds.has(termId)) {
-                  window.location.href = `/sources/${termId}`;
+                  window.open(`/sources/${termId}`, '_blank');
                 } else {
-                  window.location.href = `/terms/${termId}`;
+                  window.open(`/terms/${termId}`, '_blank');
                 }
               } else if (nodeId.startsWith('http')) {
                 window.open(nodeId, '_blank');

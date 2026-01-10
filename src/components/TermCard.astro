@@ -14,9 +14,11 @@ const url = `/terms/${id}`;
 <a
   href={url}
   class="term-card"
+  target="_blank"
   data-letter={letter}
   data-sources={JSON.stringify(sources)}
   data-title={title.toLowerCase()}
+  data-description={description.toLowerCase()}
 >
   <h3>{title}</h3>
   <p>{description}</p>

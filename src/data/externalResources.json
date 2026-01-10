@@ -54,9 +54,38 @@
   "publishers": [
     {
       "id": "OMG",
-      "type": "Publisher",
-      "name": "Object Management Group",
+      "type": "Organization",
+      "name": "Object Management Group (OMG)",
+      "description": "An international, open membership, not-for-profit technology standards consortium that develops enterprise integration standards for a wide range of technologies and industries.",
       "homepage": "https://www.omg.org/"
+    },
+    {
+      "id": "IIBA",
+      "type": "Organization",
+      "name": "International Institute of Business Analysis (IIBA)",
+      "description": "A non-profit professional association for business analysis professionals, providing certification, training, and resources for the business analysis community worldwide.",
+      "homepage": "https://www.iiba.org/"
+    },
+    {
+      "id": "PMI",
+      "type": "Organization",
+      "name": "Project Management Institute (PMI)",
+      "description": "A global professional organization for project management professionals, offering certifications, standards, and resources including the PMBOK Guide and PMI Guide to Business Analysis.",
+      "homepage": "https://www.pmi.org/"
+    },
+    {
+      "id": "IREB",
+      "type": "Organization",
+      "name": "International Requirements Engineering Board (IREB)",
+      "description": "A non-profit organization dedicated to establishing and improving requirements engineering as a professional discipline through certification, education, and research.",
+      "homepage": "https://www.ireb.org/"
+    },
+    {
+      "id": "IQBBA",
+      "type": "Organization",
+      "name": "International Qualifications Board for Business Analysis (IQBBA)",
+      "description": "An organization providing internationally recognized certification schemes for business analysts, focusing on standardizing business analysis qualifications globally.",
+      "homepage": "https://www.iqbba.org/"
     }
   ],
   "contributors": [
@@ -64,19 +93,19 @@
       "id": "0009-0002-4140-6464",
       "type": "Contributor",
       "orcid": "https://orcid.org/0009-0002-4140-6464",
-      "name": "Vladyslav Tykhonenko"
+      "name": "Aleksandr Belin"
     },
     {
       "id": "0009-0000-6729-5489",
       "type": "Contributor",
       "orcid": "https://orcid.org/0009-0000-6729-5489",
-      "name": "Contributor 0009-0000-6729-5489"
+      "name": "Aliaksandr Karnialiuk"
     },
     {
       "id": "0009-0000-1610-6991",
       "type": "Contributor",
       "orcid": "https://orcid.org/0009-0000-1610-6991",
-      "name": "Contributor 0009-0000-1610-6991"
+      "name": "Vladyslav Uleiskyi"
     }
   ]
 }
